@@ -1,4 +1,4 @@
-package AutomatesCellulaires;
+package AutomatesCellulaires.td;
 
 import java.util.ArrayList;
 import java.util.Arrays;
