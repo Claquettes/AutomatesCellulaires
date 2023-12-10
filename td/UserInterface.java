@@ -21,9 +21,16 @@ public class UserInterface {
                 Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
                 System.out.println(grille);
                 System.out.println(grille.getCellules());
-            } else {
+            }
+            else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT") || input.equals("Quit")) {
+                System.out.println("Fermeture de l'interface");
+            } 
+            
+            
+            
+            else {
                 System.out.println("Commande inconnue, veuillez réessayer");
             }
-        } while (!input.equals("F") && !input.equals("q"));
+        } while (!input.equals("F") && !input.equals("q") && !input.equals("Q") && !input.equals("quit") && !input.equals("QUIT") && !input.equals("Quit"));
     }
 }
