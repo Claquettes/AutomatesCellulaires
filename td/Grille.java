@@ -1,7 +1,7 @@
 package AutomatesCellulaires.td;
-import AutomatesCellulaires.EtatCellule;
-import AutomatesCellulairesCellule;
-import AutomatesCellulaires.Coordonnee;
+import AutomatesCellulaires.td.EtatCellule;
+import AutomatesCellulaires.td.Cellule;
+import AutomatesCellulaires.td.Coordonnee;
 
 
 public class Grille {
