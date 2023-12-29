@@ -1,4 +1,4 @@
-package AutomatesCellulaires;
+package AutomatesCellulaires.td;
 
 public class Coordonnee {
     private int dimension;

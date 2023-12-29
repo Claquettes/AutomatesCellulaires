@@ -1,4 +1,8 @@
-package AutomatesCellulaires;
+package AutomatesCellulaires.td;
+import AutomatesCellulaires.td.EtatCellule;
+import AutomatesCellulaires.td.Cellule;
+import AutomatesCellulaires.td.Coordonnee;
+
 
 public class Grille {
     private EtatCellule etat;
