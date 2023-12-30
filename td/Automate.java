@@ -12,6 +12,8 @@ public class Automate {
             Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println(grille);
             System.out.println(grille.getCellules());
+            //we quit the program
+            System.exit(0);
         }
         if (name.equals("CONWAY")) {
             // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
@@ -26,5 +28,6 @@ public class Automate {
         // this.grid = new Grille(dimension, nombreCellules, new EtatCellule(name));
         // this.lr = LR; a rajouter quand la classe LocalRule sera créée
         System.out.println("Création de l'automate " + name + " en mode custom");
+        System.exit(0);
     }
 }
