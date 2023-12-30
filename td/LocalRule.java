@@ -55,6 +55,7 @@ public class LocalRule {
      * @return liste String List contenant les configurations qui soivent être mises à 1
      **/
     private static List<String> ConfigurationsDonnant1 (String regleBinaire ,int nbBits){
+        
         List<String> resultatsA1 = new ArrayList<>();
         int facteur = 0;
         for (int i = regleBinaire.length()-1; i >= 0 ; i--) {
@@ -82,14 +83,18 @@ public class LocalRule {
     }
 
 
-    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins,String NomRegle){
+    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins,String NomRegle){ 
+
+        //etatsPossibles = ["FEU", "CENDRE", "VIDE", "ARBRE"] par exemple pour le feu 
+        //ensuite ca créé locale rule pour le feu  ou pour ce qu'on veux 
+
         if(NomRegle == "FEU") {
             //System.out.println("Le Nom en string de la regle n'existe pas.");
             //System.exit(0);
             //}
             List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins);
-            listeClesValeurs = new HashMap<>();
-            for (String combinaison : toutesLesCombinaisons) {
+            listeClesValeurs = new HashMap<>(); // on initialise la liste des clés valeurs
+            for (String combinaison : toutesLesCombinaisons) { 
                 String EtatPremiereCellule =  combinaison.split(";")[0];
                 //System.out.print(" etat cellule ref : " + EtatPremiereCellule +"\n");
 
@@ -120,7 +125,7 @@ public class LocalRule {
         }
         else{
             int nbRegle=Integer.parseInt(NomRegle);
-            String regleEnBin = Integer.toBinaryString(nbRegle);
+            String regleEnBin = Integer.toBinaryString(nbRegle); 
             //TESTER SI LE NOM DE BITS SONT COMPATIBLES AVEC LE NB DE VOISINS ET LA CELLULE ACTUELLE NB + 1
             System.out.print("regle en binaire : " + regleEnBin + '\n');
 

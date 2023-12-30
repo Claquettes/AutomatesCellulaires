@@ -1,4 +1,4 @@
-package AutomatesCellulaires.td;
+ package AutomatesCellulaires.td;
 import AutomatesCellulaires.td.EtatCellule;
 import AutomatesCellulaires.td.Cellule;
 import AutomatesCellulaires.td.Coordonnee;
@@ -55,4 +55,25 @@ public class Grille {
         }
         return grilleString;
     }
+
+    /** 
+     * @param coordonneeX coordonnée en X de la cellule
+     * @param coordonneeY coordonnée en Y de la cellule
+     * @return valeur de la cellule
+    */
+
+    public String getValeurCellule(int coordonneeX, int coordonneeY) {
+        return this.cellules[coordonneeX * this.dimension + coordonneeY].getEtat();
+    }
+
+    /** 
+     * @param coordonneeX coordonnée en X de la cellule
+     * @param coordonneeY coordonnée en Y de la cellule
+     * @param valeur valeur à donner à la cellule
+    */
+
+    public void setValeurCellule(int coordonneeX, int coordonneeY, String valeur) {
+        this.cellules[coordonneeX * this.dimension + coordonneeY].setEtat(valeur);
+    }
+
 }
