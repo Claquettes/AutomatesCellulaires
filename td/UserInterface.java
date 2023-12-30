@@ -19,14 +19,12 @@ public class UserInterface {
             if (input.equals("F")) {
                 System.out.println("Lancement du modèle de feu");
                 effacerConsole();
-                Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
                 //la ligne du s=dessus sera a remplacer par un truc du style:
-                //Automate automateFeu = new Automate(Feu);
+                Automate automateFeu = new Automate("Feu");
                 
                 //et les lignes suivantes seront faites directement dans la classe Automate
                 
-                System.out.println(grille);
-                System.out.println(grille.getCellules());
+              
             }
             if (input.equals("C")) {
                 effacerConsole();

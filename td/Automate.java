@@ -8,9 +8,12 @@ public class Automate {
     
     //constructeur en mode prédéfini,
     public Automate(String name) {
-        if (name.equals("FEU")) {
+        if (name.toUpperCase().equals("FEU")) {
             //this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
+            Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
+            System.out.println(grille);
+            System.out.println(grille.getCellules());
         }
         if (name.equals("CONWAY")) {
             //this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
