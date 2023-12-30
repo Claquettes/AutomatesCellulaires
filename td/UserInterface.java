@@ -20,6 +20,7 @@ public class UserInterface {
                 System.out.println("Lancement du modèle de feu");
                 effacerConsole();
                 Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
+                
                 System.out.println(grille);
                 System.out.println(grille.getCellules());
             }
