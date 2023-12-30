@@ -18,7 +18,7 @@ public class Coordonnee {
     }
 
     public String toString() {
-        String coordonneesString ="[";
+        String coordonneesString = "[";
         for (int i = 0; i < this.dimension; i++) {
             coordonneesString += this.coordonnees[i];
             if (i < this.dimension - 1) {

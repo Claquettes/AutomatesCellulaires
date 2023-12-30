@@ -12,32 +12,19 @@ public class UserInterface {
 
         Scanner scanner = new Scanner(System.in);
         String input;
-
         do {
             input = scanner.nextLine();
-
             if (input.equals("F")) {
-                System.out.println("Lancement du modèle de feu");
-                effacerConsole();
-                //la ligne du s=dessus sera a remplacer par un truc du style:
                 Automate automateFeu = new Automate("Feu");
-                
-                //et les lignes suivantes seront faites directement dans la classe Automate
-                
-              
             }
             if (input.equals("C")) {
-                effacerConsole();
-                System.out.flush(); // Clear console
                 System.out.println("Lancement du modèle de conway");
             }
-            if(input.equals("custom"))
-            {
+            if (input.equals("custom")) {
                 System.out.println("Lancement du modèle custom");
-                Automate automateCustom = new Automate(2, 8, "custom", new LocalRule(new EtatCellule("FEU").getEtatChoisie(), 3, "FEU"));
-            }
-
-            else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT")
+                Automate automateCustom = new Automate(2, 8, "custom",
+                        new LocalRule(new EtatCellule("FEU").getEtatChoisie(), 3, "FEU"));
+            } else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT")
                     || input.equals("Quit")) {
                 System.out.println("Fermeture de l'interface");
             } else {

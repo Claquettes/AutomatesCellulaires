@@ -10,7 +10,7 @@ LocalRule1.afficher();
 
 public class LocalRule {
 
-    Map<String, String> listeClesValeurs ;
+    Map<String, String> listeClesValeurs;
 
     public static List<String> genererToutesLesCombinaisons(List<String> valeurs, int tailleCombinaison) {
         List<String> resultats = new ArrayList<>();
@@ -18,7 +18,8 @@ public class LocalRule {
         return resultats;
     }
 
-    private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle, List<String> resultats) {
+    private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle,
+            List<String> resultats) {
         String sep = ";";
         if (tailleCombinaison == 0) {
             // Ajouter la combinaison actuelle à la liste des résultats
@@ -36,69 +37,74 @@ public class LocalRule {
     }
 
     /**
-     * met des escpaces entre chaque char et avant et apres du string contenant un binaire
+     * met des escpaces entre chaque char et avant et apres du string contenant un
+     * binaire
+     * 
      * @param Binaire string contenant un nb en binaire
-     * @return Binaire avec des  String List contenant les configurations qui soivent être mises à 1
+     * @return Binaire avec des String List contenant les configurations qui soivent
+     *         être mises à 1
      **/
-    private static String BinToConf (String Binaire){
+    private static String BinToConf(String Binaire) {
         String AvecEspaces = " ";
-        for (int i = 0; i < Binaire.length() ; i++) {
+        for (int i = 0; i < Binaire.length(); i++) {
             AvecEspaces = AvecEspaces + Binaire.charAt(i) + " ";
         }
-        //System.out.print(" str bin " + Binaire + " result " + AvecEspaces);
+        // System.out.print(" str bin " + Binaire + " result " + AvecEspaces);
         return AvecEspaces;
     }
 
     /**
-     * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour les regles només par un nombre
+     * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour
+     * les regles només par un nombre
+     * 
      * @param regleBinaire string contenant un nb en binaire
-     * @return liste String List contenant les configurations qui soivent être mises à 1
+     * @return liste String List contenant les configurations qui soivent être mises
+     *         à 1
      **/
-    private static List<String> ConfigurationsDonnant1 (String regleBinaire ,int nbBits){
-        
+    private static List<String> ConfigurationsDonnant1(String regleBinaire, int nbBits) {
+
         List<String> resultatsA1 = new ArrayList<>();
         int facteur = 0;
-        for (int i = regleBinaire.length()-1; i >= 0 ; i--) {
+        for (int i = regleBinaire.length() - 1; i >= 0; i--) {
             // parcours du string de puis les bit de poids faible
             char charbitActuel = regleBinaire.charAt(i);
-            //System.out.print("char " + charbitActuel + " \n");
-            if(charbitActuel=='1'){
+            // System.out.print("char " + charbitActuel + " \n");
+            if (charbitActuel == '1') {
 
-                //on converti le facteur en configuration en binaire
-                //et on l'ajoute a la liste resultante
+                // on converti le facteur en configuration en binaire
+                // et on l'ajoute a la liste resultante
 
-                String factBin= Integer.toBinaryString(facteur);
-                while (factBin.length()<nbBits){
-                    factBin="0" + factBin;
+                String factBin = Integer.toBinaryString(facteur);
+                while (factBin.length() < nbBits) {
+                    factBin = "0" + factBin;
                 }
-                //System.out.print("facteur "+facteur + "  " +factBin+ " \n");
+                // System.out.print("facteur "+facteur + " " +factBin+ " \n");
                 String bin = BinToConf(factBin);
-                //System.out.print(bin + " \n");
+                // System.out.print(bin + " \n");
                 resultatsA1.add(bin);
 
             }
-            facteur = facteur +1;
+            facteur = facteur + 1;
         }
         return resultatsA1;
     }
 
+    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins, String NomRegle) {
 
-    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins,String NomRegle){ 
+        // etatsPossibles = ["FEU", "CENDRE", "VIDE", "ARBRE"] par exemple pour le feu
+        // ensuite ca créé locale rule pour le feu ou pour ce qu'on veux
 
-        //etatsPossibles = ["FEU", "CENDRE", "VIDE", "ARBRE"] par exemple pour le feu 
-        //ensuite ca créé locale rule pour le feu  ou pour ce qu'on veux 
-
-        if(NomRegle == "FEU") {
-            //System.out.println("Le Nom en string de la regle n'existe pas.");
-            //System.exit(0);
-            //}
+        if (NomRegle == "FEU") {
+            // System.out.println("Le Nom en string de la regle n'existe pas.");
+            // System.exit(0);
+            // }
             List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins);
             listeClesValeurs = new HashMap<>(); // on initialise la liste des clés valeurs
-            for (String combinaison : toutesLesCombinaisons) { 
-                String EtatPremiereCellule =  combinaison.split(";")[0];
-                //System.out.print(" etat cellule ref : " + EtatPremiereCellule +"\n");
+            for (String combinaison : toutesLesCombinaisons) {
+                String EtatPremiereCellule = combinaison.split(";")[0];
+                // System.out.print(" etat cellule ref : " + EtatPremiereCellule +"\n");
 
-                switch(EtatPremiereCellule) {
+                switch (EtatPremiereCellule) {
                     case "FEU":
                         listeClesValeurs.put(combinaison, "CENDRE");
                         break;
@@ -117,22 +123,22 @@ public class LocalRule {
                         }
                         break;
                     default:
-                        listeClesValeurs.put(combinaison,"eindef");
+                        listeClesValeurs.put(combinaison, "eindef");
                 }
 
             }
 
-        }
-        else{
-            int nbRegle=Integer.parseInt(NomRegle);
-            String regleEnBin = Integer.toBinaryString(nbRegle); 
-            //TESTER SI LE NOM DE BITS SONT COMPATIBLES AVEC LE NB DE VOISINS ET LA CELLULE ACTUELLE NB + 1
+        } else {
+            int nbRegle = Integer.parseInt(NomRegle);
+            String regleEnBin = Integer.toBinaryString(nbRegle);
+            // TESTER SI LE NOM DE BITS SONT COMPATIBLES AVEC LE NB DE VOISINS ET LA CELLULE
+            // ACTUELLE NB + 1
             System.out.print("regle en binaire : " + regleEnBin + '\n');
 
             List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins);
             listeClesValeurs = new HashMap<>();
-            List<String>  listeDesConfigurationsDonnann1 = ConfigurationsDonnant1(regleEnBin,nbDeVoisins);
-            //System.out.print(listeDesConfigurationsDonnann1);
+            List<String> listeDesConfigurationsDonnann1 = ConfigurationsDonnant1(regleEnBin, nbDeVoisins);
+            // System.out.print(listeDesConfigurationsDonnann1);
             for (String combinaison : toutesLesCombinaisons) {
                 boolean estContenue = listeDesConfigurationsDonnann1.contains(combinaison);
 
@@ -145,10 +151,9 @@ public class LocalRule {
         }
     }
 
-    public void afficher(){
+    public void afficher() {
         for (Map.Entry<String, String> entry : listeClesValeurs.entrySet()) {
             System.out.println("Clé : " + entry.getKey() + ", Valeur : " + entry.getValue());
         }
     }
 }
-
