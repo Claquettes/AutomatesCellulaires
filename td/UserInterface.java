@@ -12,25 +12,19 @@ public class UserInterface {
 
         Scanner scanner = new Scanner(System.in);
         String input;
-
         do {
             input = scanner.nextLine();
-
             if (input.equals("F")) {
-                System.out.println("Lancement du modèle de feu");
-                effacerConsole();
-                Grille grille = new Grille(2, 8, new EtatCellule("FEU"));
-                
-                System.out.println(grille);
-                System.out.println(grille.getCellules());
+                Automate automateFeu = new Automate("Feu");
             }
             if (input.equals("C")) {
-                effacerConsole();
-                System.out.flush(); // Clear console
                 System.out.println("Lancement du modèle de conway");
             }
-
-            else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT")
+            if (input.equals("custom")) {
+                System.out.println("Lancement du modèle custom");
+                Automate automateCustom = new Automate(2, 8, "custom",
+                        new LocalRule(new EtatCellule("FEU").getEtatChoisie(), 3, "FEU"));
+            } else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT")
                     || input.equals("Quit")) {
                 System.out.println("Fermeture de l'interface");
             } else {

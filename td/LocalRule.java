@@ -12,7 +12,7 @@ LocalRule1.afficher();
 
 public class LocalRule {
 
-    Map<String, String> listeClesValeurs ;
+    Map<String, String> listeClesValeurs;
 
     public static List<String> genererToutesLesCombinaisons(List<String> valeurs, int tailleCombinaison,String sep,String CombinaisonInit) {
         List<String> resultats = new ArrayList<>();
@@ -20,6 +20,7 @@ public class LocalRule {
         genererCombinaisons(valeurs, tailleCombinaison,CombinaisonInit, resultats,sep);
         return resultats;
     }
+
 
     private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle, List<String> resultats,String sep) {
         //String sep = ";";
@@ -39,10 +40,14 @@ public class LocalRule {
     }
 
     /**
-     * met des escpaces entre chaque char et avant et apres du string contenant un binaire
+     * met des escpaces entre chaque char et avant et apres du string contenant un
+     * binaire
+     * 
      * @param Binaire string contenant un nb en binaire
-     * @return Binaire avec des  String List contenant les configurations qui soivent être mises à 1
+     * @return Binaire avec des String List contenant les configurations qui soivent
+     *         être mises à 1
      **/
+
     private static String BinToConf (String Binaire){
         String AvecEspaces = "";
         for (int i = 0; i < Binaire.length() ; i++) {
@@ -53,26 +58,29 @@ public class LocalRule {
     }
 
     /**
-     * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour les regles només par un nombre
+     * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour
+     * les regles només par un nombre
+     * 
      * @param regleBinaire string contenant un nb en binaire
-     * @return liste String List contenant les configurations qui soivent être mises à 1
+     * @return liste String List contenant les configurations qui soivent être mises
+     *         à 1
      **/
-    private static List<String> ConfigurationsDonnant1 (String regleBinaire ,int nbBits){
-        
+    private static List<String> ConfigurationsDonnant1(String regleBinaire, int nbBits) {
+
         List<String> resultatsA1 = new ArrayList<>();
         int facteur = 0;
-        for (int i = regleBinaire.length()-1; i >= 0 ; i--) {
+        for (int i = regleBinaire.length() - 1; i >= 0; i--) {
             // parcours du string de puis les bit de poids faible
             char charbitActuel = regleBinaire.charAt(i);
-            //System.out.print("char " + charbitActuel + " \n");
-            if(charbitActuel=='1'){
+            // System.out.print("char " + charbitActuel + " \n");
+            if (charbitActuel == '1') {
 
-                //on converti le facteur en configuration en binaire
-                //et on l'ajoute a la liste resultante
+                // on converti le facteur en configuration en binaire
+                // et on l'ajoute a la liste resultante
 
-                String factBin= Integer.toBinaryString(facteur);
-                while (factBin.length()<nbBits){
-                    factBin="0" + factBin;
+                String factBin = Integer.toBinaryString(facteur);
+                while (factBin.length() < nbBits) {
+                    factBin = "0" + factBin;
                 }
 
                 String bin = BinToConf(factBin);
@@ -81,10 +89,11 @@ public class LocalRule {
                 resultatsA1.add(bin);
 
             }
-            facteur = facteur +1;
+            facteur = facteur + 1;
         }
         return resultatsA1;
     }
+
 
     /**
      * Cree le HashMap pour une regle locale de type FEU avec les parametres donnés
@@ -144,16 +153,17 @@ public class LocalRule {
         }
     }
 
+
     /**
      * Constructeur de LocalRule avec numero (int) de la Regle
      * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
      * @param nbDeVoisins int, nombre de voisins par cellule
-     * @param NumeroRegle String contenenant le nom de la Regle (pour le moment FEU)
+     * @param NumeroRegle int contenenant le numero de la Regle (pour le moment 0;1)
      * */
     LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins,int NumeroRegle){
         String sep=";";
 
-        //etatsPossibles = ["0","1"] par exemple pour le feu
+        //etatsPossibles = ["0","1"] 
         //ensuite ca créé locale rule pour le nombre qu'on a donné
 
         String regleEnBin = Integer.toBinaryString(NumeroRegle);
@@ -175,6 +185,7 @@ public class LocalRule {
                 regleEnBin = regleEnBin.substring(longueur-(int)nbBitsVoisins, longueur);
                 //System.out.print("nouvelle regle bin coupée est:"+regleEnBin);
             }
+
         }
 
         System.out.print("regle en binaire : " + regleEnBin + '\n');
@@ -190,11 +201,12 @@ public class LocalRule {
                 listeClesValeurs.put(combinaison, "1");
             } else {
                 listeClesValeurs.put(combinaison, "0");
+
             }
         }
     }
 
-    public void afficher(){
+    public void afficher() {
         for (Map.Entry<String, String> entry : listeClesValeurs.entrySet()) {
             System.out.println("Clé : " + entry.getKey() + ", Valeur : " + entry.getValue());
         }
@@ -222,4 +234,3 @@ public class LocalRule {
     }
 
 }
-

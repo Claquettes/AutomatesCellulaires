@@ -1,4 +1,5 @@
 package AutomatesCellulaires.td;
+
 import AutomatesCellulaires.td.EtatCellule;
 import AutomatesCellulaires.td.Cellule;
 
@@ -31,8 +32,6 @@ public class Main {
         if(!valStr.isEmpty()){
             System.out.print(valStr);
         }*/
-
-
 
 
     }
