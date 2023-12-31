@@ -3,7 +3,7 @@ import AutomatesCellulaires.td.LocalRule;
 
 public class Automate {
     public Grille grid;
-    Public LocalRule localRule;
+    public LocalRule localRule;
     // public LocalRule lr; a rajouter quand la classe LocalRule sera créée
 
     // constructeur en mode prédéfini,
