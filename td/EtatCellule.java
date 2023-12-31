@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class EtatCellule {
+    //etat "neutre" doit etre en premier
     private Map<String, ArrayList<String>> etats = Map.of(
             "1D", new ArrayList<>(Arrays.asList("0", "1")),
             "FEU", new ArrayList<>(Arrays.asList("VIDE", "ARBRE", "FEU", "CENDRE")),
