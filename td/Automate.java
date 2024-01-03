@@ -43,4 +43,39 @@ public class Automate {
         System.out.println("Création de l'automate " + name + " en mode custom");
         System.exit(0);
     }
+
+    /**
+     * Trouve l'etat suivant selon la configuration de l'etat de la cellule et de ces voisines
+     * @param Configuration String qui contient le "voisinage" (etat cellule ; etat cellules voisines)
+     * @retun String donnant l'etat suivant
+     * */
+    public String getEtatSuivantCellule(String Configuration){
+        String[] listeTemp = Configuration.split(";");
+        int nbReeldeCellules = listeTemp.length;
+        if(nbReeldeCellules-1 < this.nombreVoisins){
+            while(nbReeldeCellules-1 < this.nombreVoisins){
+                Configuration=Configuration+this.etatCellules.getEtatByIndex(0)+";";
+                listeTemp = Configuration.split(";");
+                nbReeldeCellules = listeTemp.length;
+            }
+        }
+
+        String etatSuivant= this.localRule.getEtatSuivant(Configuration);
+
+        return etatSuivant;
+    }
+
+    /**
+     * Calcule le nouveau etat de la grille selon l'etat actuel (avec localRule)
+     * a la fin la grille de l'objet sera mise a jour
+     */
+    public void miseAJour(){
+        //copie Grille gridCopie;
+        // recupere etat de la cellule et etat cellules voisines
+        // calcule l'etat suivant et le stoque dans la copie
+        // remplace this.grid par la copie et libere les stocage inutil
+
+    }
+
+
 }

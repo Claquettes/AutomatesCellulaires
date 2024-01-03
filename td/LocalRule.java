@@ -213,24 +213,12 @@ public class LocalRule {
     }
     /**
      * Trouve l'etat suivant selon la configuration de l'etat de la cellule et de ces voisines
-     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
-     * @param nbDeVoisins int, nombre de voisins par cellule (selon déclaration)
+     * @param Configuration String qui contient le "voisinage" (etat cellule ; etat cellules voisines)
      * @retun String donnant l'etat suivant
      * */
-    public String getEtatSuivant(String Configuration,EtatCellule etatsPossibles,int nbDeVoisins){
-        String[] listeTemp = Configuration.split(";");
-        int nbReeldeCellules = listeTemp.length;
-        if(nbReeldeCellules-1 < nbDeVoisins){
-            while(nbReeldeCellules-1 < nbDeVoisins){
-                Configuration=Configuration+etatsPossibles.getEtatByIndex(0)+";";
-                listeTemp = Configuration.split(";");
-                nbReeldeCellules = listeTemp.length;
-            }
-        }
+    public String getEtatSuivant(String Configuration){
 
-        String etatSuivant= listeClesValeurs.get(Configuration);
-
-        return etatSuivant;
+        return listeClesValeurs.get(Configuration);
     }
 
 }
