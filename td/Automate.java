@@ -11,8 +11,11 @@ public class Automate {
     //etats possibles des cellules = Q, un ensemble fini, est son alphabet
     public EtatCellule etatCellules;
 
+    private Grille gridCopy; //qui va contenier la grille à l'état N pour pouvoir calculer l'etat  N+1
+
 
     // constructeur en mode prédéfini,
+    // NE PAS OUBLIER DE INITIALISER GRIDCOPY  !!!!!
     public Automate(String name) {
         if (name.toUpperCase().equals("FEU")) {
             //predefini avec 4 voisins
@@ -22,9 +25,13 @@ public class Automate {
             this.localRule = new LocalRule(etatFeu.getEtatChoisie(),this.nombreVoisins,"FEU");
             // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
-            Grille grille = new Grille(2, 8, etatFeu);
-            System.out.println(grille);
-            System.out.println(grille.getCellules());
+            //Grille grille = new Grille(2, 8, etatFeu);
+            this.grid = new Grille(2, 8, etatFeu);
+            this.gridCopy = new Grille(grid);
+
+            System.out.println(grid);
+            System.out.print(gridCopy);
+            System.out.println(grid.getCellules());
             //we quit the program
             System.exit(0);
         }
@@ -71,6 +78,9 @@ public class Automate {
      */
     public void miseAJour(){
         //copie Grille gridCopie;
+        this.gridCopy.copieEtatCellules(this.grid);
+        //Selon de nombre de voisins
+
         // recupere etat de la cellule et etat cellules voisines
         // calcule l'etat suivant et le stoque dans la copie
         // remplace this.grid par la copie et libere les stocage inutil

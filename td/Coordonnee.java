@@ -28,4 +28,14 @@ public class Coordonnee {
         coordonneesString += "]";
         return coordonneesString;
     }
+
+    /**
+     * constructeur avec une coordonnée comme parametre
+     * @param CoordonneeOj Coordonnee
+     */
+    public Coordonnee(Coordonnee CoordonneeOj) {
+        this.dimension = CoordonneeOj.getDimension();
+        this.coordonnees = CoordonneeOj.getCoordonnees();
+    }
+
 }

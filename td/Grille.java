@@ -74,4 +74,39 @@ public class Grille {
         this.cellules[coordonneeX * this.dimension + coordonneeY].setEtat(valeur);
     }
 
+    /**
+     * Constructeur a partir de une autre grille
+    * @param Oj une grille deja initialiser
+    * */
+    public Grille(Grille Oj) {
+        this.etat = Oj.etat;
+        this.dimension = Oj.getDimension();
+        this.nombreCellules = Oj.nombreCellules;
+
+        this.cellules  = new Cellule[this.nombreCellules];
+        Coordonnee coordonnee;
+        String etat;
+        this.cellules =  Oj.cellules;
+
+        for (int i = 0; i < this.nombreCellules; i++) {
+            coordonnee= new Coordonnee(Oj.cellules[i].getCoordonnee());
+            etat = new String(Oj.cellules[i].getEtat());
+            this.cellules[i] = new Cellule(coordonnee, etat);
+        }
+
+    }
+
+    /**
+     * Copie le contenue de la table cellules qui est en parametres
+     * @param Oj une grille deja initialiser
+     * */
+    public void copieEtatCellules(Grille Oj){
+        String etat;
+        for (int i = 0; i < this.nombreCellules; i++) {
+            etat = new String(Oj.cellules[i].getEtat());
+            this.cellules[i].setEtat(etat);
+        }
+    }
+
+
 }
