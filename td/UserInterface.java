@@ -20,6 +20,14 @@ public class UserInterface {
             if (input.equals("C")) {
                 System.out.println("Lancement du modèle de conway");
             }
+            if  (input.equals("1D")) {
+                System.out.println("Lancement du modèle 1D");
+                System.out.println("Quel est le numéro de la règle que vous voulez utiliser ?");
+                Scanner scanner1DRuleNumber = new Scanner(System.in);
+                Automate automate1D = new Automate("1D", scanner1DRuleNumber.nextInt());
+
+                
+            }
             if (input.equals("custom")) {
                 System.out.println("Lancement du modèle custom");
                 Automate automateCustom = new Automate(2, 8, "custom",

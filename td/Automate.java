@@ -38,10 +38,40 @@ public class Automate {
         if (name.equals("CONWAY")) {
             // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
-        } else {
+        }  
+        else {
             System.out.println("Erreur : nom d'automate inconnu...");
         }
     }
+
+    // constructeur en mode 1D, donc semi-custom vu qu'on passe le numero de la regle
+    public Automate(String name, Integer ruleNumber){
+        if (name.toUpperCase().equals("1D")) {
+            //predefini avec 4 voisins
+            this.nombreVoisins = 1;
+            EtatCellule etat1D = new EtatCellule("1D");
+            this.etatCellules = etat1D;
+            this.localRule = new LocalRule(etat1D.getEtatChoisie(),this.nombreVoisins,ruleNumber);
+            // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
+            System.out.println("Création de l'automate " + name + " en mode prédéfini");
+            //Grille grille = new Grille(2, 8, etatFeu);
+            this.grid = new Grille(1, 8, etat1D);
+            this.gridCopy = new Grille(grid);
+
+            System.out.println(grid);
+            System.out.print(gridCopy);
+            System.out.println(grid.getCellules());
+            //we quit the program
+            System.exit(0);
+        }
+        else {
+            System.out.println("Erreur : nom d'automate inconnu...");
+        }
+    }
+
+
+
+
 
     // constructeur en mode custom,
     public Automate(int dimension, int nombreCellules, String name, LocalRule LR) {
