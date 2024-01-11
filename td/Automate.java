@@ -72,6 +72,94 @@ public class Automate {
         return etatSuivant;
     }
 
+
+    /*
+     * 
+     * 
+     */
+    private String getConfigVoisin(int x, int y){
+
+        String configVoisin = "";
+
+        switch (this.nombreVoisins) {
+            case 1:
+                
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) ;
+                return configVoisin;
+                
+            case 2:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) ;
+                return configVoisin;
+
+            case 3:
+                
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) + ";" 
+                + this.gridCopy.getValeurCellule(x+1, y) ;
+                return configVoisin;
+
+            case 4:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) + ";" 
+                + this.gridCopy.getValeurCellule(x+1, y) + ";" 
+                + this.gridCopy.getValeurCellule(x-1, y) ;
+                return configVoisin;
+
+            case 5:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) ;
+                return configVoisin;
+
+            case 6: 
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) ;
+                return configVoisin;
+
+            case 7:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y-1) ;
+                return configVoisin;
+
+            case 8:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y+1) ;
+                return configVoisin;
+            
+            default:
+
+                configVoisin = "NONE";
+                return configVoisin;
+
+            
+        }
+
+    }
+
     /**
      * Calcule le nouveau etat de la grille selon l'etat actuel (avec localRule)
      * a la fin la grille de l'objet sera mise a jour
@@ -80,6 +168,31 @@ public class Automate {
         //copie Grille gridCopie;
         this.gridCopy.copieEtatCellules(this.grid);
         //Selon de nombre de voisins
+        
+        int dimension = this.gridCopy.getDimension();
+
+        if (dimension == 1){
+            // traitement 1D
+
+            for(int i=0; i<this.gridCopy.getCellules.length; i++){
+                // pour parcouir la grille ( dimension 1)
+
+                for( int j = 0; j < this.gridCopy.getCellules()[i].length; j++){
+                    // pour parcourir les cellules ( dimension 2)
+
+                    // recupere etat de la cellule et etat cellules voisines
+                    String etatCellule = this.gridCopy.getCellules()[i][j].getEtat();
+                    String etatVoisines = "";
+
+                }
+
+            }
+
+        }
+        else if (dimension == 2) {
+            // traitement 2D
+
+        }
 
         // recupere etat de la cellule et etat cellules voisines
         // calcule l'etat suivant et le stoque dans la copie
