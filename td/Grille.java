@@ -6,6 +6,7 @@ import AutomatesCellulaires.td.Coordonnee;
 
 public class Grille {
     private EtatCellule etat;
+
     private int dimension;
     private int nombreCellules;
     private Cellule[] cellules; // ON UTILISERA % POUR PASSER D'UNE DIMENSION A L'AUTRE
@@ -22,14 +23,16 @@ public class Grille {
 
         this.cellules = new Cellule[nombreCellules];
         for (int i = 0; i < nombreCellules; i++) {
-            int coordonnees[] = new int[dimension];
-            coordonnees[0] = i / dimension;
+           // int coordonnees[] = new int[dimension];
+            /*coordonnees[0] = i / dimension;
             for (int j = 1; j < dimension; j++) {
                 coordonnees[j] = i % dimension;
             }
 
-            this.cellules[i] = new Cellule(new Coordonnee(coordonnees),
-                    etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
+             */
+
+            this.cellules[i] = new Cellule( etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
+            //new Coordonnee(coordonnees),
         }
     }
 
@@ -44,7 +47,7 @@ public class Grille {
     public String toString() {
         String grilleString = "---------------------------------------\n";
         for (int i = 0; i < this.nombreCellules; i++) {
-            grilleString += this.cellules[i].getEtat() + " (" + this.cellules[i].getCoordonnee() + ")";
+            grilleString += this.cellules[i].getEtat() ;//" (" + this.cellules[i].getCoordonnee() + ")"
             if (i % this.dimension == this.dimension - 1) {
                 grilleString += "\n---------------------------------------\n";
             } else {
@@ -84,14 +87,14 @@ public class Grille {
         this.nombreCellules = Oj.nombreCellules;
 
         this.cellules  = new Cellule[this.nombreCellules];
-        Coordonnee coordonnee;
+        //Coordonnee coordonnee;
         String etat;
         this.cellules =  Oj.cellules;
 
         for (int i = 0; i < this.nombreCellules; i++) {
-            coordonnee= new Coordonnee(Oj.cellules[i].getCoordonnee());
+           // coordonnee= new Coordonnee(Oj.cellules[i].getCoordonnee());
             etat = new String(Oj.cellules[i].getEtat());
-            this.cellules[i] = new Cellule(coordonnee, etat);
+            this.cellules[i] = new Cellule(etat);
         }
 
     }
