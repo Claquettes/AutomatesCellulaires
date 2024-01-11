@@ -22,6 +22,6 @@ public class Cellule {
     }
 
     public String toString() {
-        return "CELLULE : \n"+ this.coordonnee + " : " + this.etat + "\n";
+        return "CELLULE : \n" + this.coordonnee + " : " + this.etat + "\n";
     }
 }

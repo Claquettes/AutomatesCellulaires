@@ -18,7 +18,7 @@ public class Coordonnee {
     }
 
     public String toString() {
-        String coordonneesString ="[";
+        String coordonneesString = "[";
         for (int i = 0; i < this.dimension; i++) {
             coordonneesString += this.coordonnees[i];
             if (i < this.dimension - 1) {
@@ -28,4 +28,14 @@ public class Coordonnee {
         coordonneesString += "]";
         return coordonneesString;
     }
+
+    /**
+     * constructeur avec une coordonnée comme parametre
+     * @param CoordonneeOj Coordonnee
+     */
+    public Coordonnee(Coordonnee CoordonneeOj) {
+        this.dimension = CoordonneeOj.getDimension();
+        this.coordonnees = CoordonneeOj.getCoordonnees();
+    }
+
 }
