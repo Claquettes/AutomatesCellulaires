@@ -49,9 +49,9 @@ public class Automate {
         }
     }
 
-    // constructeur en mode 1D, donc semi-custom vu qu'on passe le numero de la
+    // constructeur en mode 1D, donc custom vu qu'on passe le numero de la
     // regle
-    public Automate(String name, Integer ruleNumber) {
+    public Automate(String name, Integer nbVoisins, Integer ruleNumber) {
         askForGridSize();
         if (name.toUpperCase().equals("1D")) {
             // predefini avec 4 voisins
@@ -62,7 +62,7 @@ public class Automate {
             // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
             // Grille grille = new Grille(2, 8, etatFeu);
-            this.grid = new Grille(1, 8, etat1D);
+            this.grid = new Grille(1, this.nbCol, etat1D);
             this.gridCopy = new Grille(grid);
 
             System.out.println(grid);
@@ -73,16 +73,6 @@ public class Automate {
         } else {
             System.out.println("Erreur : nom d'automate inconnu...");
         }
-    }
-
-    // constructeur en mode custom,
-    public Automate(String etatsPossibles, Integer nombreVoisins, Integer ruleNumber) {
-        // this.grid = new Grille(dimension, nombreCellules, new EtatCellule(name));
-        // this.lr = LR; a rajouter quand la classe LocalRule sera créée
-        askForGridSize();
-        this.nombreVoisins = nombreVoisins;
-        EtatCellule etatCustom = new EtatCellule(etatsPossibles);
-        this.etatCellules = etatCustom;
     }
 
     /**
