@@ -73,9 +73,11 @@ public class Automate {
     }
 
 
-    /*
+    /**
+     * Trouve la configuration des voisins de la cellule
      * 
-     * 
+     * @param x coordonnee x de la cellule
+     * @ruturn String qui contient la configuration des voisins
      */
     private String getConfigVoisin(int x, int y){
 
@@ -86,7 +88,7 @@ public class Automate {
                 
                 configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) ;
                 return configVoisin;
-                
+
             case 2:
 
                 configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
@@ -167,36 +169,25 @@ public class Automate {
     public void miseAJour(){
         //copie Grille gridCopie;
         this.gridCopy.copieEtatCellules(this.grid);
-        //Selon de nombre de voisins
         
-        int dimension = this.gridCopy.getDimension();
+        
+        // pour parcouir la grille 
+        for(int i=0; i<this.gridCopy.line; i++){
 
-        if (dimension == 1){
-            // traitement 1D
+            for( int j = 0; j < this.gridCopy.col; j++){
 
-            for(int i=0; i<this.gridCopy.getCellules.length; i++){
-                // pour parcouir la grille ( dimension 1)
+                // recupere etat de la cellule et etat cellules voisines
+                String etatCellule = this.gridCopy.getValeurCellule(i, j);
+                String etatVoisines = getConfigVoisin(i,j);
 
-                for( int j = 0; j < this.gridCopy.getCellules()[i].length; j++){
-                    // pour parcourir les cellules ( dimension 2)
+                // calcule l'etat suivant et le stoque dans la copie
+                String etatSuivant = getEtatSuivantCellule(etatVoisines);
 
-                    // recupere etat de la cellule et etat cellules voisines
-                    String etatCellule = this.gridCopy.getCellules()[i][j].getEtat();
-                    String etatVoisines = "";
-
-                }
+                this.grid.setValeurCellule(i, j, etatSuivant);
 
             }
 
         }
-        else if (dimension == 2) {
-            // traitement 2D
-
-        }
-
-        // recupere etat de la cellule et etat cellules voisines
-        // calcule l'etat suivant et le stoque dans la copie
-        // remplace this.grid par la copie et libere les stocage inutil
 
     }
 
