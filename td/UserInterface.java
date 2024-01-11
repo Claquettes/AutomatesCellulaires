@@ -25,13 +25,34 @@ public class UserInterface {
                 System.out.println("Quel est le numéro de la règle que vous voulez utiliser ?");
                 Scanner scanner1DRuleNumber = new Scanner(System.in);
                 Automate automate1D = new Automate("1D", scanner1DRuleNumber.nextInt());
-
-                
             }
             if (input.equals("custom")) {
-                System.out.println("Lancement du modèle custom");
-                Automate automateCustom = new Automate(2, 8, "custom",
-                        new LocalRule(new EtatCellule("FEU").getEtatChoisie(), 3, "FEU"));
+                //on récupère les paramètres nécessaires a la création de la local rule custome
+                System.out.println("Donnez l'ensemble des états possibles des cellules, séparés par des virgules");
+                System.out.println("Et avec l'état NEUTRE en premier");
+                System.out.println("Exemple : VIDE,ARBRE,FEU,CENDRE");
+                Scanner scannerCustomEtatsPossibles = new Scanner(System.in);
+                String etatsPossibles = scannerCustomEtatsPossibles.nextLine();
+                System.out.println("Donnez le nombre de voisins par cellule");
+                Scanner scannerCustomNombreVoisins = new Scanner(System.in);
+                int nombreVoisins = scannerCustomNombreVoisins.nextInt();
+                System.out.println("Donnez le numéro de la règle que vous voulez utiliser");
+                Scanner scannerCustomRuleNumber = new Scanner(System.in);
+                int ruleNumber = scannerCustomRuleNumber.nextInt();
+                //
+                Automate automateCustom = new Automate(etatsPossibles, nombreVoisins, ruleNumber);
+                
+
+
+
+
+
+                
+
+
+
+
+                       
             } else if (input.equals("q") || input.equals("Q") || input.equals("quit") || input.equals("QUIT")
                     || input.equals("Quit")) {
                 System.out.println("Fermeture de l'interface");
