@@ -1,16 +1,15 @@
 package AutomatesCellulaires.td;
 
 public class Cellule {
-    private Coordonnee coordonnee;
     private String etat;
 
-    public Cellule(Coordonnee coordonnee, String etat) {
-        this.coordonnee = coordonnee;
-        this.etat = etat;
-    }
+    public Integer x;
+    public Integer y;
 
-    public Coordonnee getCoordonnee() {
-        return this.coordonnee;
+    public Cellule(int x, int y, String etat) {
+        this.x = x;
+        this.y = y;
+        this.etat = etat;
     }
 
     public String getEtat() {
@@ -22,6 +21,6 @@ public class Cellule {
     }
 
     public String toString() {
-        return "CELLULE : \n" + this.coordonnee + " : " + this.etat + "\n";
+        return "CELLULE : \n" + this.x + this.y + "\n" + this.getEtat() + "\n";
     }
 }
