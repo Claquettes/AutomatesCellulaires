@@ -46,7 +46,7 @@ public class Grille {
         for (int i = 0; i < nbLine ; i++) {
             for (int j = 0; j < nbCol; j++) {
                 grilleString +=this.cellules[i][j].getEtat();
-                grilleString += " | ";
+                grilleString += "\t"+" | ";
             }
             grilleString += "\n";
         }
@@ -62,6 +62,10 @@ public class Grille {
      */
 
     public String getValeurCellule(int coordonneeX, int coordonneeY) {
+
+        if(coordonneeX<0 || coordonneeX>=nbLine || coordonneeY<0 || coordonneeY>=nbCol ){
+            return etat.getEtatByIndex(0);
+        }
         return this.cellules[coordonneeX][coordonneeY].getEtat();
     }
 
