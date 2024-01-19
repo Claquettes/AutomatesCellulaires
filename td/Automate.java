@@ -172,9 +172,9 @@ public class Automate {
         
         
         // pour parcouir la grille 
-        for(int i=0; i<this.gridCopy.line; i++){
+        for(int i=0; i<this.gridCopy.nbLine; i++){
 
-            for( int j = 0; j < this.gridCopy.col; j++){
+            for( int j = 0; j < this.gridCopy.nbCol; j++){
 
                 // recupere etat de la cellule et etat cellules voisines
                 String etatCellule = this.gridCopy.getValeurCellule(i, j);
