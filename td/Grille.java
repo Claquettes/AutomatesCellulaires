@@ -9,19 +9,19 @@ public class Grille {
 
     //private int dimension;
     //private int nombreCellules;
-    public int col; //nombre de colones
-    public int line; //nombre de lignes
+    public int nbCol; //nombre de nbColones
+    public int nbLine; //nombre de lignes
     private Cellule[][] cellules; // ON UTILISERA % POUR PASSER D'UNE DIMENSION A L'AUTRE
 
-    public Grille(int dimension, int colones, int lignes, EtatCellule etat) {
+    public Grille(int dimension, int nbColones, int lignes, EtatCellule etat) {
         //this.dimension = dimension;
-        this.col=colones;
-        this.line=lignes;
-        if(colones <1 ){
-            this.col=1;
+        this.nbCol=nbColones;
+        this.nbLine =lignes;
+        if(nbColones <1 ){
+            this.nbCol=1;
         }
         if(lignes<1){
-            this.line=1;
+            this.nbLine=1;
         }
 
         //this.nombreCellules = nombreCellules;
@@ -32,9 +32,9 @@ public class Grille {
             System.exit(0);
         }*/
 
-        this.cellules = new Cellule[line][col];
-        for (int i = 0; i < line; i++) {
-            for (int j = 0; j < col; j++) {
+        this.cellules = new Cellule[nbLine][nbCol];
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule( etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
             }
         }
@@ -43,8 +43,8 @@ public class Grille {
 
     public String toString() {
         String grilleString = "---------------------------------------\n";
-        for (int i = 0; i < line; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < nbLine ; i++) {
+            for (int j = 0; j < nbCol; j++) {
                 grilleString +=this.cellules[i][j].getEtat();
                 grilleString += " | ";
             }
@@ -81,16 +81,16 @@ public class Grille {
     * */
     public Grille(Grille Oj) {
         this.etat = Oj.etat;
-        this.line = Oj.line;
-        this.col = Oj.col;
+        this.nbLine  = Oj.nbLine ;
+        this.nbCol = Oj.nbCol;
         //this.dimension = Oj.getDimension();
         //this.nombreCellules = Oj.nombreCellules;
 
-        this.cellules  = new Cellule[line][col];
+        this.cellules  = new Cellule[nbLine][nbCol];
         //Coordonnee coordonnee;
         String etat;
-        for (int i = 0; i < line; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule( Oj.getValeurCellule(i,j));
             }
         }
@@ -102,8 +102,8 @@ public class Grille {
      * @param Oj une grille deja initialiser
      * */
     public void copieEtatCellules(Grille Oj){
-        for (int i = 0; i < line; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j].setEtat(Oj.getValeurCellule(i,j));
             }
         }
