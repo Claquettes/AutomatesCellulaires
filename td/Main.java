@@ -22,8 +22,8 @@ public class Main {
         System.out.print("\n");
         LocalRule2.afficher();
 
-        System.out.print("etat: 1;0;"+ " etat suivant "+LocalRule2.getEtatSuivant("1;0;",etat0et1,nbDeVoisins));
-        /*String valStr= LocalRule2.listeClesValeurs.get(" 0 0 0 ");
+        System.out.print("etat: 1;0;"+ " etat suivant "+LocalRule2.getEtatSuivant("1;0;"));
+        String valStr= LocalRule2.listeClesValeurs.get(" 0 0 0 ");
         String t =" 0 0 0 ";
         t ="0;0;0;;;";
         String[] a = t.split(";");

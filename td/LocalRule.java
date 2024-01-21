@@ -135,6 +135,35 @@ public class LocalRule {
 
     }
 
+    private static Map<String, String> CreationRegleVIE(ArrayList<String> etatsPossibles, int nbDeVoisins){
+        nbDeVoisins = 8;
+        String v="1";
+        String m="0";
+        int nbVivants;
+        List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins+1,";","");
+        Map<String, String> resCleValeurs = new HashMap<>(); // on initialise la liste des clés valeurs
+        for (String combinaison : toutesLesCombinaisons) {
+            String EtatPremiereCellule =  combinaison.split(";")[0];
+            String[] voisinage = combinaison.split(";");
+            nbVivants = 0;
+
+            for ( int i=1 ; i< nbDeVoisins+1 ; i++ ) {
+                if (voisinage[i].equals(v)) {
+                    nbVivants++;
+                }
+            }
+
+            if( nbVivants == 3 ){
+                resCleValeurs.put(combinaison, etatsPossibles.get(1)); //vivant
+            }else{
+                resCleValeurs.put(combinaison, etatsPossibles.get(0));
+            }
+
+            //System.out.print(" etat cellule ref : " + EtatPremiereCellule +"\n");
+        }
+        return resCleValeurs;
+    }
+
 
 
     /**
@@ -150,6 +179,9 @@ public class LocalRule {
 
         if(NomRegle == "FEU") {
             listeClesValeurs = CreationRegleFEU(etatsPossibles,nbDeVoisins);
+        }
+        if(NomRegle == "VIE"){
+            listeClesValeurs =CreationRegleVIE(etatsPossibles,3);
         }
     }
 

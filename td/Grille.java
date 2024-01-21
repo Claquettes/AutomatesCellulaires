@@ -6,51 +6,52 @@ import AutomatesCellulaires.td.Coordonnee;
 
 public class Grille {
     private EtatCellule etat;
-    private int dimension;
-    private int nombreCellules;
-    private Cellule[] cellules; // ON UTILISERA % POUR PASSER D'UNE DIMENSION A L'AUTRE
 
-    public Grille(int dimension, int nombreCellules, EtatCellule etat) {
-        this.dimension = dimension;
-        this.nombreCellules = nombreCellules;
+    //private int dimension;
+    //private int nombreCellules;
+    public int nbCol; //nombre de nbColones
+    public int nbLine; //nombre de lignes
+    private Cellule[][] cellules; // ON UTILISERA % POUR PASSER D'UNE DIMENSION A L'AUTRE
+
+    public Grille(int dimension, int nbColones, int lignes, EtatCellule etat) {
+        //this.dimension = dimension;
+        this.nbCol=nbColones;
+        this.nbLine =lignes;
+        if(nbColones <1 ){
+            this.nbCol=1;
+        }
+        if(lignes<1){
+            this.nbLine=1;
+        }
+
+        //this.nombreCellules = nombreCellules;
         this.etat = etat;
 
-        if (nombreCellules % dimension != 0) {
+       /* if (nombreCellules % dimension != 0) {
             System.out.println("Le nombre de cellules n'est pas un multiple de la dimension.");
             System.exit(0);
-        }
+        }*/
 
-        this.cellules = new Cellule[nombreCellules];
-        for (int i = 0; i < nombreCellules; i++) {
-            int coordonnees[] = new int[dimension];
-            coordonnees[0] = i / dimension;
-            for (int j = 1; j < dimension; j++) {
-                coordonnees[j] = i % dimension;
+        this.cellules = new Cellule[nbLine][nbCol];
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
+                this.cellules[i][j] = new Cellule( etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
             }
-
-            this.cellules[i] = new Cellule(new Coordonnee(coordonnees),
-                    etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
         }
     }
 
-    public int getDimension() {
-        return this.dimension;
-    }
-
-    public Cellule[] getCellules() {
-        return this.cellules;
-    }
 
     public String toString() {
         String grilleString = "---------------------------------------\n";
-        for (int i = 0; i < this.nombreCellules; i++) {
-            grilleString += this.cellules[i].getEtat() + " (" + this.cellules[i].getCoordonnee() + ")";
-            if (i % this.dimension == this.dimension - 1) {
-                grilleString += "\n---------------------------------------\n";
-            } else {
-                grilleString += " | ";
+        for (int i = 0; i < nbLine ; i++) {
+            for (int j = 0; j < nbCol; j++) {
+                grilleString +=this.cellules[i][j].getEtat();
+                grilleString += "\t"+" | ";
             }
+            grilleString += "\n";
         }
+        grilleString += "\n---------------------------------------\n";
+
         return grilleString;
     }
 
@@ -61,7 +62,11 @@ public class Grille {
      */
 
     public String getValeurCellule(int coordonneeX, int coordonneeY) {
-        return this.cellules[coordonneeX * this.dimension + coordonneeY].getEtat();
+
+        if(coordonneeX<0 || coordonneeX>=nbLine || coordonneeY<0 || coordonneeY>=nbCol ){
+            return etat.getEtatByIndex(0);
+        }
+        return this.cellules[coordonneeX][coordonneeY].getEtat();
     }
 
     /**
@@ -71,7 +76,7 @@ public class Grille {
      */
 
     public void setValeurCellule(int coordonneeX, int coordonneeY, String valeur) {
-        this.cellules[coordonneeX * this.dimension + coordonneeY].setEtat(valeur);
+        this.cellules[coordonneeX][coordonneeY].setEtat(valeur);
     }
 
     /**
@@ -80,18 +85,18 @@ public class Grille {
     * */
     public Grille(Grille Oj) {
         this.etat = Oj.etat;
-        this.dimension = Oj.getDimension();
-        this.nombreCellules = Oj.nombreCellules;
+        this.nbLine  = Oj.nbLine ;
+        this.nbCol = Oj.nbCol;
+        //this.dimension = Oj.getDimension();
+        //this.nombreCellules = Oj.nombreCellules;
 
-        this.cellules  = new Cellule[this.nombreCellules];
-        Coordonnee coordonnee;
+        this.cellules  = new Cellule[nbLine][nbCol];
+        //Coordonnee coordonnee;
         String etat;
-        this.cellules =  Oj.cellules;
-
-        for (int i = 0; i < this.nombreCellules; i++) {
-            coordonnee= new Coordonnee(Oj.cellules[i].getCoordonnee());
-            etat = new String(Oj.cellules[i].getEtat());
-            this.cellules[i] = new Cellule(coordonnee, etat);
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
+                this.cellules[i][j] = new Cellule( Oj.getValeurCellule(i,j));
+            }
         }
 
     }
@@ -101,10 +106,10 @@ public class Grille {
      * @param Oj une grille deja initialiser
      * */
     public void copieEtatCellules(Grille Oj){
-        String etat;
-        for (int i = 0; i < this.nombreCellules; i++) {
-            etat = new String(Oj.cellules[i].getEtat());
-            this.cellules[i].setEtat(etat);
+        for (int i = 0; i < nbLine; i++) {
+            for (int j = 0; j < nbCol; j++) {
+                this.cellules[i][j].setEtat(Oj.getValeurCellule(i,j));
+            }
         }
     }
 
