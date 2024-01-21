@@ -10,7 +10,9 @@ public class UserInterface {
         System.out.println("Interface créée");
         System.out.println("Appuyez sur F pour lancer le modèle de feu");
         System.out.println("Appuyez sur C pour lancer le modèle de conway");
+        System.out.println("Appuyez sur 1D pour lancer le modèle 1D");
         System.out.println("Appuyez sur Q pour quitter");
+
 
         Scanner scanner = new Scanner(System.in);
         String input;
