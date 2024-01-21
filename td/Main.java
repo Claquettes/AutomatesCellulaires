@@ -4,34 +4,31 @@ import AutomatesCellulaires.td.EtatCellule;
 import AutomatesCellulaires.td.Cellule;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
 
-        /*EtatCellule etat1 = new EtatCellule("FEU");
-        System.out.print(etat1.getEtatChoisie());
-        int nbDeVoisins = 2;
-        LocalRule LocalRule1 = new LocalRule(etat1.getEtatChoisie(), nbDeVoisins,"FEU");
-        LocalRule1.afficher();
+        EtatCellule etat0et1 = new EtatCellule("FEU");
+        LocalRule LocalRuleVie = new LocalRule(etat0et1.getEtatChoisie(), 4,"FEU");
+        LocalRule testMajorite  =  new LocalRule(etat0et1.getEtatChoisie(),2,"MAJORITE");
+        //test.afficher();
 
-        EtatCellule etat0et1 = new EtatCellule("1D");
-        //170
-        LocalRule LocalRule2 = new LocalRule(etat0et1.getEtatChoisie(), nbDeVoisins,170);
+        /*Automate automTest = new Automate(LocalRuleVie,4,etat0et1,6,6);
+        for (int i = 0; i < 10; i++) {
+            automTest.miseAJour();
+            System.out.println(automTest.grid);
+            int millis = 5000;
 
-        System.out.print("\n");
-        LocalRule2.afficher();
+            try {
+                Thread.sleep(millis);
+            } catch (InterruptedException ie) {
+                // ...
+            }
+        }
+         */
 
-        System.out.print("etat: 1;0;"+ " etat suivant "+LocalRule2.getEtatSuivant("1;0;"));
-        String valStr= LocalRule2.listeClesValeurs.get(" 0 0 0 ");
-        String t =" 0 0 0 ";
-        t ="0;0;0;;;";
-        String[] a = t.split(";");
-        System.out.print(a.length);
-        System.out.print(" array ");//+valStr.isEmpty()+" empty \n");
-        if(!valStr.isEmpty()){
-            System.out.print(valStr);
-        }*/
 
 
     }

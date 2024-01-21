@@ -14,6 +14,14 @@ public class LocalRule {
 
     Map<String, String> listeClesValeurs;
 
+    /**
+     * Cree les differents combinaisons de tailleCombinaison longueur avec les elements contenus dans la lsite valeurs
+     * @param valeurs List String qui contient les string à combiner
+     * @param tailleCombinaison int longueur des combinaisons desirées
+     * @param sep String separateur des elements dans les combinaisons
+     * @param CombinaisonInit String qui contient comment on commence la combinaison
+     * @return resultats List String avec les combinaisons de tailleCombianison elements separés avec sep
+     * */
     public static List<String> genererToutesLesCombinaisons(List<String> valeurs, int tailleCombinaison,String sep,String CombinaisonInit) {
         List<String> resultats = new ArrayList<>();
         //CombinaisonInit=" "FEU et ""pour 1D
@@ -21,7 +29,15 @@ public class LocalRule {
         return resultats;
     }
 
-
+    /**
+     * Cree les combinaisons de tailleCombinaison longueur avec les elements contenus dans la lsite valeurs
+     * resultat en parametre/resultat nomé resultats
+     * @param valeurs List String qui contient les string à combiner
+     * @param tailleCombinaison int longueur des combinaisons desirées
+     * @param combinaisonActuelle contient la combinaison en construction
+     * @param resultats accummulateur de type List String contenant les dif combinaisons
+     * @param sep String separateur des elements dans les combinaisons
+     * */
     private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle, List<String> resultats,String sep) {
         //String sep = ";";
         if (tailleCombinaison == 0) {
@@ -40,28 +56,26 @@ public class LocalRule {
     }
 
     /**
-     * met des escpaces entre chaque char et avant et apres du string contenant un
-     * binaire
-     * 
+     * met des points virgule apres chaque char  du string contenant un nb en binaire
      * @param Binaire string contenant un nb en binaire
-     * @return Binaire avec des String List contenant les configurations qui soivent
+     * @return Binaire avec des String List contenant les configurations qui doivent
      *         être mises à 1
      **/
 
     private static String BinToConf (String Binaire){
-        String AvecEspaces = "";
+        String AvecPointVirgule = "";
         for (int i = 0; i < Binaire.length() ; i++) {
-            AvecEspaces = AvecEspaces + Binaire.charAt(i) + ";";
+           AvecPointVirgule =AvecPointVirgule + Binaire.charAt(i) + ";";
         }
-        //System.out.print(" str bin ." + Binaire + ". result ." + AvecEspaces);
-        return AvecEspaces;
+        //System.out.print(" str bin ." + Binaire + ". result ." +AvecPointVirgule);
+        return AvecPointVirgule;
     }
 
     /**
      * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour
      * les regles només par un nombre
-     * 
      * @param regleBinaire string contenant un nb en binaire
+     * @param nbBits nb de caracteres pour la regle binaire
      * @return liste String List contenant les configurations qui soivent être mises
      *         à 1
      **/
@@ -135,6 +149,12 @@ public class LocalRule {
 
     }
 
+    /**
+     * Cree le HashMap pour une regle locale de type VIE (jeu de la vie) avec les parametres donnés
+     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
+     * @param nbDeVoisins int, nombre de voisins par cellule (ici il doit toujours etre de 8 !!!!
+     * @return resCleValeurs
+     * */
     private static Map<String, String> CreationRegleVIE(ArrayList<String> etatsPossibles, int nbDeVoisins){
         nbDeVoisins = 8;
         String v="1";
@@ -153,13 +173,54 @@ public class LocalRule {
                 }
             }
 
-            if( nbVivants == 3 ){
+            if( nbVivants == 3 ||  (nbVivants == 2 && voisinage[0].equals(etatsPossibles.get(1)) )  ){
                 resCleValeurs.put(combinaison, etatsPossibles.get(1)); //vivant
             }else{
                 resCleValeurs.put(combinaison, etatsPossibles.get(0));
             }
 
             //System.out.print(" etat cellule ref : " + EtatPremiereCellule +"\n");
+        }
+        return resCleValeurs;
+    }
+
+    /**
+     * Cree le HashMap pour une regle locale de type MAJORITE avec les parametres donnés
+     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
+     * @param nbDeVoisins int, nombre de voisins par cellule TJS IMPAIRE !!!
+     * @return resCleValeurs
+     * */
+
+    private static Map<String, String> CreationRegleMAJORITE(ArrayList<String> etatsPossibles, int nbDeVoisins){
+        // ICI ON ASSUME que voisinage Q = {0, 1} OU que on a que deux etats
+        String val0 = etatsPossibles.get(0);
+        int nbVal0, nbVal1;
+        String val1 = etatsPossibles.get(1);
+        int nbVivants;
+        List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins+1,";","");
+        Map<String, String> resCleValeurs = new HashMap<>(); // on initialise la liste des clés valeurs
+        for (String combinaison : toutesLesCombinaisons) {
+            String EtatPremiereCellule =  combinaison.split(";")[0];
+            String[] voisinage = combinaison.split(";");
+
+            nbVal0 = 0;
+            nbVal1 = 0;
+            //on ne prend pas en compte l'etat de la cellule actuelle
+            for ( int i=1 ; i< nbDeVoisins+1 ; i++ ) {
+                if (voisinage[i].equals(val0)) {
+                    nbVal0++;
+                }
+                if (voisinage[i].equals(val1)) {
+                    nbVal1++;
+                }
+            }
+
+            if( nbVal0 > nbVal1 ){
+                resCleValeurs.put(combinaison, etatsPossibles.get(0));
+            }else{
+                resCleValeurs.put(combinaison, etatsPossibles.get(1));
+            }
+
         }
         return resCleValeurs;
     }
@@ -176,13 +237,25 @@ public class LocalRule {
 
         //etatsPossibles = ["FEU", "CENDRE", "VIDE", "ARBRE"] par exemple pour le feu
         //ensuite ca créé locale rule pour le feu  ou pour ce qu'on veux 
+        switch (NomRegle) {
+            case "FEU":
+                listeClesValeurs = CreationRegleFEU(etatsPossibles,nbDeVoisins);
+                break;
+            case "VIE":
+                listeClesValeurs = CreationRegleVIE(etatsPossibles,8); //tjs 8 voisins
+                break;
+            case "MAJORITE":
+                // nbDeVoisins TOUJOURS IMPAIR
+                if(nbDeVoisins % 2 == 0){
+                    //ajout de 1 pour le faire impaire
+                    nbDeVoisins++;
+                }
+                listeClesValeurs = CreationRegleMAJORITE(etatsPossibles,nbDeVoisins);
+                break;
+            default:
+                System.out.println("Erreur : nom de regle inconnu...");
+        }
 
-        if(NomRegle == "FEU") {
-            listeClesValeurs = CreationRegleFEU(etatsPossibles,nbDeVoisins);
-        }
-        if(NomRegle == "VIE"){
-            listeClesValeurs =CreationRegleVIE(etatsPossibles,3);
-        }
     }
 
 
