@@ -102,6 +102,96 @@ public class Automate {
         return etatSuivant;
     }
 
+
+    /**
+     * Trouve la configuration des voisins de la cellule
+     * 
+     * @param x coordonnee x de la cellule
+     * @ruturn String qui contient la configuration des voisins
+     */
+    private String getConfigVoisin(int x, int y){
+
+        String configVoisin = "";
+
+        switch (this.nombreVoisins) {
+            case 1:
+                
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) ;
+                return configVoisin;
+
+            case 2:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) ;
+                return configVoisin;
+
+            case 3:
+                
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) + ";" 
+                + this.gridCopy.getValeurCellule(x+1, y) ;
+                return configVoisin;
+
+            case 4:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";" 
+                + this.gridCopy.getValeurCellule(x, y-1) + ";" 
+                + this.gridCopy.getValeurCellule(x+1, y) + ";" 
+                + this.gridCopy.getValeurCellule(x-1, y) ;
+                return configVoisin;
+
+            case 5:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) ;
+                return configVoisin;
+
+            case 6: 
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) ;
+                return configVoisin;
+
+            case 7:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y-1) ;
+                return configVoisin;
+
+            case 8:
+
+                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x-1, y+1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y-1) + ";"
+                + this.gridCopy.getValeurCellule(x+1, y+1) ;
+                return configVoisin;
+            
+            default:
+
+                configVoisin = "NONE";
+                return configVoisin;
+
+            
+        }
+
+    }
+
     /**
      * Calcule le nouveau etat de la grille selon l'etat actuel (avec localRule)
      * a la fin la grille de l'objet sera mise a jour
@@ -109,11 +199,27 @@ public class Automate {
     public void miseAJour() {
         // copie Grille gridCopie;
         this.gridCopy.copieEtatCellules(this.grid);
-        // Selon de nombre de voisins
 
-        // recupere etat de la cellule et etat cellules voisines
-        // calcule l'etat suivant et le stoque dans la copie
-        // remplace this.grid par la copie et libere les stocage inutil
+        
+        
+        // pour parcouir la grille 
+        for(int i=0; i<this.gridCopy.nbLine; i++){
+
+            for( int j = 0; j < this.gridCopy.nbCol; j++){
+
+                // recupere etat de la cellule et etat cellules voisines
+                String etatCellule = this.gridCopy.getValeurCellule(i, j);
+                String etatVoisines = getConfigVoisin(i,j);
+
+                // calcule l'etat suivant et le stoque dans la copie
+                String etatSuivant = getEtatSuivantCellule(etatVoisines);
+
+                this.grid.setValeurCellule(i, j, etatSuivant);
+
+            }
+
+        }
+
     }
 
     /**
