@@ -28,7 +28,7 @@ public class Automate {
             this.nombreVoisins = 4;
             EtatCellule etatFeu = new EtatCellule("FEU");
             this.etatCellules = etatFeu;
-            System.out.println("45425 WE HAVE THIS ETATCELLULES : " + this.etatCellules);
+            System.out.println("WE HAVE THIS ETATCELLULES : " + this.etatCellules);
             this.localRule = new LocalRule(etatFeu.getEtatChoisie(), this.nombreVoisins, "FEU");
             // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
@@ -37,7 +37,6 @@ public class Automate {
             //8
             this.grid = new Grille(2,3,2, etatFeu);
             this.gridCopy = new Grille(grid);
-
             System.out.println(grid);
             System.out.print(gridCopy);
 
