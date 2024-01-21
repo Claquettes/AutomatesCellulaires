@@ -128,7 +128,7 @@ public class Automate {
      */
     private String getConfigVoisin(int x, int y){
 
-        String configVoisin = "";
+        String configVoisin = this.gridCopy.getValeurCellule(x, y) + ";";
 
         switch (this.nombreVoisins) {
             case 1:
