@@ -10,18 +10,18 @@ public class Grille {
     //private int dimension;
     //private int nombreCellules;
     public int nbCol; //nombre de nbColones
-    public int nbLine; //nombre de lignes
+    public int nbLigne; //nombre de lignes
     private Cellule[][] cellules; // ON UTILISERA % POUR PASSER D'UNE DIMENSION A L'AUTRE
 
     public Grille(int dimension, int nbColones, int lignes, EtatCellule etat) {
         //this.dimension = dimension;
         this.nbCol=nbColones;
-        this.nbLine =lignes;
+        this.nbLigne =lignes;
         if(nbColones <1 ){
             this.nbCol=1;
         }
         if(lignes<1){
-            this.nbLine=1;
+            this.nbLigne=1;
         }
 
         //this.nombreCellules = nombreCellules;
@@ -32,8 +32,8 @@ public class Grille {
             System.exit(0);
         }*/
 
-        this.cellules = new Cellule[nbLine][nbCol];
-        for (int i = 0; i < nbLine; i++) {
+        this.cellules = new Cellule[nbLigne][nbCol];
+        for (int i = 0; i < nbLigne; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule( etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
             }
@@ -43,7 +43,7 @@ public class Grille {
 
     public String toString() {
         String grilleString = "---------------------------------------\n";
-        for (int i = 0; i < nbLine ; i++) {
+        for (int i = 0; i < nbLigne ; i++) {
             for (int j = 0; j < nbCol; j++) {
                 grilleString +=this.cellules[i][j].getEtat();
                 grilleString += "\t"+" | ";
@@ -63,7 +63,7 @@ public class Grille {
 
     public String getValeurCellule(int coordonneeX, int coordonneeY) {
 
-        if(coordonneeX<0 || coordonneeX>=nbLine || coordonneeY<0 || coordonneeY>=nbCol ){
+        if(coordonneeX<0 || coordonneeX>=nbLigne || coordonneeY<0 || coordonneeY>=nbCol ){
             return etat.getEtatByIndex(0);
         }
         return this.cellules[coordonneeX][coordonneeY].getEtat();
@@ -85,15 +85,15 @@ public class Grille {
     * */
     public Grille(Grille Oj) {
         this.etat = Oj.etat;
-        this.nbLine  = Oj.nbLine ;
+        this.nbLigne  = Oj.nbLigne ;
         this.nbCol = Oj.nbCol;
         //this.dimension = Oj.getDimension();
         //this.nombreCellules = Oj.nombreCellules;
 
-        this.cellules  = new Cellule[nbLine][nbCol];
+        this.cellules  = new Cellule[nbLigne][nbCol];
         //Coordonnee coordonnee;
         String etat;
-        for (int i = 0; i < nbLine; i++) {
+        for (int i = 0; i < nbLigne; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule( Oj.getValeurCellule(i,j));
             }
@@ -106,7 +106,7 @@ public class Grille {
      * @param Oj une grille deja initialiser
      * */
     public void copieEtatCellules(Grille Oj){
-        for (int i = 0; i < nbLine; i++) {
+        for (int i = 0; i < nbLigne; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j].setEtat(Oj.getValeurCellule(i,j));
             }

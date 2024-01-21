@@ -15,9 +15,9 @@ public class Automate {
     // etats possibles des cellules = Q, un ensemble fini, est son alphabet
     public EtatCellule etatCellules;
 
-    private Grille gridCopy; // qui va contenier la grille à l'état N pour pouvoir calculer l'etat N+1
-    private Integer nbCol = 10;
-    private Integer nbLigne = 5;
+    protected Grille gridCopy; // qui va contenier la grille à l'état N pour pouvoir calculer l'etat N+1
+    protected Integer nbCol = 10;
+    protected Integer nbLigne = 5;
 
     // constructeur en mode prédéfini,
     // NE PAS OUBLIER DE INITIALISER GRIDCOPY !!!!!
@@ -218,7 +218,7 @@ public class Automate {
         this.gridCopy.copieEtatCellules(this.grid);
 
         // pour parcouir la grille 
-        for(int i=0; i<this.gridCopy.nbLine; i++){
+        for(int i=0; i<this.gridCopy.nbLigne; i++){
 
             for( int j = 0; j < this.gridCopy.nbCol; j++){
 
@@ -266,5 +266,48 @@ public class Automate {
             this.nbLigne = scannerNbLigne.nextInt();
         }
      }
+
+    /**
+     * Constructeur générique de AutomateFEU
+     */
+    public Automate(LocalRule localRule, Integer nombreVoisins, EtatCellule etatCellules, Integer nbCol, Integer nbLigne) {
+        this.etatCellules = etatCellules;
+
+        if(nbLigne==1){
+            this.grid = new Grille(1,nbCol,nbLigne,etatCellules);
+        }else{
+            this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
+        }
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+        this.localRule = localRule;
+        this.nombreVoisins = nombreVoisins;
+
+        this.gridCopy = new Grille(grid);
+
+    }
+
+    /**
+     * constructeur partiel qui met le nbLigne et nbCol selon les parametres et le reste à null
+     * @param nbCol
+     * @param nbLigne
+     */
+    public Automate(Integer nbCol, Integer nbLigne) {
+        this.etatCellules = null;
+        if( nbCol <= 0){
+            nbCol = 1;
+        }
+        if( nbLigne < 1){
+            nbLigne = 1;
+        }
+
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+
+
+
+    }
 
 }
