@@ -3,6 +3,7 @@ package AutomatesCellulaires.td;
 import AutomatesCellulaires.td.LocalRule;
 
 import java.util.Scanner;
+import java.util.concurrent.Thread;
 
 public class Automate {
     public Grille grid;
@@ -39,6 +40,16 @@ public class Automate {
 
             System.out.println(grid);
             System.out.print(gridCopy);
+
+            for (int i = 0; i < 5; i++) {
+                miseAJour();
+                System.out.println(grid);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
             //System.out.println(grid.getCellules());
             // we quit the program
@@ -200,8 +211,6 @@ public class Automate {
         // copie Grille gridCopie;
         this.gridCopy.copieEtatCellules(this.grid);
 
-        
-        
         // pour parcouir la grille 
         for(int i=0; i<this.gridCopy.nbLine; i++){
 
