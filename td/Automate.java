@@ -40,7 +40,7 @@ public class Automate {
             System.out.println(grid);
             System.out.print(gridCopy);
 
-            System.out.println(grid.getCellules());
+            //System.out.println(grid.getCellules());
             // we quit the program
             System.exit(0);
         }
@@ -65,12 +65,12 @@ public class Automate {
             // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
             // Grille grille = new Grille(2, 8, etatFeu);
-            this.grid = new Grille(1, this.nbCol, etat1D);
+            this.grid = new Grille(1, this.nbCol,1,  etat1D);
             this.gridCopy = new Grille(grid);
 
             System.out.println(grid);
             System.out.print(gridCopy);
-            System.out.println(grid.getCellules());
+            //System.out.println(grid.getCellules());
             // we quit the program
             System.exit(0);
         } else {
