@@ -66,9 +66,8 @@ public class Automate {
 
     // constructeur en mode 1D, donc custom vu qu'on passe le numero de la
     // regle
-    public Automate(String name, Integer nbVoisins, Integer ruleNumber, Integer nbCol,Integer nbLigne) {
+    public Automate(String name, Integer nbVoisins, Integer ruleNumber, Integer nbCol) {
         this.nbCol = nbCol;
-        this.nbLigne = nbLigne;
         if (name.toUpperCase().equals("1D")) {
             // predefini avec 4 voisins
             this.nombreVoisins = 1;
