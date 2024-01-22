@@ -21,8 +21,9 @@ public class Automate {
 
     // constructeur en mode prédéfini,
     // NE PAS OUBLIER DE INITIALISER GRIDCOPY !!!!!
-    public Automate(String name) {
-        askForGridSize();
+    public Automate(String name, Integer nbCol,Integer nbLigne) {
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
         if (name.toUpperCase().equals("FEU")) {
             // predefini avec 4 voisins
             this.nombreVoisins = 4;
@@ -65,8 +66,9 @@ public class Automate {
 
     // constructeur en mode 1D, donc custom vu qu'on passe le numero de la
     // regle
-    public Automate(String name, Integer nbVoisins, Integer ruleNumber) {
-        askForGridSize();
+    public Automate(String name, Integer nbVoisins, Integer ruleNumber, Integer nbCol,Integer nbLigne) {
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
         if (name.toUpperCase().equals("1D")) {
             // predefini avec 4 voisins
             this.nombreVoisins = 1;
@@ -236,35 +238,5 @@ public class Automate {
         }
 
     }
-
-    /**
-     * On demande a l'utilisateur de choisir le colonnes et de lignes de la grille
-     */
-
-     public void askForGridSize(){
-        System.out.println("Voulez vous utiliser la taille par défault pour la grille (10*5) ? (Y/N)");
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        if(input.equals("Y") || input.equals("y")){
-            this.nbCol = 10;
-            this.nbLigne = 5;
-        }else{
-
-            System.out.println("Veuillez entrer le nombre de colonnes de la grille");
-            Scanner scannerNbCol = new Scanner(System.in);
-            this.nbCol = scannerNbCol.nextInt();
-            if(nbCol < 1){
-                System.out.println("Le nombre de colonnes doit être supérieur à 0");
-                System.exit(0);
-            }
-            System.out.println("Veuillez entrer le nombre de lignes de la grille");
-            Scanner scannerNbLigne = new Scanner(System.in);
-            if(nbLigne < 0){
-                System.out.println("Le nombre de lignes doit être supérieur à 0");
-                System.exit(0);
-            }
-            this.nbLigne = scannerNbLigne.nextInt();
-        }
-     }
 
 }

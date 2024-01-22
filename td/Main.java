@@ -7,7 +7,18 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
+
+        // demande user pour choix de l'interface 
+        System.out.println("Appuyez sur 1 pour lancer l'interface console ou 2 pour lancer l'interface graphique");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String input = scanner.nextLine();
+        if (input.equals("1")) {
+            UserInterface ui = new UserInterface();
+        } else if (input.equals("2")) {
+            GUI uig = new GUI();
+        } else {
+            System.out.println("Commande inconnue, veuillez réessayer");
+        }
 
         /*EtatCellule etat1 = new EtatCellule("FEU");
         System.out.print(etat1.getEtatChoisie());
