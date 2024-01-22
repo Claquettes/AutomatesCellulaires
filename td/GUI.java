@@ -11,6 +11,8 @@ public class GUI extends JFrame {
     private JTextField textField2;
     private JTextField textField3;
     private JTextField textField4;
+    private JTextField textField_voison;
+    private JTextField textField_regle;
     private JButton validateButton;
     private JButton backButton;
     private JButton secondaryValidateButton;
@@ -28,7 +30,7 @@ public class GUI extends JFrame {
         panel = new JPanel(cardLayout);
 
         JPanel mainPanel = new JPanel(new GridLayout(5, 2));
-        JPanel secondaryPanel = new JPanel(new GridLayout(4, 2));
+        JPanel secondaryPanel = new JPanel(new GridLayout(5, 2));
 
         JLabel label1 = new JLabel("Choix automate:");
         JLabel label2 = new JLabel("Nombre de colonnes:");
@@ -39,6 +41,8 @@ public class GUI extends JFrame {
 
         textField1 = new JTextField();
         textField2 = new JTextField();
+        textField_voison = new JTextField();
+        textField_regle = new JTextField();
 
         validateButton = new JButton("Validate");
         backButton = new JButton("Retour");
@@ -51,14 +55,16 @@ public class GUI extends JFrame {
                 int columns = Integer.parseInt(textField1.getText());
                 int rows = Integer.parseInt(textField2.getText());
                 if (selectedOption.equals("1D")) {
-                    JLabel label4 = new JLabel("Nombre de voisins:");
-                    textField3 = new JTextField();
-                    secondaryPanel.add(label4);
-                    secondaryPanel.add(textField3);
+                    JLabel label_voisin = new JLabel("Nombre de voisins:");
+                    JLabel label_regle = new JLabel("Numéro de la règle:");
+
+                    secondaryPanel.add(label_voisin);
+                    secondaryPanel.add(textField_voison);
+                    secondaryPanel.add(label_regle);
+                    secondaryPanel.add(textField_regle);
                     secondaryPanel.add(secondaryValidateButton);
                     cardLayout.next(panel);
-                }
-                else {
+                } else {
                     Automate automate = new Automate(selectedOption, columns, rows);
                 }
             }
@@ -68,6 +74,17 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.previous(panel);
+            }
+        });
+
+        secondaryValidateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int neighbors = Integer.parseInt(textField_voison.getText());
+                int regle = Integer.parseInt(textField_regle.getText());
+                int col = Integer.parseInt(textField1.getText());
+                
+                Automate automate1D = new Automate("1D", neighbors, regle, col);
             }
         });
 
