@@ -16,7 +16,7 @@ public class Main {
         //test.afficher();
          */
 
-        AutomateFeu FeuAutomateTest = new AutomateFeu(4, 6, 10 , 0.5, "nan", 0, 0.5, 0);
+        AutomateFeu FeuAutomateTest = new AutomateFeu(4, 6, 10 , 0.5, "nan", 0, 0.1, 0,3);
 
         /*Automate automTest = new Automate(LocalRuleVie,4,etat0et1,6,6);
         for (int i = 0; i < 10; i++) {

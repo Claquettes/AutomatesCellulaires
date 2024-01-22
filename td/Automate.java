@@ -125,8 +125,8 @@ public class Automate {
      * 
      * @param x coordonnee x de la cellule
      * @ruturn String qui contient la configuration des voisins
-     */
-    private String getConfigVoisin(int x, int y){
+
+    protected String getConfigVoisin(int x, int y){
 
         String configVoisin = this.gridCopy.getValeurCellule(x, y) + ";";
 
@@ -207,7 +207,26 @@ public class Automate {
             
         }
 
+    }*/
+    /**
+     * Gets the configuration of the neighbors of a cell.
+     *
+     * @param x The x-coordinate of the cell.
+     * @param y The y-coordinate of the cell.
+     * @return The configuration of the neighbors of the cell.
+     */
+    protected String getConfigVoisin(int x, int y) {
+        //modif ordre directions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { 1, -1 }, { -1, 1 },  { 1, 1 } };
+        StringBuilder configVoisin = new StringBuilder(this.gridCopy.getValeurCellule(x, y) + ";");
+        for (int i = 0; i < this.nombreVoisins; i++) {
+            int newX = x + directions[i][0];
+            int newY = y + directions[i][1];
+            configVoisin.append(this.gridCopy.getValeurCellule(newX, newY)).append(";");
+        }
+        return configVoisin.toString();
     }
+
 
     /**
      * Calcule le nouveau etat de la grille selon l'etat actuel (avec localRule)
