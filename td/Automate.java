@@ -36,7 +36,7 @@ public class Automate {
 
             //Grille grille = new Grille(2, 8, etatFeu);
             //8
-            this.grid = new Grille(2,3,2, etatFeu);
+            this.grid = new Grille(2, this.nbCol, this.nbLigne, etatFeu);
             this.gridCopy = new Grille(grid);
 
             System.out.println(grid);
