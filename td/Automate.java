@@ -103,85 +103,14 @@ public class Automate {
      * @return The configuration of the neighbors of the cell.
      */
     private String getConfigVoisin(int x, int y) {
-
-        String configVoisin = this.gridCopy.getValeurCellule(x, y) + ";";
-
-        switch (this.nombreVoisins) {
-            case 1:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";";
-                return configVoisin;
-
-            case 2:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";";
-                return configVoisin;
-
-            case 3:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";";
-                return configVoisin;
-
-            case 4:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y) + ";";
-                return configVoisin;
-
-            case 5:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y - 1) + ";";
-                return configVoisin;
-
-            case 6:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y + 1) + ";";
-                return configVoisin;
-
-            case 7:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y - 1) + ";";
-                return configVoisin;
-
-            case 8:
-
-                configVoisin = configVoisin + this.gridCopy.getValeurCellule(x, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x - 1, y + 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y - 1) + ";"
-                        + this.gridCopy.getValeurCellule(x + 1, y + 1) + ";";
-                return configVoisin;
-
-            default:
-
-                configVoisin = "NONE";
-                return configVoisin;
-
+        int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+        StringBuilder configVoisin = new StringBuilder(this.gridCopy.getValeurCellule(x, y) + ";");
+        for (int i = 0; i < this.nombreVoisins; i++) {
+            int newX = x + directions[i][0];
+            int newY = y + directions[i][1];
+            configVoisin.append(this.gridCopy.getValeurCellule(newX, newY)).append(";");
         }
-
+        return configVoisin.toString();
     }
 
     /**
@@ -206,9 +135,7 @@ public class Automate {
                 this.grid.setValeurCellule(i, j, etatSuivant);
 
             }
-
         }
-
     }
 
     /**
