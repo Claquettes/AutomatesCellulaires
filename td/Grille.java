@@ -5,27 +5,26 @@ import AutomatesCellulaires.td.Cellule;
 import AutomatesCellulaires.td.Coordonnee;
 
 /**
- * The Grille class represents a grid of cells in the AutomatesCellulaires
- * application.
- * Each cell in the grid has a state represented by an instance of the
- * EtatCellule class.
+ * This class represents a Grid in an Automaton.
+ * It has a number of columns and lines, and a 2D array of Cells.
  */
 public class Grille {
     private EtatCellule etat;
-    public int nbCol; // number of columns
-    public int nbLine; // number of lines
+    public int nbCol;
+    public int nbLine;
     private Cellule[][] cellules;
 
     /**
-     * Constructs a new Grille with the specified dimensions and initial state.
-     *
-     * @param dimension the dimension of the grid
-     * @param nbColones the number of columns in the grid
-     * @param lignes    the number of lines in the grid
-     * @param etat      the initial state of the cells in the grid
+     * Constructor for the Grille class.
+     * It initializes the Grille with a given dimension, number of columns, number
+     * of lines, and state.
+     * 
+     * @param dimension The dimension of the Grille.
+     * @param nbColones The number of columns in the Grille.
+     * @param lignes    The number of lines in the Grille.
+     * @param etat      The state of the Grille.
      */
     public Grille(int dimension, int nbColones, int lignes, EtatCellule etat) {
-        // this.dimension = dimension;
         this.nbCol = nbColones;
         this.nbLine = lignes;
         if (nbColones < 1) {
@@ -34,8 +33,6 @@ public class Grille {
         if (lignes < 1) {
             this.nbLine = 1;
         }
-
-        // this.nombreCellules = nombreCellules;
         this.etat = etat;
 
         this.cellules = new Cellule[nbLine][nbCol];
@@ -48,11 +45,10 @@ public class Grille {
     }
 
     /**
-     * Returns a string representation of the grid.
-     *
-     * @return a string representation of the grid
+     * Returns a string representation of the Grille.
+     * 
+     * @return A string representation of the Grille.
      */
-
     public String toString() {
         String grilleString = "---------------------------------------\n";
         for (int i = 0; i < nbLine; i++) {
@@ -63,16 +59,16 @@ public class Grille {
             grilleString += "\n";
         }
         grilleString += "\n---------------------------------------\n";
-
         return grilleString;
     }
 
     /**
-     * @param coordonneeX coordonnée en X de la cellule
-     * @param coordonneeY coordonnée en Y de la cellule
-     * @return valeur de la cellule
+     * Gets the value of the Cell at the given coordinates.
+     * 
+     * @param coordonneeX The x-coordinate of the Cell.
+     * @param coordonneeY The y-coordinate of the Cell.
+     * @return The value of the Cell at the given coordinates.
      */
-
     public String getValeurCellule(int coordonneeX, int coordonneeY) {
 
         if (coordonneeX < 0 || coordonneeX >= nbLine || coordonneeY < 0 || coordonneeY >= nbCol) {
@@ -82,42 +78,39 @@ public class Grille {
     }
 
     /**
-     * @param coordonneeX coordonnée en X de la cellule
-     * @param coordonneeY coordonnée en Y de la cellule
-     * @param valeur      valeur à donner à la cellule
+     * Sets the value of the Cell at the given coordinates to a new value.
+     * 
+     * @param coordonneeX The x-coordinate of the Cell.
+     * @param coordonneeY The y-coordinate of the Cell.
+     * @param valeur      The new value of the Cell.
      */
-
     public void setValeurCellule(int coordonneeX, int coordonneeY, String valeur) {
         this.cellules[coordonneeX][coordonneeY].setEtat(valeur);
     }
 
     /**
-     * Constructeur a partir de une autre grille
+     * Constructor for the Grille class.
+     * It initializes the Grille with another Grille object.
      * 
-     * @param Oj une grille deja initialiser
+     * @param Oj The Grille object to copy.
      */
     public Grille(Grille Oj) {
         this.etat = Oj.etat;
         this.nbLine = Oj.nbLine;
         this.nbCol = Oj.nbCol;
-        // this.dimension = Oj.getDimension();
-        // this.nombreCellules = Oj.nombreCellules;
-
         this.cellules = new Cellule[nbLine][nbCol];
-        // Coordonnee coordonnee;
         String etat;
         for (int i = 0; i < nbLine; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule(Oj.getValeurCellule(i, j));
             }
         }
-
     }
 
     /**
-     * Copie le contenue de la table cellules qui est en parametres
+     * Copies the state of the Cells from another Grille object.
      * 
-     * @param Oj une grille deja initialiser
+     * @param Oj The Grille object to copy from.
      */
     public void copieEtatCellules(Grille Oj) {
         for (int i = 0; i < nbLine; i++) {
@@ -126,5 +119,4 @@ public class Grille {
             }
         }
     }
-
 }
