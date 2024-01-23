@@ -7,14 +7,29 @@ import java.util.Random;
 
 public class AutomateFeu extends Automate{
 
+    //le vent vien de cette direction
     public String directionVent;
     public double forceVent;
     public double pProbaPropagationFeu;
     public double qProbaCombustion;
 
+    //pour la gestion du vent  (+f)
+    public Map<String, Integer> listeClesValeursIndexVent;
+    //pour la gestion du vent opposé (-f)
+    public Map<String, Integer> listeClesValeursIndexVentOppose;
+
+    // pour l'affichage avec couleurs
+    public static final String RESET = "\u001B[0m";
+    public static final String VERT = "\u001B[32m";
+    public static final String ROUGE = "\u001B[31m";
+    public static final String NOIR = "\u001B[90m";
+    public static final String BLANC = "\u001B[37m";
+
+
+
 
     /**
-     * Constructeur de AutomateFeu
+     * Constructeur de AutomateFeu Initialise la grille selon les parametres et tout les champs
      * @param nombreDeVoisins int nb de voisins (4,6 ou 8)
      * @param nbCol nb de col (3 min)
      * @param nbLigne nb de lignes (3min)
@@ -46,7 +61,6 @@ public class AutomateFeu extends Automate{
                 grid.setValeurCellule(i,j,etatCellules.getEtatByIndex(0));
             }
         }
-
 
         //densiteForet bornée à 1
         if(densiteForet>1){
@@ -88,13 +102,13 @@ public class AutomateFeu extends Automate{
             }
         }
 
-        System.out.println(grid);
+        //System.out.println(this);
         this.gridCopy = new Grille(grid);
 
         this.forceVent = p_forceVent;
 
         String[] directions = {"Nord",  "Est",  "Sud",  "Ouest","Nord-Est","Sud-Est", "Nord-Ouest","Sud-Ouest"};
-        String[] directions_6 = {  "Est",  "Ouest","Nord-Est","Sud-Est", "Nord-Ouest","Sud-Ouest"};
+        String[] directions_6 = { "Est",  "Ouest","Nord-Est","Sud-Est", "Nord-Ouest","Sud-Ouest"};
         String[] directions_4 = {"Nord",  "Est",  "Sud",  "Ouest"};
         if(Arrays.asList(directions).contains(p_directionVent)){
             if(this.nombreVoisins==8){
@@ -130,6 +144,7 @@ public class AutomateFeu extends Automate{
             this.qProbaCombustion=0;
         }
 
+        init_map_vent_et_oppose();
         /*
         Force et dir du vent
 
@@ -140,55 +155,83 @@ public class AutomateFeu extends Automate{
 
     }
 
-    private int getIndexesVentEtOpposee(){
-        if(this.nombreVoisins==8){
-            int[][] directionsCard = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { 1, -1 }, { -1, 1 },  { 1, 1 } };
-            String[] directions = { "Est",  "Ouest" , "Sud", "Nord", "Nord-Ouest" , "Sud-Ouest" , "Nord-Est" , "Sud-Est"};
-            String[] directions_6 = { "Est",  "Ouest" , "Sud-Est" , "Nord-Est",  "Nord-Ouest" , "Sud-Ouest"  };
-            String[] directions_4 = {"Est",  "Ouest" , "Sud", "Nord",};
+    /**
+     * initialise les Map qui vont etre utilisées pour tester si il y a feu
+     * dans la dirrection d'ou vient le vent ou la dirrection opposée
+     */
+    private void init_map_vent_et_oppose(){
+        String[] directions = {"CelActuelle","Est", "Ouest", "Sud","Nord", "Nord-Ouest", "Sud-Ouest","Nord-Est","Sud-Est"};
+        String[] directionsOPPOSE = {"CelActuelle", "Ouest","Est","Nord", "Sud","Sud-Est", "Nord-Est", "Sud-Ouest","Nord-Ouest"};
 
-            Map<String, Integer> listeClesValeursIndexVent8 = new HashMap<>(); ;
-            int compteur = 0;
-            for (String dir : directions) {
-                listeClesValeursIndexVent8.put(dir, compteur);
+        String[] directions_6 = {"CelActuelle","Est", "Ouest","Sud-Est","Nord-Est", "Nord-Ouest", "Sud-Ouest"};
+        String[] directions_6OPPOSE = {"CelActuelle", "Ouest","Est","Nord-Est", "Sud-Ouest","Sud-Est", "Nord-Ouest"};
 
-            }
+        String[] directions_4 = {"CelActuelle","Est",  "Ouest", "Sud", "Nord"};
+        String[] directions_4OPPOSE = {"CelActuelle",  "Ouest","Est", "Nord", "Sud"};
+
+        String[] directionsCorrespondantes;
+        String[] directionsOPPOSEESCorrespondantes;
+
+        switch (this.nombreVoisins){
+            case 4: directionsCorrespondantes=directions_4;
+                    directionsOPPOSEESCorrespondantes=directions_4OPPOSE;
+                break;
+            case 6: directionsCorrespondantes=directions_6;
+                    directionsOPPOSEESCorrespondantes=directions_6OPPOSE;
+                break;
+            default:
+                directionsCorrespondantes=directions;
+                directionsOPPOSEESCorrespondantes=directionsOPPOSE;
         }
-        return -1;
+
+
+        this.listeClesValeursIndexVent= new HashMap<>();
+        this.listeClesValeursIndexVentOppose = new HashMap<>();
+        int compteur = 0;
+        for (String dir : directions) {
+            listeClesValeursIndexVent.put(dir, compteur);
+            compteur++;
+        }
+        compteur = 0;
+        for (String dirOPOSEE : directionsOPPOSE) {
+            listeClesValeursIndexVentOppose.put(dirOPOSEE, compteur);
+            compteur++;
+        }
     }
 
-    private double calculeForceVent(String configVoisinage){
-        int[][] directionsCard = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { 1, -1 }, { -1, 1 },  { 1, 1 } };
-        String[] directions = { "Est",  "Ouest" , "Sud", "Nord", "Nord-Ouest" , "Sud-Ouest" , "Nord-Est" , "Sud-Est"};
-        String[] directions_6 = { "Est",  "Ouest" , "Sud-Est" , "Nord-Est",  "Nord-Ouest" , "Sud-Ouest"  };
-        String[] directions_4 = {"Est",  "Ouest" , "Sud", "Nord"};
-
-        /*if(this.nombreVoisins==8){
-            //this.directionVent=p_directionVent;
-            //vent
-            //configurationeVoisines
-
-        }
-
-        if(this.nombreVoisins==6) {
-            if (Arrays.asList(directions_6).contains(p_directionVent)) {
-                this.directionVent = p_directionVent;
-            } else {
-                this.directionVent = "Est";
-                this.forceVent = 0;
+    /**
+     * Calcule la force du vent qui est appliqué
+     * @param configVoisinage String contenat tout le voisinage (etat cellule reference a l'indice 0 )
+     * @return double le resultat de la force effective du vent
+     */
+    private double getForceVentCalculee(String configVoisinage){
+        //si Feu en index donne par dir alors +forceVent si Feu dans dir oppo alors -force vent
+        Integer indexVent = listeClesValeursIndexVent.get(this.directionVent);
+        Integer indexVentOppose = listeClesValeursIndexVentOppose.get(this.directionVent);
+        double resultatVent = 0;
+        String[] etatVoisines = configVoisinage.split(";");
+        if(indexVent!=null){
+            if(indexVent<nombreVoisins+1){
+                if(etatVoisines[indexVent].equals(etatCellules.getEtatByIndex(2))){
+                    resultatVent = this.forceVent;
+                }
             }
         }
-        if(this.nombreVoisins==4) {
-            if (Arrays.asList(directions_4).contains(p_directionVent)) {
-                this.directionVent = p_directionVent;
-            } else {
-                this.directionVent = "Est";
-                this.forceVent = 0;
+        if(indexVentOppose!=null){
+            if(indexVentOppose<nombreVoisins+1){
+                if(etatVoisines[indexVentOppose].equals(etatCellules.getEtatByIndex(2))){
+                    resultatVent = resultatVent - this.forceVent;
+                }
             }
-        }*/
-        return -1.0;
+        }
+
+        return resultatVent;
     }
 
+    /**
+     * Effectue la mise a jour de la grille selon les parametres de l'automate feu en
+     * prenannt en compte les propabilites
+     */
     @Override public void miseAJour() {
         // copie Grille gridCopie;
         this.gridCopy.copieEtatCellules(this.grid);
@@ -223,13 +266,13 @@ public class AutomateFeu extends Automate{
                     valProba = probaGeneree.nextInt(1, 100);
                     //prise en compte du vent et sa force
 
-                    int forceVentAppliquee;
+                    double forceVentAppliquee = 0;
                     if(this.forceVent!=0){
                         //calcule force vent
-
+                        forceVentAppliquee = getForceVentCalculee(configurationeVoisines);
                     }
 
-                    ceuil = (qProbaCombustion + nbVoisinsEnFeu*pProbaPropagationFeu)*100;
+                    ceuil = (qProbaCombustion + nbVoisinsEnFeu*pProbaPropagationFeu + forceVentAppliquee)*100;
 
                     if(valProba<ceuil){
                         this.grid.setValeurCellule(i, j, etatCelFeu);
@@ -257,4 +300,53 @@ public class AutomateFeu extends Automate{
 
     }
 
+    /**
+     * Renvois une chaine de caracteres avec couleur et caracter corespondant
+     * @param e String contenu cellule qu'on veu afficher
+     * @return String
+     */
+    public String cellToStringCouleur(String e){
+        /*String v = this.etatCellules.getEtatByIndex(0), a = this.etatCellules.getEtatByIndex(1);
+        String f = this.etatCellules.getEtatByIndex(2), c = this.etatCellules.getEtatByIndex(3);*/
+
+        switch (e){
+            case "VIDE": return BLANC + "0" + RESET ;
+            case "ARBRE": return VERT + "T" + RESET;
+            case "FEU": return ROUGE + "W" + RESET;
+            default: return NOIR + "." + RESET;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String esp = "  ";
+        String diff = " \t";
+        if( nombreVoisins == 6 ){
+            diff = "  ";
+        }
+
+        String grilleString = "---------------------------------------\n";
+        for (int i = 0; i < nbLigne ; i++) {
+            esp ="  ";
+            //pour l'affichage hexagonal
+            if( nombreVoisins ==6 && (i % 2 == 0 )){
+                grilleString += "   ";
+                esp = "  ";
+            }
+            if( nombreVoisins != 6){
+                esp="";
+            }
+
+            for (int j = 0; j < nbCol; j++) {
+                //grilleString += this.grid.getValeurCellule(i,j);
+                grilleString += esp + cellToStringCouleur(this.grid.getValeurCellule(i,j));
+                grilleString += diff;
+                //grilleString += " \t";
+            }
+            grilleString += "\n";
+        }
+        grilleString += "\n---------------------------------------\n";
+
+        return grilleString;
+    }
 }
