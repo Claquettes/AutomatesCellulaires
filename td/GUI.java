@@ -25,12 +25,18 @@ public class GUI extends JFrame {
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        // set look 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         cardLayout = new CardLayout();
         panel = new JPanel(cardLayout);
 
-        JPanel mainPanel = new JPanel(new GridLayout(5, 2));
-        JPanel secondaryPanel = new JPanel(new GridLayout(5, 2));
+        JPanel mainPanel = new JPanel();
+        JPanel secondaryPanel = new JPanel();
 
         JLabel label1 = new JLabel("Choix automate:");
         JLabel label2 = new JLabel("Nombre de colonnes:");
@@ -39,10 +45,10 @@ public class GUI extends JFrame {
         String[] options = {"Feu", "Conway", "1D"};
         comboBox = new JComboBox<>(options);
 
-        textField1 = new JTextField();
-        textField2 = new JTextField();
-        textField_voison = new JTextField();
-        textField_regle = new JTextField();
+        textField1 = new JTextField(10);
+        textField2 = new JTextField(10);
+        textField_voison = new JTextField(10);
+        textField_regle = new JTextField(10);
 
         validateButton = new JButton("Validate");
         backButton = new JButton("Retour");
@@ -67,10 +73,52 @@ public class GUI extends JFrame {
                 } else {
                     Automate automate = new Automate(selectedOption, columns, rows);
 
-                    for (int i = 0; i < 50; i++) {
-                        automate.miseAJour();
-                        System.out.println(automate.grid);
-                    }
+                    new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            for (int i = 0; i < 50; i++) {
+                                automate.miseAJour();
+
+                                // supprimer les cellules précédentes
+                                SwingUtilities.invokeLater(() -> {
+                                    secondaryPanel.removeAll();
+                                    secondaryPanel.setLayout(new GridLayout(rows, columns));
+                                    for (int row = 0; row < automate.grid.nbLine; row++) {
+                                        for (int col = 0; col < automate.grid.nbCol; col++) {
+                                            JPanel cellPanel = new JPanel();
+                                            cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a square
+
+                                            switch (automate.grid.getValeurCellule(row, col)) {
+                                                case "CENDRE":
+                                                    cellPanel.setBackground(Color.GRAY);
+                                                    break;
+
+                                                case "FEU":
+                                                    cellPanel.setBackground(Color.RED);
+                                                    break;
+
+                                                case "ARBRE":
+                                                    cellPanel.setBackground(Color.GREEN);
+                                                    break;
+
+                                                default:
+                                                    cellPanel.setBackground(Color.WHITE);
+                                                    break;
+                                            }
+
+                                            secondaryPanel.add(cellPanel);
+                                        }
+                                    }
+                                    secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                    secondaryPanel.repaint();
+                                    secondaryPanel.getParent().repaint();
+                                });
+
+                                Thread.sleep(250); // Wait for 1 second
+                            }
+                            return null;
+                        }
+                    }.execute();
                 }
             }
         });
@@ -88,13 +136,37 @@ public class GUI extends JFrame {
                 int neighbors = Integer.parseInt(textField_voison.getText());
                 int regle = Integer.parseInt(textField_regle.getText());
                 int col = Integer.parseInt(textField1.getText());
-                
+
                 Automate automate = new Automate("1D", neighbors, regle, col);
 
-                for (int i = 0; i < 50; i++) {
-                    automate.miseAJour();
-                    System.out.println(automate.grid);
-                }
+                new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        for (int i = 0; i < 50; i++) {
+                            automate.miseAJour();
+
+                            // supprimer les cellules précédentes
+                            SwingUtilities.invokeLater(() -> {
+                                secondaryPanel.removeAll();
+                                for (int j = 0; j < automate.grid.nbCol; j++) {
+                                    JPanel cellPanel = new JPanel();
+                                    cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a square
+                                    if (automate.grid.getValeurCellule(0, j) == "1") {
+                                        cellPanel.setBackground(Color.BLACK);
+                                    } else {
+                                        cellPanel.setBackground(Color.WHITE);
+                                    }
+                                    secondaryPanel.add(cellPanel);
+                                }
+                                secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                secondaryPanel.repaint();
+                            });
+
+                            Thread.sleep(250); // Wait for 1 second
+                        }
+                        return null;
+                    }
+                }.execute();
             }
         });
 

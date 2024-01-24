@@ -39,12 +39,13 @@ public class Automate {
             this.gridCopy = new Grille(grid);
 
 
-        }
-        if (name.equals("CONWAY")) {
-            // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
-            System.out.println("Création de l'automate " + name + " en mode prédéfini");
         } else {
-            System.out.println("Erreur : nom d'automate inconnu...");
+            if (name.equals("CONWAY")) {
+                // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
+                System.out.println("Création de l'automate " + name + " en mode prédéfini");
+            } else {
+                System.out.println("Erreur : nom d'automate inconnu...");
+            }
         }
     }
 
