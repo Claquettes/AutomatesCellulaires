@@ -84,13 +84,11 @@ public class GUI extends JFrame {
                                     secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the layout to BoxLayout
 
                                     JPanel gridPanel = new JPanel(new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Create a new panel with a GridLayout
-                                    gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum size to avoid taking up the whole window
-
+                                    gridPanel.setMaximumSize(new Dimension((int)(getWidth() * 0.8), (int)(getHeight() * 0.8)));
                                     for (int row = 0; row < automate.grid.nbLine; row++) {
                                         for (int col = 0; col < automate.grid.nbCol; col++) {
                                             JPanel cellPanel = new JPanel();
-                                            cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a square
-
+                                            cellPanel.setPreferredSize(new Dimension((int)(getWidth() * 0.8 / automate.grid.nbCol), (int)(getHeight() * 0.8 / automate.grid.nbLine)));
                                             switch (automate.grid.getValeurCellule(row, col)) {
                                                 case "CENDRE":
                                                     cellPanel.setBackground(Color.GRAY);
