@@ -34,9 +34,20 @@ public class Grille {
 
         this.cellules = new Cellule[nbLine][nbCol];
         for (int i = 0; i < nbLine; i++) {
-            for (int j = 0; j < nbCol; j++) {
-                this.cellules[i][j] = new Cellule( etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
+            if (etat.getEtatChoisie().get(0).equals("Feu")) {
+                for (int j = 0; j < nbCol; j++) {
+                    if (Math.random() < 0.9) {
+                        this.cellules[i][j] = new Cellule(etat.getEtatByIndex(0));
+                    } else {
+                        this.cellules[i][j] = new Cellule(etat.getEtatByIndex(1));
+                    }
+                }
+            } else {
+                for (int j = 0; j < nbCol; j++) {
+                    this.cellules[i][j] = new Cellule(etat.getEtatByIndex((int) (Math.random() * etat.getEtatChoisie().size())));
+                }
             }
+
         }
     }
 
@@ -56,9 +67,9 @@ public class Grille {
     }
 
     /**
-     * @param coordonneeX coordonnée en X de la cellule
-     * @param coordonneeY coordonnée en Y de la cellule
-     * @return valeur de la cellule
+     * @param coordonneeX x coordiante of the cell
+     * @param coordonneeY y coordiante of the cell
+     * @return the value of the cell
      */
 
     public String getValeurCellule(int coordonneeX, int coordonneeY) {
@@ -81,7 +92,7 @@ public class Grille {
 
     /**
      * Constructeur a partir de une autre grille
-    * @param Oj une grille deja initialiser
+    * @param Oj une grille deja initialisée
     * */
     public Grille(Grille Oj) {
         this.etat = Oj.etat;
@@ -111,6 +122,30 @@ public class Grille {
                 this.cellules[i][j].setEtat(Oj.getValeurCellule(i,j));
             }
         }
+    }
+
+
+    /**
+     * @return true if the cell is neighbour of an Arbre
+     * @param x x coordiante of the cell
+     * @param y y coordiante of the cell
+     */
+    private boolean isNeighbourArbre(int x, int y) {
+        int[] dx = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] dy = {-1, -1, -1, 0, 0, 1, 1, 1};
+
+        for (int i = 0; i < 8; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (nx >= 0 && nx < nbLine && ny >= 0 && ny < nbCol && cellules[nx][ny] != null && cellules[nx][ny].getEtat().equals("Arbre")) {
+                if (Math.random() < 0.75) { // 3x chance to be Arbre
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 
