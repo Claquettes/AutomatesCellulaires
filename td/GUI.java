@@ -82,7 +82,7 @@ public class GUI extends JFrame {
                                 // supprimer les cellules précédentes
                                 SwingUtilities.invokeLater(() -> {
                                     secondaryPanel.removeAll();
-                                    secondaryPanel.setLayout(new GridLayout(rows, columns));
+                                    secondaryPanel.setLayout(new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Set the layout to a grid
                                     for (int row = 0; row < automate.grid.nbLine; row++) {
                                         for (int col = 0; col < automate.grid.nbCol; col++) {
                                             JPanel cellPanel = new JPanel();
@@ -109,6 +109,17 @@ public class GUI extends JFrame {
                                             secondaryPanel.add(cellPanel);
                                         }
                                     }
+
+                                    JButton backButton = new JButton("Retour");
+                                    backButton.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            //fermer le programme
+                                            System.exit(0);
+                                        }
+                                    });
+                                    secondaryPanel.add(backButton);
+
 
                                     secondaryPanel.revalidate(); // Update the panel after adding the cells
                                     secondaryPanel.repaint();
