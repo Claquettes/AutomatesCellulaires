@@ -54,13 +54,8 @@ public class AutomateFeu extends Automate{
         }else{
             this.grid = new Grille(2,this.nbCol,this.nbLigne,etatCellules);
         }
-
-        //met toutes les case à vide
-        for (int i = 0; i < this.grid.nbLigne; i++) {
-            for (int j = 0; j < this.grid.nbCol; j++) {
-                grid.setValeurCellule(i,j,etatCellules.getEtatByIndex(0));
-            }
-        }
+        //met a "vide"
+        met_toutes_cells_a(etatCellules.getEtatByIndex(0));
 
         //densiteForet bornée à 1
         if(densiteForet>1){
@@ -75,26 +70,17 @@ public class AutomateFeu extends Automate{
 
         int nbTotalCellules = grid.nbLigne * grid.nbCol;
         int nbArbres = (int) (nbTotalCellules * densiteForet);
-        if(nbArbres>nbTotalCellules){ nbArbres=nbTotalCellules; }
+
+        met_arbres_avec_densite(densiteForet);
+
         Random r = new Random();
         int X,Y;
-        int a = 0;
-        while( a < nbArbres ){
-            X = r.nextInt(0, grid.nbLigne-1);
-            Y = r.nextInt(0,grid.nbCol-1);
-
-            if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(1)) ){
-                grid.setValeurCellule(X,Y,etatCellules.getEtatByIndex(1));
-                a++;
-            }
-
-        }
 
         int f = 0;
         if(nbEnFeu<0){nbEnFeu = 0;}
         while( f < nbEnFeu ){
-            X = r.nextInt(0, grid.nbLigne-1);
-            Y = r.nextInt(0,grid.nbCol-1);
+            X = r.nextInt(0, grid.nbLigne);
+            Y = r.nextInt(0,grid.nbCol);
 
             if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(2)) ){
                 grid.setValeurCellule(X,Y,etatCellules.getEtatByIndex(2));
@@ -156,6 +142,70 @@ public class AutomateFeu extends Automate{
     }
 
     /**
+     * met toutes les cellules de la grille à l'etat passé en parametre
+     * @param etat string
+     */
+
+    public void met_toutes_cells_a(String etat){
+        //met toutes les case à vide
+        for (int i = 0; i < this.grid.nbLigne; i++) {
+            for (int j = 0; j < this.grid.nbCol; j++) {
+                grid.setValeurCellule(i, j, etat);
+            }
+        }
+    }
+
+    /**
+     * met des arbres dans la grille pour attendre la densité donnée
+     * @param densiteForet double compris entre 0 et 1
+     */
+    public void met_arbres_avec_densite(double densiteForet){
+        if(densiteForet<0){
+            densiteForet = 0;
+            return;
+        }
+        if( densiteForet > 1 ){  densiteForet=1;}
+
+        int nbTotalCellules = grid.nbLigne * grid.nbCol;
+        int nbArbres = (int) (nbTotalCellules * densiteForet);
+        Random r = new Random();
+        int X,Y;
+
+        if(densiteForet <= 0.5 ){
+            int a = 0;
+            while( a < nbArbres ){
+                X = r.nextInt(0, grid.nbLigne-1);
+                Y = r.nextInt(0,grid.nbCol-1);
+
+                if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(1)) ){
+                    grid.setValeurCellule(X,Y,etatCellules.getEtatByIndex(1));
+                    a++;
+                }
+
+            }
+        }
+
+
+        if(densiteForet > 0.5 ){
+            met_toutes_cells_a(this.etatCellules.getEtatByIndex(1));
+            int a_enlev = 0;
+            int nbArbres_a_enlev = (int) (nbTotalCellules * (1-densiteForet) );
+
+            while( a_enlev < nbArbres_a_enlev ){
+                X = r.nextInt(0, grid.nbLigne);
+                Y = r.nextInt(0,grid.nbCol);
+
+                if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(0)) ){
+                    grid.setValeurCellule(X,Y,etatCellules.getEtatByIndex(0));
+                    a_enlev++;
+                }
+
+            }
+        }
+
+    }
+
+    /**
      * initialise les Map qui vont etre utilisées pour tester si il y a feu
      * dans la dirrection d'ou vient le vent ou la dirrection opposée
      */
@@ -188,12 +238,12 @@ public class AutomateFeu extends Automate{
         this.listeClesValeursIndexVent= new HashMap<>();
         this.listeClesValeursIndexVentOppose = new HashMap<>();
         int compteur = 0;
-        for (String dir : directions) {
+        for (String dir : directionsCorrespondantes) {
             listeClesValeursIndexVent.put(dir, compteur);
             compteur++;
         }
         compteur = 0;
-        for (String dirOPOSEE : directionsOPPOSE) {
+        for (String dirOPOSEE : directionsOPPOSEESCorrespondantes) {
             listeClesValeursIndexVentOppose.put(dirOPOSEE, compteur);
             compteur++;
         }

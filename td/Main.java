@@ -16,12 +16,12 @@ public class Main {
         //test.afficher();
          */
 
-        AutomateFeu FeuAutomateTest = new AutomateFeu(4, 12, 12 , 0.5, "Est", 1, 0.8, 0,4);
+        AutomateFeu FeuAutomateTest = new AutomateFeu(4, 20, 20, 0.9, "Est", 1, 1, 0.01,6);
         //System.out.println(FeuAutomateTest);
         for (int i = 0; i < 10; i++) {
             System.out.println(FeuAutomateTest);
             FeuAutomateTest.miseAJour();
-            int millis = 4500;
+            int millis = 3000;
             try {
                 Thread.sleep(millis);
             } catch (InterruptedException ie) {
