@@ -69,7 +69,7 @@ public class GUI extends JFrame {
                     secondaryPanel.add(label_regle);
                     secondaryPanel.add(textField_regle);
                     secondaryPanel.add(secondaryValidateButton);
-                    cardLayout.next(panel);
+                    cardLayout.show(panel, "secondaryPanel");
                 } else {
                     Automate automate = new Automate(selectedOption, columns, rows);
 
@@ -109,9 +109,9 @@ public class GUI extends JFrame {
                                             secondaryPanel.add(cellPanel);
                                         }
                                     }
+
                                     secondaryPanel.revalidate(); // Update the panel after adding the cells
                                     secondaryPanel.repaint();
-                                    secondaryPanel.getParent().repaint();
                                 });
 
                                 Thread.sleep(250); // Wait for 1 second
@@ -119,6 +119,8 @@ public class GUI extends JFrame {
                             return null;
                         }
                     }.execute();
+
+                    cardLayout.show(panel, "secondaryPanel");
                 }
             }
         });
