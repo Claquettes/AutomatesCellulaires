@@ -34,27 +34,11 @@ public class Automate {
             // this.grid = new Grille(2, 8, new EtatCellule("FEU"));
             System.out.println("Création de l'automate " + name + " en mode prédéfini");
 
-            //Grille grille = new Grille(2, 8, etatFeu);
-            //8
+            
             this.grid = new Grille(2, this.nbCol, this.nbLigne, etatFeu);
             this.gridCopy = new Grille(grid);
 
-            System.out.println(grid);
-            System.out.print(gridCopy);
 
-            for (int i = 0; i < 5; i++) {
-                miseAJour();
-                System.out.println(grid);
-                /*try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
-            }
-
-            //System.out.println(grid.getCellules());
-            // we quit the program
-            System.exit(0);
         }
         if (name.equals("CONWAY")) {
             // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
@@ -80,17 +64,7 @@ public class Automate {
             this.grid = new Grille(1, this.nbCol,1,  etat1D);
             this.gridCopy = new Grille(grid);
 
-            //System.out.println(grid);
-
-            for (int i = 0; i < 5; i++) {
-                miseAJour();
-                System.out.println(grid);
-            }
-
-            //System.out.print(gridCopy);
-            //System.out.println(grid.getCellules());
-            // we quit the program
-            System.exit(0);
+            
         } else {
             System.out.println("Erreur : nom d'automate inconnu...");
         }
