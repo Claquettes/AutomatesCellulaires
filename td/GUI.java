@@ -66,6 +66,11 @@ public class GUI extends JFrame {
                     cardLayout.next(panel);
                 } else {
                     Automate automate = new Automate(selectedOption, columns, rows);
+
+                    for (int i = 0; i < 50; i++) {
+                        automate.miseAJour();
+                        System.out.println(automate.grid);
+                    }
                 }
             }
         });
@@ -84,7 +89,12 @@ public class GUI extends JFrame {
                 int regle = Integer.parseInt(textField_regle.getText());
                 int col = Integer.parseInt(textField1.getText());
                 
-                Automate automate1D = new Automate("1D", neighbors, regle, col);
+                Automate automate = new Automate("1D", neighbors, regle, col);
+
+                for (int i = 0; i < 50; i++) {
+                    automate.miseAJour();
+                    System.out.println(automate.grid);
+                }
             }
         });
 
