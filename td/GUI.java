@@ -158,6 +158,18 @@ public class GUI extends JFrame {
                                     }
                                     secondaryPanel.add(cellPanel);
                                 }
+
+                                // Add a "Back" button at the end
+                                JButton backButton = new JButton("Retour");
+                                backButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        //fermer le programme
+                                        System.exit(0);
+                                    }
+                                });
+                                secondaryPanel.add(backButton);
+
                                 secondaryPanel.revalidate(); // Update the panel after adding the cells
                                 secondaryPanel.repaint();
                             });
