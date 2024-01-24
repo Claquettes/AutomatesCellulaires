@@ -22,7 +22,7 @@ public class GUI extends JFrame {
     public GUI() {
         super("Automates cellulaires");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(800, 600);
+        this.setSize(1000, 800);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         // set look 
@@ -79,10 +79,13 @@ public class GUI extends JFrame {
                             for (int i = 0; i < 50; i++) {
                                 automate.miseAJour();
 
-                                // supprimer les cellules précédentes
                                 SwingUtilities.invokeLater(() -> {
                                     secondaryPanel.removeAll();
-                                    secondaryPanel.setLayout(new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Set the layout to a grid
+                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the layout to BoxLayout
+
+                                    JPanel gridPanel = new JPanel(new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Create a new panel with a GridLayout
+                                    gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum size to avoid taking up the whole window
+
                                     for (int row = 0; row < automate.grid.nbLine; row++) {
                                         for (int col = 0; col < automate.grid.nbCol; col++) {
                                             JPanel cellPanel = new JPanel();
@@ -106,7 +109,7 @@ public class GUI extends JFrame {
                                                     break;
                                             }
 
-                                            secondaryPanel.add(cellPanel);
+                                            gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
                                         }
                                     }
 
@@ -118,8 +121,10 @@ public class GUI extends JFrame {
                                             System.exit(0);
                                         }
                                     });
-                                    secondaryPanel.add(backButton);
 
+                                    secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical spacer
+                                    secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
 
                                     secondaryPanel.revalidate(); // Update the panel after adding the cells
                                     secondaryPanel.repaint();
@@ -161,6 +166,11 @@ public class GUI extends JFrame {
                             // supprimer les cellules précédentes
                             SwingUtilities.invokeLater(() -> {
                                 secondaryPanel.removeAll();
+                                secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the layout to BoxLayout
+
+                                JPanel gridPanel = new JPanel(new GridLayout(1, automate.grid.nbCol)); // Create a new panel with a GridLayout
+                                gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum size to avoid taking up the whole window
+
                                 for (int j = 0; j < automate.grid.nbCol; j++) {
                                     JPanel cellPanel = new JPanel();
                                     cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a square
@@ -169,7 +179,7 @@ public class GUI extends JFrame {
                                     } else {
                                         cellPanel.setBackground(Color.WHITE);
                                     }
-                                    secondaryPanel.add(cellPanel);
+                                    gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
                                 }
 
                                 // Add a "Back" button at the end
@@ -181,7 +191,9 @@ public class GUI extends JFrame {
                                         System.exit(0);
                                     }
                                 });
-                                secondaryPanel.add(backButton);
+                                secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical spacer
+                                secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
 
                                 secondaryPanel.revalidate(); // Update the panel after adding the cells
                                 secondaryPanel.repaint();
