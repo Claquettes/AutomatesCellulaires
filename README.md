@@ -18,7 +18,60 @@ Le projet est organisé en plusieurs classes Java :
 
 ## Comment Exécuter
 
-Pour exécuter le projet, compilez et exécutez la classe `Main.java`. Vous pourrez ensuite sélectionner le mode d'interface utilisateur que vous souhaitez utiliser : console ou graphique.
+### Prérequis
+
+#### Sous Linux
+
+- Ouvrez un terminal et exécutez la commande suivante pour installer Java :
+
+```bash
+sudo apt install default-jre
+```
+
+- Vérifiez que Java est installé en exécutant la commande suivante :
+
+```bash
+java --version
+```
+
+- Si Java est installé, vous devriez voir quelque chose comme ceci :
+
+```bash
+openjdk 11.0.11 2021-04-20
+OpenJDK Runtime Environment (build 11.0.11+9-Ubuntu-0ubuntu2.20.04)
+OpenJDK 64-Bit Server VM (build 11.0.11+9-Ubuntu-0ubuntu2.20.04, mixed mode, sharing)
+```
+
+#### Sous Windows et MacOS
+
+- Téléchargez et installez Java 17 ou supérieur à partir du lien suivant : https://www.oracle.com/java/technologies/downloads/#java17
+
+- Vérifiez que Java est installé en exécutant la commande suivante :
+
+```bash
+java --version
+```
+
+- Si Java est installé, vous devriez voir quelque chose comme ceci :
+
+```bash
+openjdk 17.0.1 2021-10-19
+OpenJDK Runtime Environment (build 17.0.1+12-39)
+OpenJDK 64-Bit Server VM (build 17.0.1+12-39, mixed mode, sharing)
+```
+
+### Compilation
+
+Pour exécuter le projet, compilez et exécutez la classe `Main.java`. Utilisez les commandes suivantes :
+
+```bash
+javac Main.java
+java Main
+```
+
+Veillez à bien exécuter ces commandes dans le dossier `td` du projet.
+
+Vous pourrez ensuite sélectionner le mode d'interface utilisateur que vous souhaitez utiliser : console ou graphique.
 
 ## Modèles
 
