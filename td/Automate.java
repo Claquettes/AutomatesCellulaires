@@ -324,9 +324,37 @@ public class Automate {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
 
+    }
+    @Override
+    public String toString() {
+        String esp = "  ";
+        String diff = " \t";
+        if( nombreVoisins == 6 ){
+            diff = "  ";
+        }
+        String grilleString = "---------------------------------------\n";
+        for (int i = 0; i < nbLigne ; i++) {
+            esp ="  ";
+            //pour l'affichage hexagonal
+            if( nombreVoisins ==6 && (i % 2 == 0 )){
+                grilleString += "   ";
+                esp = "  ";
+            }
+            if( nombreVoisins != 6){
+                esp="";
+            }
 
+            for (int j = 0; j < nbCol; j++) {
+                //grilleString += this.grid.getValeurCellule(i,j);
+                grilleString += esp + this.grid.getValeurCellule(i,j);
+                grilleString += diff;
+                //grilleString += " \t";
+            }
+            grilleString += "\n";
+        }
+        grilleString += "\n---------------------------------------\n";
 
-
+        return grilleString;
     }
 
 }
