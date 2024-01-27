@@ -1,6 +1,14 @@
 package AutomatesCellulaires.td;
+import AutomatesCellulaires.td.Automate;
 
 import java.util.Scanner;
+import AutomatesCellulaires.td.EtatCellule;
+import AutomatesCellulaires.td.Cellule;
+import AutomatesCellulaires.td.Automate;
+import AutomatesCellulaires.td.UserInterface;
+import AutomatesCellulaires.td.GUI;
+import AutomatesCellulaires.td.Grille;
+
 
 /**
  * This class represents the UserInterface of the AutomatesCellulaires

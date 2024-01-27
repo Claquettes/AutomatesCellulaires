@@ -1,4 +1,11 @@
 package AutomatesCellulaires.td;
+import AutomatesCellulaires.td.EtatCellule;
+import AutomatesCellulaires.td.Cellule;
+import AutomatesCellulaires.td.Automate;
+import AutomatesCellulaires.td.UserInterface;
+import AutomatesCellulaires.td.GUI;
+import AutomatesCellulaires.td.Grille;
+
 
 /**
  * This class represents a Coordinate in a multi-dimensional space.

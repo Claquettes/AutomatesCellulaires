@@ -1,4 +1,11 @@
 package AutomatesCellulaires.td;
+import AutomatesCellulaires.td.EtatCellule;
+import AutomatesCellulaires.td.Cellule;
+import AutomatesCellulaires.td.Automate;
+import AutomatesCellulaires.td.UserInterface;
+import AutomatesCellulaires.td.GUI;
+import AutomatesCellulaires.td.Grille;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
