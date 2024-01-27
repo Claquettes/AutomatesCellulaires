@@ -1,3 +1,7 @@
+/**
+ * The Main class of the AutomatesCellulaires application.
+ * This class is responsible for initializing the UserInterface.
+ */
 package AutomatesCellulaires.td;
 
 import AutomatesCellulaires.td.EtatCellule;
@@ -6,33 +10,13 @@ import AutomatesCellulaires.td.Cellule;
 import java.util.Arrays;
 
 public class Main {
+    /**
+     * The main method of the AutomatesCellulaires application.
+     * This method is the entry point of the application and is responsible for creating an instance of the UserInterface.
+     *
+     * @param args An array of command-line arguments for the application.
+     */
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
-
-        /*EtatCellule etat1 = new EtatCellule("FEU");
-        System.out.print(etat1.getEtatChoisie());
-        int nbDeVoisins = 2;
-        LocalRule LocalRule1 = new LocalRule(etat1.getEtatChoisie(), nbDeVoisins,"FEU");
-        LocalRule1.afficher();
-
-        EtatCellule etat0et1 = new EtatCellule("1D");
-        //170
-        LocalRule LocalRule2 = new LocalRule(etat0et1.getEtatChoisie(), nbDeVoisins,170);
-
-        System.out.print("\n");
-        LocalRule2.afficher();
-
-        System.out.print("etat: 1;0;"+ " etat suivant "+LocalRule2.getEtatSuivant("1;0;"));
-        String valStr= LocalRule2.listeClesValeurs.get(" 0 0 0 ");
-        String t =" 0 0 0 ";
-        t ="0;0;0;;;";
-        String[] a = t.split(";");
-        System.out.print(a.length);
-        System.out.print(" array ");//+valStr.isEmpty()+" empty \n");
-        if(!valStr.isEmpty()){
-            System.out.print(valStr);
-        }*/
-
-
     }
 }
