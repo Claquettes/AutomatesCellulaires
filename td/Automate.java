@@ -95,30 +95,43 @@ public class Automate {
      * Constructor for the Automate class.
      */
     public Automate(Integer nombreVoisins, Integer nbCol, Integer nbLigne, String localRuleName ) {
-        EtatCellule etatCellulesIci = new EtatCellule("1D");
-        if(etatCellulesIci.getEtatChoisie().isEmpty()){
-            return;
-            //erreur de construction
-        }
 
-        LocalRule LocalRuleM;
         if(localRuleName.equals("MAJORITE")){
+            LocalRule LocalRuleM;
+            EtatCellule etatCellulesIci = new EtatCellule("1D");
             LocalRuleM = new LocalRule(etatCellulesIci.getEtatChoisie(),nombreVoisins,"MAJORITE");
+            this.etatCellules = etatCellulesIci;
+
+            if(nbLigne==1){
+                this.grid = new Grille(1,nbCol,nbLigne,etatCellulesIci);
+            }else{
+                this.grid = new Grille(2,nbCol,nbLigne,etatCellulesIci);
+            }
+            this.nbCol = nbCol;
+            this.nbLigne = nbLigne;
+
             this.localRule = LocalRuleM;
+            this.nombreVoisins = nombreVoisins;
+
+            this.gridCopy = new Grille(grid);
+        }
+        if(localRuleName.equals("CONWAY") || localRuleName.equals("VIE")){
+            LocalRule LocalRuleM;
+            EtatCellule etatCellulesIci = new EtatCellule("1D");
+            LocalRuleM = new LocalRule(etatCellulesIci.getEtatChoisie(),8,"VIE");
+            this.etatCellules = etatCellulesIci;
+
+            this.grid = new Grille(2,nbCol,nbLigne,etatCellulesIci);
+
+            this.nbCol = nbCol;
+            this.nbLigne = nbLigne;
+
+            this.localRule = LocalRuleM;
+            this.nombreVoisins = 8;
+            this.gridCopy = new Grille(grid);
         }
 
-        this.etatCellules = etatCellulesIci;
 
-
-        this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
-
-        this.nbCol = nbCol;
-        this.nbLigne = nbLigne;
-
-
-        this.nombreVoisins = nombreVoisins;
-
-        this.gridCopy = new Grille(grid);
 
     }
 

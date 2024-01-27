@@ -1,5 +1,6 @@
 package AutomatesCellulaires.td;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -29,7 +30,7 @@ public class UserInterface {
         System.out.println("Appuyez sur F pour lancer le modèle de feu");
         System.out.println("Appuyez sur C pour lancer le modèle de conway");
         System.out.println("Appuyez sur 1D pour lancer le modèle 1D");
-        System.out.println("Appuyez sur Maj pour lancer le modèle avec la Regle de");
+        System.out.println("Ecruvez MAJO pour lancer le modèle avec la Regle de Majorité");
         System.out.println("Appuyez sur Q pour quitter");
     }
 
@@ -53,76 +54,207 @@ public class UserInterface {
                 if(input2.equals("Y") || input2.equals("y")){
                     nbCol = 10;
                     nbLigne = 5;
-                }else{
+                    System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                    int nbIt = scanner.nextInt();
+                    boolean nbItOk = (nbIt>0 );
+                    while (nbItOk != true){
+                        System.out.println("Donner un nombre possitif non nul");
+                        nbIt = scanner.nextInt();
+                        nbItOk = (nbIt>0 );
+                    }
+                    //Integer nombreDeVoisins, Integer nbCol, Integer nbLigne , double densiteForet, String p_directionVent, double p_forceVent, double p_ProbaPropagationFeu, double q_ProbaCombustion, int nbEnFeu
+                    Automate automateFeu = new AutomateFeu(4, 12, 12 , 0.75, "Est", 0.8, 0.6, 0, 4);
+
+                    // La boucle qui fait tourner le modèle
+                    System.out.println(automateFeu);
+                    for (int i = 0; i < nbIt; i++) {
+                        automateFeu.miseAJour();
+                        int millis = 3000;
+                        try {
+                            Thread.sleep(millis);
+                        } catch (InterruptedException ie) {
+                            // ...
+                        }
+                        System.out.println(automateFeu);
+
+                    }
+                    // Exit the program
+                    System.exit(0);
+
+                }else {
                     System.out.println("Veuillez entrer le nombre de colonnes de la grille");
                     nbCol = scanner.nextInt();
-                    if(nbCol < 1){
+                    if (nbCol < 1) {
                         System.out.println("Le nombre de colonnes doit être supérieur à 0");
                         System.exit(0);
                     }
                     System.out.println("Veuillez entrer le nombre de lignes de la grille");
                     nbLigne = scanner.nextInt();
-                    if(nbLigne < 0){
+                    if (nbLigne < 0) {
                         System.out.println("Le nombre de lignes doit être supérieur à 0");
                         System.exit(0);
                     }
 
-                }
-                System.out.println("Quel est le nombre de iterations que vous voulez (min 1) ?");
-                int nbIt = scanner.nextInt();
-                boolean nbItOk = (nbIt>0 );
-                while (nbItOk != true){
-                    System.out.println("Donner un nombre possitif non nul");
-                    nbIt = scanner.nextInt();
-                    nbItOk = (nbIt>0 );
-                }
-                //Integer nombreDeVoisins, Integer nbCol, Integer nbLigne , double densiteForet, String p_directionVent, double p_forceVent, double p_ProbaPropagationFeu, double q_ProbaCombustion, int nbEnFeu
-                Automate automateFeu = new AutomateFeu(4, 12, 12 , 0.75, "Est", 0.8, 0.6, 0, 4);
-
-                // La boucle qui fait tourner le modèle
-                System.out.println(automateFeu);
-                for (int i = 0; i < nbIt; i++) {
-                    automateFeu.miseAJour();
-                    int millis = 3000;
-                    try {
-                        Thread.sleep(millis);
-                    } catch (InterruptedException ie) {
-                        // ...
+                    System.out.println("Quel est le nombre de voisins que vous voulez utiliser soit 4,6 ou 8 ?");
+                    int neighbours = scanner.nextInt();
+                    boolean nbNeighboursOk = (neighbours == 4 || neighbours == 6 || neighbours == 8 );
+                    while (nbNeighboursOk != true){
+                        System.out.println("Donner un nombre de voisins 4, 6 ou 8");
+                        neighbours = scanner.nextInt();
+                        nbNeighboursOk = (neighbours == 4 || neighbours == 6 || neighbours == 8 );
                     }
+                    String[] directions = { "Nord", "Est", "Sud", "Ouest", "Nord-Est", "Sud-Est", "Nord-Ouest", "Sud-Ouest" };
+                    String[] directions_6 = { "Est", "Ouest", "Nord-Est", "Sud-Est", "Nord-Ouest", "Sud-Ouest" };
+                    String[] directions_4 = { "Nord", "Est", "Sud", "Ouest" };
+                    int indiceVent;
+                    boolean dirVentOk;
+                    String VentChoisit;
+                    switch (neighbours){
+                        case 4:
+                            for (int i=0 ; i<directions_4.length;i++){System.out.print("  " + i + ": " + directions_4[i] );}
+
+                            System.out.println( "\n" + "Veuillez entrer l'indice d'ou vient le vent");
+                            indiceVent = scanner.nextInt();
+                            dirVentOk = (indiceVent>=0 && indiceVent<4);
+                            while (dirVentOk != true){
+                                System.out.println("l'indice du de la dirrection d'ou vient le vent ");
+                                indiceVent = scanner.nextInt();
+                                dirVentOk = (indiceVent>=0 && indiceVent<4);
+                            }
+                            VentChoisit = directions_4[indiceVent];
+                            break;
+                        case 6:
+                            for (int i=0 ; i<directions_6.length;i++){System.out.print("  " + i + ": " + directions_6[i] );}
+                            System.out.println("\n"+" Veuillez entrer l'indice d'ou vient le vent");
+                            indiceVent = scanner.nextInt();
+                            dirVentOk = (indiceVent>=0 && indiceVent<6);
+                            while (dirVentOk != true){
+                                System.out.println("l'indice du de la dirrection d'ou vient le vent ");
+                                indiceVent = scanner.nextInt();
+                                dirVentOk = (indiceVent>=0 && indiceVent<6);
+                            }
+                            VentChoisit = directions_6[indiceVent];
+                            break;
+                        default:
+                            for (int i=0 ; i<directions.length;i++){System.out.print("  " + i + ": " + directions[i] );}
+                            System.out.println("\n"+" Veuillez entrer l'indice d'ou vient le vent");
+                            indiceVent = scanner.nextInt();
+                            dirVentOk = (indiceVent>=0 && indiceVent<8);
+                            while (dirVentOk != true){
+                                System.out.println("l'indice du de la dirrection d'ou vient le vent ");
+                                indiceVent = scanner.nextInt();
+                                dirVentOk = (indiceVent>=0 && indiceVent<8);
+                            }
+                            VentChoisit = directions[indiceVent];
+                    }
+
+                    System.out.println("Quel est la densité de la foret (entre 0 et 1) METTRE UNE VIRGULE  ?");
+                    double densite;
+                    try {
+                        densite = scanner.nextDouble();
+                        boolean densiteOK = ( densite>=0 && densite<=1 );
+                        while (densiteOK != true){
+                            System.out.println("Donner une densité entre 0 et 1");
+                            densite = scanner.nextDouble();
+                            densiteOK = ( densite>=0 && densite<=1 );
+                        }
+                    } catch (InputMismatchException e) {
+                        densite = 0.8;
+                        System.out.println(" par defaut 0.8   Veuillez entrer un nombre valide avec une vigule");
+                        scanner.next();
+                    }
+
+
+                    System.out.println("Quel est la probabilité de autocombustion d'un arbre? (entre 0 et 1)  avec virgule ?");
+                    double pCom;
+                    try {
+                        pCom = scanner.nextDouble();
+                        boolean pComOK = ( pCom>=0 && pCom<=1 );
+                        while (pComOK != true){
+                            System.out.println("Donner une densité entre 0 et 1");
+                            pCom = scanner.nextDouble();
+                            pComOK = ( pCom>=0 && pCom<=1 );
+                        }
+                    } catch (InputMismatchException e) {
+                        pCom = 0.1;
+                        System.out.println("Par defaut 0.1 pour la prochaine Veuillez entrer un nombre valide avec une vigule");
+                        scanner.next();
+                    }
+
+
+
+                    System.out.println("Quel est la probabilité de propagation du Feu? (entre 0 et 1) ?");
+                    double pPropagation;
+                    try {
+                        pPropagation = scanner.nextDouble();
+                        boolean pPropagationOK = ( pPropagation>=0 && pPropagation<=1 );
+                        while (pPropagationOK != true){
+                            System.out.println("Donner une densité entre 0 et 1");
+                            pPropagation = scanner.nextDouble();
+                            pPropagationOK = ( pPropagation>=0 && pPropagation<=1 );
+                        }
+                    } catch (InputMismatchException e) {
+                        pPropagation = 0.6;
+                        System.out.println("Veuillez entrer un nombre valide avec une vigule pour la prochaine fois par defaut 0.6");
+                        scanner.next();
+                    }
+
+
+
+                    System.out.println("Veuillez donner la force du vent ");
+                    double ForceVent;
+                    try {
+                            ForceVent = scanner.nextDouble();
+                    } catch (InputMismatchException e) {
+                        ForceVent = 0.8;
+                        System.out.println("valeur par defaut 0.8 Veuillez entrer un nombre valide avec une vigule");
+                        scanner.next();
+                    }
+
+
+
+                    System.out.println("Donner le nombre de arbres en feu ");
+
+                    int nbEnFeu = scanner.nextInt();
+                    if(nbEnFeu<0){
+                        nbEnFeu = 0;
+                    }
+
+
+                    Automate automateFeu = new AutomateFeu(neighbours, nbCol, nbLigne , densite, VentChoisit, ForceVent, pPropagation, pCom, nbEnFeu);
+
+
+                    System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                    int nbIt = scanner.nextInt();
+                    boolean nbItOk = (nbIt > 0);
+                    while (nbItOk != true) {
+                        System.out.println("Donner un nombre possitif non nul");
+                        nbIt = scanner.nextInt();
+                        nbItOk = (nbIt > 0);
+                    }
+
+
+                    // La boucle qui fait tourner le modèle
                     System.out.println(automateFeu);
+                    for (int i = 0; i < nbIt; i++) {
+                        automateFeu.miseAJour();
+                        int millis = 3000;
+                        try {
+                            Thread.sleep(millis);
+                        } catch (InterruptedException ie) {
+                            // ...
+                        }
+                        System.out.println(automateFeu);
 
+                    }
+                    // Exit the program
+                    System.exit(0);
                 }
-
-                // Exit the program
-                System.exit(0);
-
-
-
-                System.out.println("Quel est le nombrede voisins que vous voulez utiliser soit 4,6 ou 8 ?");
-                int neighbours = scanner.nextInt();
-                boolean nbNeighboursOk = (neighbours == 4 || neighbours==6 || neighbours==8 );
-                while (nbNeighboursOk != true){
-                    System.out.println("Donner un nombre de voisins 4, 6 ou 8");
-                    neighbours = scanner.nextInt();
-                    nbNeighboursOk = (neighbours == 4 || neighbours==6 || neighbours==8 );
-                }
-
-                //Integer nombreDeVoisins, Integer nbCol, Integer nbLigne , double densiteForet, String p_directionVent, double p_forceVent, double p_ProbaPropagationFeu, double q_ProbaCombustion, int nbEnFeu
-                Automate automateFeuDef = new Automate("Feu", nbCol, nbLigne);
-
-                // La boucle qui fait tourner le modèle
-                for (int i = 0; i < 100; i++) {
-                    automateFeu.miseAJour();
-                    System.out.println(automateFeuDef.grid);
-                }
-
-                // Exit the program
-                System.exit(0);
             }
             if (input.equals("C")) {
                 System.out.println("Lancement du modèle de conway");
             }
-            if (input.equals("Maj")) {
+            if (input.equals("MAJO")) {
                 System.out.println("Voulez vous utiliser la taille par défault pour la grille (10*5) ? (Y/N)");
                 String input2 = scanner.nextLine();
                 if(input2.equals("Y") || input2.equals("y")){
@@ -152,8 +284,17 @@ public class UserInterface {
                 }
                 Automate automateMAJO = new Automate(neighbours, nbCol,nbLigne, "MAJORITE" );
 
+                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                int nbIt = scanner.nextInt();
+                boolean nbItOk = (nbIt>0 );
+                while (nbItOk != true){
+                    System.out.println("Donner un nombre possitif non nul");
+                    nbIt = scanner.nextInt();
+                    nbItOk = (nbIt>0 );
+                }
+
                 // La boucle qui fait tourner le modèle
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < nbIt; i++) {
                     automateMAJO.miseAJour();
                     System.out.println(automateMAJO.grid);
                 }
