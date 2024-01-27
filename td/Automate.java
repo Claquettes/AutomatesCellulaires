@@ -19,7 +19,12 @@ public class Automate {
     protected Integer nbCol = 10;
     protected Integer nbLigne = 5;
 
-
+    /**
+     * Constructor for the Automate class.
+     * @param name
+     * @param nbCol
+     * @param nbLigne
+     */
     public Automate(String name, Integer nbCol,Integer nbLigne) {
         this.nbCol = nbCol;
         this.nbLigne = nbLigne;
@@ -66,7 +71,7 @@ public class Automate {
     }
 
     /**
-     * Constructeur générique de Automate
+     * Constructor for the Automate class.
      */
     public Automate(LocalRule localRule, Integer nombreVoisins, EtatCellule etatCellules, Integer nbCol, Integer nbLigne) {
         this.etatCellules = etatCellules;
@@ -86,6 +91,9 @@ public class Automate {
 
     }
 
+    /**
+     * Constructor for the Automate class.
+     */
     public Automate(Integer nombreVoisins, Integer nbCol, Integer nbLigne, String localRuleName ) {
         EtatCellule etatCellulesIci = new EtatCellule("1D");
         if(etatCellulesIci.getEtatChoisie().isEmpty()){
@@ -141,7 +149,7 @@ public class Automate {
     }
 
     /**
-     * constructeur partiel qui met le nbLigne et nbCol selon les parametres et le reste à null
+     * Constructor for the Automate class.
      * @param nbCol
      * @param nbLigne
      */
@@ -275,6 +283,9 @@ public class Automate {
 
 
     @Override
+    /**
+     * Returns a string representation of the Automate.
+     */
     public String toString() {
         String esp = "  ";
         String diff = " \t";

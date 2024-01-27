@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * The GUI class of the AutomatesCellulaires application.
+ */
 public class GUI extends JFrame {
 
     private JComboBox<String> comboBox;
@@ -19,13 +22,17 @@ public class GUI extends JFrame {
     private JPanel panel;
     private CardLayout cardLayout;
 
+    /**
+     * The constructor of the GUI class.
+     * This constructor is responsible for initializing the GUI.
+     */
     public GUI() {
         super("Automates cellulaires");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000, 800);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        // set look 
+        // set look
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -42,7 +49,7 @@ public class GUI extends JFrame {
         JLabel label2 = new JLabel("Nombre de colonnes:");
         JLabel label3 = new JLabel("Nombre de lignes:");
 
-        String[] options = {"Feu", "Conway", "1D"};
+        String[] options = { "Feu", "Conway", "1D" };
         comboBox = new JComboBox<>(options);
 
         textField1 = new JTextField(10);
@@ -56,6 +63,10 @@ public class GUI extends JFrame {
 
         validateButton.addActionListener(new ActionListener() {
             @Override
+            /**
+             * This method is called when the validateButton is clicked.
+             * @param e
+             */
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) comboBox.getSelectedItem();
                 int columns = Integer.parseInt(textField1.getText());
@@ -81,14 +92,24 @@ public class GUI extends JFrame {
 
                                 SwingUtilities.invokeLater(() -> {
                                     secondaryPanel.removeAll();
-                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the layout to BoxLayout
+                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set
+                                                                                                               // the
+                                                                                                               // layout
+                                                                                                               // to
+                                                                                                               // BoxLayout
 
-                                    JPanel gridPanel = new JPanel(new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Create a new panel with a GridLayout
-                                    gridPanel.setMaximumSize(new Dimension((int)(getWidth() * 0.8), (int)(getHeight() * 0.8)));
+                                    JPanel gridPanel = new JPanel(
+                                            new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Create a new
+                                                                                                        // panel with a
+                                                                                                        // GridLayout
+                                    gridPanel.setMaximumSize(
+                                            new Dimension((int) (getWidth() * 0.8), (int) (getHeight() * 0.8)));
                                     for (int row = 0; row < automate.grid.nbLine; row++) {
                                         for (int col = 0; col < automate.grid.nbCol; col++) {
                                             JPanel cellPanel = new JPanel();
-                                            cellPanel.setPreferredSize(new Dimension((int)(getWidth() * 0.8 / automate.grid.nbCol), (int)(getHeight() * 0.8 / automate.grid.nbLine)));
+                                            cellPanel.setPreferredSize(
+                                                    new Dimension((int) (getWidth() * 0.8 / automate.grid.nbCol),
+                                                            (int) (getHeight() * 0.8 / automate.grid.nbLine)));
                                             switch (automate.grid.getValeurCellule(row, col)) {
                                                 case "CENDRE":
                                                     cellPanel.setBackground(Color.GRAY);
@@ -115,13 +136,14 @@ public class GUI extends JFrame {
                                     backButton.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            //fermer le programme
+                                            // fermer le programme
                                             System.exit(0);
                                         }
                                     });
 
                                     secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
-                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical spacer
+                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical
+                                                                                                   // spacer
                                     secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
 
                                     secondaryPanel.revalidate(); // Update the panel after adding the cells
@@ -164,14 +186,22 @@ public class GUI extends JFrame {
                             // supprimer les cellules précédentes
                             SwingUtilities.invokeLater(() -> {
                                 secondaryPanel.removeAll();
-                                secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the layout to BoxLayout
+                                secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the
+                                                                                                           // layout to
+                                                                                                           // BoxLayout
 
-                                JPanel gridPanel = new JPanel(new GridLayout(1, automate.grid.nbCol)); // Create a new panel with a GridLayout
-                                gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum size to avoid taking up the whole window
+                                JPanel gridPanel = new JPanel(new GridLayout(1, automate.grid.nbCol)); // Create a new
+                                                                                                       // panel with a
+                                                                                                       // GridLayout
+                                gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum
+                                                                                                       // size to avoid
+                                                                                                       // taking up the
+                                                                                                       // whole window
 
                                 for (int j = 0; j < automate.grid.nbCol; j++) {
                                     JPanel cellPanel = new JPanel();
-                                    cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a square
+                                    cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a
+                                                                                       // square
                                     if (automate.grid.getValeurCellule(0, j) == "1") {
                                         cellPanel.setBackground(Color.BLACK);
                                     } else {
@@ -185,7 +215,7 @@ public class GUI extends JFrame {
                                 backButton.addActionListener(new ActionListener() {
                                     @Override
                                     public void actionPerformed(ActionEvent e) {
-                                        //fermer le programme
+                                        // fermer le programme
                                         System.exit(0);
                                     }
                                 });
