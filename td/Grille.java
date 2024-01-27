@@ -14,6 +14,7 @@ public class Grille {
     public int nbLine;
     private Cellule[][] cellules;
 
+
     /**
      * Constructor for the Grille class.
      * It initializes the Grille with a given dimension, number of columns, number
@@ -69,8 +70,7 @@ public class Grille {
      * @param coordonneeY The y-coordinate of the Cell.
      * @return The value of the Cell at the given coordinates.
      */
-    public String getValeurCellule(int coordonneeX, int coordonneeY) {
-
+    public String getValeurCellule(int coordonneeX, int coordonneeY) { 
         if (coordonneeX < 0 || coordonneeX >= nbLine || coordonneeY < 0 || coordonneeY >= nbCol) {
             return etat.getEtatByIndex(0);
         }
@@ -100,7 +100,7 @@ public class Grille {
         this.nbCol = Oj.nbCol;
         this.cellules = new Cellule[nbLine][nbCol];
         String etat;
-        for (int i = 0; i < nbLine; i++) {
+        for (int i = 0; i < nbLigne; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule(Oj.getValeurCellule(i, j));
             }

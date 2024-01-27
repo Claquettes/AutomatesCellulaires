@@ -12,6 +12,7 @@ public class LocalRule {
     Map<String, String> listeClesValeurs;
 
     /**
+
      * Generates all combinations of a given size from a list of values.
      * 
      * @param valeurs           The list of values to generate combinations from.
@@ -20,24 +21,22 @@ public class LocalRule {
      * @param CombinaisonInit   The initial combination.
      * @return A list of all generated combinations.
      */
-    public static List<String> genererToutesLesCombinaisons(List<String> valeurs, int tailleCombinaison, String sep,
-            String CombinaisonInit) {
+    public static List<String> genererToutesLesCombinaisons(List<String> valeurs, int tailleCombinaison, String sep, String CombinaisonInit) {
         List<String> resultats = new ArrayList<>();
         genererCombinaisons(valeurs, tailleCombinaison, CombinaisonInit, resultats, sep);
         return resultats;
     }
 
     /**
-     * Generates all combinations of a given size from a list of values.
-     * 
-     * @param valeurs
-     * @param tailleCombinaison
-     * @param combinaisonActuelle
-     * @param resultats
-     * @param sep
-     */
-    private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle,
-            List<String> resultats, String sep) {
+     * Cree les combinaisons de tailleCombinaison longueur avec les elements contenus dans la lsite valeurs
+     * resultat en parametre/resultat nomé resultats
+     * @param valeurs List String qui contient les string à combiner
+     * @param tailleCombinaison int longueur des combinaisons desirées
+     * @param combinaisonActuelle contient la combinaison en construction
+     * @param resultats accummulateur de type List String contenant les dif combinaisons
+     * @param sep String separateur des elements dans les combinaisons
+     * */
+    private static void genererCombinaisons(List<String> valeurs, int tailleCombinaison, String combinaisonActuelle, List<String> resultats,String sep) {
         if (tailleCombinaison == 0) {
             resultats.add(combinaisonActuelle);
             return;
@@ -51,26 +50,30 @@ public class LocalRule {
     }
 
     /**
-     * Transform a binary string into a string with spaces between each character.
-     * 
-     * @param Binaire
-     * @return
-     */
-    private static String BinToConf(String Binaire) {
-        String AvecEspaces = "";
-        for (int i = 0; i < Binaire.length(); i++) {
-            AvecEspaces = AvecEspaces + Binaire.charAt(i) + ";";
+     * met des points virgule apres chaque char  du string contenant un nb en binaire
+     * @param Binaire string contenant un nb en binaire
+     * @return Binaire avec des String List contenant les configurations qui doivent
+     *         être mises à 1
+     **/
+
+    private static String BinToConf (String Binaire){
+        String AvecPointVirgule = "";
+        for (int i = 0; i < Binaire.length() ; i++) {
+           AvecPointVirgule =AvecPointVirgule + Binaire.charAt(i) + ";";
         }
-        return AvecEspaces;
+        //System.out.print(" str bin ." + Binaire + ". result ." +AvecPointVirgule);
+        return AvecPointVirgule;
     }
 
     /**
-     * Returns a list of all configurations that give 1 in the rule.
-     * 
-     * @param regleBinaire
-     * @param nbBits
-     * @return
-     */
+     * Calcule les clé/configurations pour les quelles la valeur doit être à 1 pour
+     * les regles només par un nombre
+     * @param regleBinaire string contenant un nb en binaire
+     * @param nbBits nb de caracteres pour la regle binaire
+     * @return liste String List contenant les configurations qui soivent être mises
+     *         à 1
+     **/
+
     private static List<String> ConfigurationsDonnant1(String regleBinaire, int nbBits) {
 
         List<String> resultatsA1 = new ArrayList<>();
@@ -129,13 +132,14 @@ public class LocalRule {
     }
 
     /**
-     * Creates a rule for the GOL Automate.
-     * 
-     * @param etatsPossibles
-     * @param nbDeVoisins
-     * @return
-     */
-    private static Map<String, String> CreationRegleVIE(ArrayList<String> etatsPossibles, int nbDeVoisins) {
+
+     * Cree le HashMap pour une regle locale de type VIE (jeu de la vie) avec les parametres donnés
+     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
+     * @param nbDeVoisins int, nombre de voisins par cellule (ici il doit toujours etre de 8 !!!!
+     * @return resCleValeurs
+     * */
+    private static Map<String, String> CreationRegleVIE(ArrayList<String> etatsPossibles, int nbDeVoisins){
+
         nbDeVoisins = 8;
         String v = "1";
         String m = "0";
@@ -151,9 +155,10 @@ public class LocalRule {
                     nbVivants++;
                 }
             }
-            if (nbVivants == 3) {
-                resCleValeurs.put(combinaison, etatsPossibles.get(1)); // vivant
-            } else {
+            if( nbVivants == 3 ||  (nbVivants == 2 && voisinage[0].equals(etatsPossibles.get(1)) )  ){
+                resCleValeurs.put(combinaison, etatsPossibles.get(1)); //vivant
+            }else{
+
                 resCleValeurs.put(combinaison, etatsPossibles.get(0));
             }
         }
@@ -161,19 +166,78 @@ public class LocalRule {
     }
 
     /**
-     * Constructor for the LocalRule class.
-     * 
-     * @param etatsPossibles
-     * @param nbDeVoisins
-     * @param NomRegle
-     */
-    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins, String NomRegle) {
-        if (NomRegle == "FEU") {
-            listeClesValeurs = CreationRegleFEU(etatsPossibles, nbDeVoisins);
+     * Cree le HashMap pour une regle locale de type MAJORITE avec les parametres donnés
+     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
+     * @param nbDeVoisins int, nombre de voisins par cellule TJS IMPAIRE !!!
+     * @return resCleValeurs
+     * */
+
+    private static Map<String, String> CreationRegleMAJORITE(ArrayList<String> etatsPossibles, int nbDeVoisins){
+        // ICI ON ASSUME que voisinage Q = {0, 1} OU que on a que deux etats
+        String val0 = etatsPossibles.get(0);
+        int nbVal0, nbVal1;
+        String val1 = etatsPossibles.get(1);
+        int nbVivants;
+        List<String> toutesLesCombinaisons = genererToutesLesCombinaisons(etatsPossibles, nbDeVoisins+1,";","");
+        Map<String, String> resCleValeurs = new HashMap<>(); // on initialise la liste des clés valeurs
+        for (String combinaison : toutesLesCombinaisons) {
+            String EtatPremiereCellule =  combinaison.split(";")[0];
+            String[] voisinage = combinaison.split(";");
+
+            nbVal0 = 0;
+            nbVal1 = 0;
+            //on ne prend pas en compte l'etat de la cellule actuelle
+            for ( int i=1 ; i< nbDeVoisins+1 ; i++ ) {
+                if (voisinage[i].equals(val0)) {
+                    nbVal0++;
+                }
+                if (voisinage[i].equals(val1)) {
+                    nbVal1++;
+                }
+            }
+
+            if( nbVal0 > nbVal1 ){
+                resCleValeurs.put(combinaison, etatsPossibles.get(0));
+            }else{
+                resCleValeurs.put(combinaison, etatsPossibles.get(1));
+            }
+
         }
-        if (NomRegle == "VIE") {
-            listeClesValeurs = CreationRegleVIE(etatsPossibles, 3);
+        return resCleValeurs;
+    }
+
+
+
+    /**
+     * Constructeur de LocalRule avec nom (String) de la Regle
+     * @param etatsPossibles ArrayList string contenant les etats possibles d'une celule
+     * @param nbDeVoisins int, nombre de voisins par cellule
+     * @param NomRegle String contenenant le nom de la Regle (pour le moment FEU)
+     * */
+    LocalRule(ArrayList<String> etatsPossibles, int nbDeVoisins,String NomRegle){ 
+
+        //etatsPossibles = ["FEU", "CENDRE", "VIDE", "ARBRE"] par exemple pour le feu
+        //ensuite ca créé locale rule pour le feu  ou pour ce qu'on veux 
+        switch (NomRegle) {
+            case "FEU":
+                listeClesValeurs = CreationRegleFEU(etatsPossibles,nbDeVoisins);
+                break;
+            case "VIE":
+                listeClesValeurs = CreationRegleVIE(etatsPossibles,8); //tjs 8 voisins
+                break;
+            case "MAJORITE":
+                // nbDeVoisins TOUJOURS IMPAIR
+                if(nbDeVoisins % 2 == 0){
+                    //ajout de 1 pour le faire impaire
+                    nbDeVoisins++;
+                }
+                listeClesValeurs = CreationRegleMAJORITE(etatsPossibles,nbDeVoisins);
+                break;
+            default:
+                System.out.println("Erreur : nom de regle inconnu...");
+
         }
+
     }
 
     /**

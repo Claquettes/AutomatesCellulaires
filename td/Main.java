@@ -8,6 +8,7 @@ import AutomatesCellulaires.td.EtatCellule;
 import AutomatesCellulaires.td.Cellule;
 
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
     /**

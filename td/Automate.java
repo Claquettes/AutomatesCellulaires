@@ -14,9 +14,11 @@ public class Automate {
     public LocalRule localRule;
     public Integer nombreVoisins;
     public EtatCellule etatCellules;
-    private Grille gridCopy;
-    private Integer nbCol = 10;
-    private Integer nbLigne = 5;
+
+    protected Grille gridCopy; // qui va contenier la grille à l'état N pour pouvoir calculer l'etat N+1
+    protected Integer nbCol = 10;
+    protected Integer nbLigne = 5;
+
 
     /**
      * Constructor for the Automate class.
@@ -95,23 +97,27 @@ public class Automate {
         return etatSuivant;
     }
 
+
     /**
      * Gets the configuration of the neighbors of a cell.
-     * 
+     *
      * @param x The x-coordinate of the cell.
      * @param y The y-coordinate of the cell.
      * @return The configuration of the neighbors of the cell.
      */
-    private String getConfigVoisin(int x, int y) {
-        int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { -1, 1 }, { 1, -1 }, { 1, 1 } };
+    protected String getConfigVoisin(int x, int y) {
+        //modif ordre directions !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { 1, -1 }, { -1, 1 },  { 1, 1 } };
         StringBuilder configVoisin = new StringBuilder(this.gridCopy.getValeurCellule(x, y) + ";");
         for (int i = 0; i < this.nombreVoisins; i++) {
             int newX = x + directions[i][0];
             int newY = y + directions[i][1];
             configVoisin.append(this.gridCopy.getValeurCellule(newX, newY)).append(";");
         }
+
         return configVoisin.toString();
     }
+
 
     /**
      * Updates the state of the grid based on the current state and the local rule.
@@ -122,7 +128,6 @@ public class Automate {
 
         // pour parcouir la grille
         for (int i = 0; i < this.gridCopy.nbLine; i++) {
-
             for (int j = 0; j < this.gridCopy.nbCol; j++) {
 
                 // recupere etat de la cellule et etat cellules voisines
@@ -166,6 +171,77 @@ public class Automate {
             scannerNbLigne.close();
             scannerNbCol.close();
         }
+    }
+
+    /**
+     * Constructeur générique de AutomateFEU
+     */
+    public Automate(LocalRule localRule, Integer nombreVoisins, EtatCellule etatCellules, Integer nbCol, Integer nbLigne) {
+        this.etatCellules = etatCellules;
+
+        if(nbLigne==1){
+            this.grid = new Grille(1,nbCol,nbLigne,etatCellules);
+        }else{
+            this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
+        }
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+        this.localRule = localRule;
+        this.nombreVoisins = nombreVoisins;
+
+        this.gridCopy = new Grille(grid);
+
+    }
+
+    /**
+     * constructeur partiel qui met le nbLigne et nbCol selon les parametres et le reste à null
+     * @param nbCol
+     * @param nbLigne
+     */
+    public Automate(Integer nbCol, Integer nbLigne) {
+        this.etatCellules = null;
+        if( nbCol <= 0){
+            nbCol = 1;
+        }
+        if( nbLigne < 1){
+            nbLigne = 1;
+        }
+
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+    }
+    @Override
+    public String toString() {
+        String esp = "  ";
+        String diff = " \t";
+        if( nombreVoisins == 6 ){
+            diff = "  ";
+        }
+        String grilleString = "---------------------------------------\n";
+        for (int i = 0; i < nbLigne ; i++) {
+            esp ="  ";
+            //pour l'affichage hexagonal
+            if( nombreVoisins ==6 && (i % 2 == 0 )){
+                grilleString += "   ";
+                esp = "  ";
+            }
+            if( nombreVoisins != 6){
+                esp="";
+            }
+
+            for (int j = 0; j < nbCol; j++) {
+                //grilleString += this.grid.getValeurCellule(i,j);
+                grilleString += esp + this.grid.getValeurCellule(i,j);
+                grilleString += diff;
+                //grilleString += " \t";
+            }
+            grilleString += "\n";
+        }
+        grilleString += "\n---------------------------------------\n";
+
+        return grilleString;
     }
 
 }
