@@ -66,6 +66,100 @@ public class Automate {
     }
 
     /**
+     * Constructeur générique de Automate
+     */
+    public Automate(LocalRule localRule, Integer nombreVoisins, EtatCellule etatCellules, Integer nbCol, Integer nbLigne) {
+        this.etatCellules = etatCellules;
+
+        if(nbLigne==1){
+            this.grid = new Grille(1,nbCol,nbLigne,etatCellules);
+        }else{
+            this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
+        }
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+        this.localRule = localRule;
+        this.nombreVoisins = nombreVoisins;
+
+        this.gridCopy = new Grille(grid);
+
+    }
+
+    public Automate(Integer nombreVoisins, Integer nbCol, Integer nbLigne, String localRuleName ) {
+        EtatCellule etatCellulesIci = new EtatCellule("1D");
+        if(etatCellulesIci.getEtatChoisie().isEmpty()){
+            return;
+            //erreur de construction
+        }
+
+        LocalRule LocalRuleM;
+        if(localRuleName.equals("MAJORITE")){
+            LocalRuleM = new LocalRule(etatCellulesIci.getEtatChoisie(),nombreVoisins,"MAJORITE");
+            this.localRule = LocalRuleM;
+        }
+
+        this.etatCellules = etatCellulesIci;
+
+
+        this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
+
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+
+        this.nombreVoisins = nombreVoisins;
+
+        this.gridCopy = new Grille(grid);
+
+    }
+
+    /**
+     * Constructeur générique de Automate
+     */
+    /*public Automate(String nom, Integer nombreVoisins, Integer nbCol, Integer nbLigne) {
+        EtatCellule etat = new EtatCellule(nom);
+        if(etat == null){
+            return ;
+        }
+        LocalRule localRule1 = new LocalRule(etat.getEtatChoisie(),nombreVoisins,nom);
+        this.etatCellules = etatCellules;
+
+        if(nbLigne==1){
+            this.grid = new Grille(1,nbCol,nbLigne,etatCellules);
+        }else{
+            this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
+        }
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+        this.localRule = localRule;
+        this.nombreVoisins = nombreVoisins;
+
+        this.gridCopy = new Grille(grid);
+
+    }
+
+    /**
+     * constructeur partiel qui met le nbLigne et nbCol selon les parametres et le reste à null
+     * @param nbCol
+     * @param nbLigne
+     */
+    public Automate(Integer nbCol, Integer nbLigne) {
+        this.etatCellules = null;
+        if( nbCol <= 0){
+            nbCol = 1;
+        }
+        if( nbLigne < 1){
+            nbLigne = 1;
+        }
+
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
+
+    }
+
+    /**
      * Initializes the Automate with a given cell state.
      * 
      * @param etatCellule The state of the cell.
@@ -179,45 +273,7 @@ public class Automate {
         }
     }
 
-    /**
-     * Constructeur générique de AutomateFEU
-     */
-    public Automate(LocalRule localRule, Integer nombreVoisins, EtatCellule etatCellules, Integer nbCol, Integer nbLigne) {
-        this.etatCellules = etatCellules;
 
-        if(nbLigne==1){
-            this.grid = new Grille(1,nbCol,nbLigne,etatCellules);
-        }else{
-            this.grid = new Grille(2,nbCol,nbLigne,etatCellules);
-        }
-        this.nbCol = nbCol;
-        this.nbLigne = nbLigne;
-
-        this.localRule = localRule;
-        this.nombreVoisins = nombreVoisins;
-
-        this.gridCopy = new Grille(grid);
-
-    }
-
-    /**
-     * constructeur partiel qui met le nbLigne et nbCol selon les parametres et le reste à null
-     * @param nbCol
-     * @param nbLigne
-     */
-    public Automate(Integer nbCol, Integer nbLigne) {
-        this.etatCellules = null;
-        if( nbCol <= 0){
-            nbCol = 1;
-        }
-        if( nbLigne < 1){
-            nbLigne = 1;
-        }
-
-        this.nbCol = nbCol;
-        this.nbLigne = nbLigne;
-
-    }
     @Override
     public String toString() {
         String esp = "  ";

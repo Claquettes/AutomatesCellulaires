@@ -112,7 +112,7 @@ public class Grille {
         this.nbCol = Oj.nbCol;
         this.cellules = new Cellule[nbLine][nbCol];
         String etat;
-        for (int i = 0; i < nbLigne; i++) {
+        for (int i = 0; i < nbLine; i++) {
             for (int j = 0; j < nbCol; j++) {
                 this.cellules[i][j] = new Cellule(Oj.getValeurCellule(i, j));
             }

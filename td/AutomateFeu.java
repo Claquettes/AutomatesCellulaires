@@ -68,7 +68,7 @@ public class AutomateFeu extends Automate{
 
         //prise en compte de la densité de la forêt
 
-        int nbTotalCellules = grid.nbLigne * grid.nbCol;
+        int nbTotalCellules = grid.nbLine * grid.nbCol;
         int nbArbres = (int) (nbTotalCellules * densiteForet);
 
         met_arbres_avec_densite(densiteForet);
@@ -79,7 +79,7 @@ public class AutomateFeu extends Automate{
         int f = 0;
         if(nbEnFeu<0){nbEnFeu = 0;}
         while( f < nbEnFeu ){
-            X = r.nextInt(0, grid.nbLigne);
+            X = r.nextInt(0, grid.nbLine);
             Y = r.nextInt(0,grid.nbCol);
 
             if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(2)) ){
@@ -148,7 +148,7 @@ public class AutomateFeu extends Automate{
 
     public void met_toutes_cells_a(String etat){
         //met toutes les case à vide
-        for (int i = 0; i < this.grid.nbLigne; i++) {
+        for (int i = 0; i < this.grid.nbLine; i++) {
             for (int j = 0; j < this.grid.nbCol; j++) {
                 grid.setValeurCellule(i, j, etat);
             }
@@ -166,7 +166,7 @@ public class AutomateFeu extends Automate{
         }
         if( densiteForet > 1 ){  densiteForet=1;}
 
-        int nbTotalCellules = grid.nbLigne * grid.nbCol;
+        int nbTotalCellules = grid.nbLine * grid.nbCol;
         int nbArbres = (int) (nbTotalCellules * densiteForet);
         Random r = new Random();
         int X,Y;
@@ -174,7 +174,7 @@ public class AutomateFeu extends Automate{
         if(densiteForet <= 0.5 ){
             int a = 0;
             while( a < nbArbres ){
-                X = r.nextInt(0, grid.nbLigne-1);
+                X = r.nextInt(0, grid.nbLine-1);
                 Y = r.nextInt(0,grid.nbCol-1);
 
                 if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(1)) ){
@@ -192,7 +192,7 @@ public class AutomateFeu extends Automate{
             int nbArbres_a_enlev = (int) (nbTotalCellules * (1-densiteForet) );
 
             while( a_enlev < nbArbres_a_enlev ){
-                X = r.nextInt(0, grid.nbLigne);
+                X = r.nextInt(0, grid.nbLine);
                 Y = r.nextInt(0,grid.nbCol);
 
                 if( !grid.getValeurCellule(X,Y).equals(etatCellules.getEtatByIndex(0)) ){
@@ -293,7 +293,7 @@ public class AutomateFeu extends Automate{
         double ceuil;
 
         // pour parcouir la grille
-        for(int i=0; i<this.gridCopy.nbLigne; i++){
+        for(int i=0; i<this.gridCopy.nbLine; i++){
 
             for( int j = 0; j < this.gridCopy.nbCol; j++){
 
