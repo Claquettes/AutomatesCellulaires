@@ -65,11 +65,12 @@ OpenJDK 64-Bit Server VM (build 17.0.1+12-39, mixed mode, sharing)
 Pour exécuter le projet, compilez et exécutez la classe `Main.java`. Utilisez les commandes suivantes :
 
 ```bash
-javac Main.java
-java Main
+javac AutomatesCellulaires/td/Main.java
+java  AutomatesCellulaires/td/Main.java
 ```
 
-Veillez à bien exécuter ces commandes dans le dossier `td` du projet.
+Veillez à bien exécuter ces commandes en etant dans le dossier parent au dossier `AutomatesCellulaires`.
+Si vous utilisez un IDE, vous pouvez simplement exécuter la classe `Main.java`.
 
 Vous pourrez ensuite sélectionner le mode d'interface utilisateur que vous souhaitez utiliser : console ou graphique.
 
