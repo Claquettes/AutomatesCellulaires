@@ -253,6 +253,59 @@ public class UserInterface {
             }
             if (input.equals("C")) {
                 System.out.println("Lancement du modèle de conway");
+                System.out.println("Voulez vous utiliser la taille par défault pour la grille (10*10) ? (Y/N)");
+                String input2 = scanner.nextLine();
+                if(input2.equals("Y") || input2.equals("y")){
+                    nbCol = 10;
+                    nbLigne = 10;
+                }else{
+
+                    System.out.println("Veuillez entrer le nombre de colonnes de la grille");
+                    nbCol = scanner.nextInt();
+                    if (nbCol < 0) {
+                        System.out.println("Le nombre de colonnes doit être supérieur à 0");
+                        System.exit(0);
+                    }
+                    System.out.println("Veuillez entrer le nombre de lignes de la grille");
+                    nbLigne = scanner.nextInt();
+                    if (nbLigne < 0) {
+                        System.out.println("Le nombre de lignes doit être supérieur à 0");
+                        System.exit(0);
+                    }
+
+                }
+
+                Automate automateVIE = new Automate(8, nbCol,nbLigne, "VIE" );
+
+                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                int nbIt = scanner.nextInt();
+                boolean nbItOk = (nbIt>0 );
+                while (nbItOk != true){
+                    System.out.println("Donner un nombre possitif non nul");
+                    nbIt = scanner.nextInt();
+                    nbItOk = (nbIt>0 );
+                }
+
+                // La boucle qui fait tourner le modèle
+                for (int i = 0; i < nbIt; i++) {
+                    System.out.println(automateVIE.grid);
+                    automateVIE.miseAJour();
+                    int millis = 1000;
+                    try {
+                        Thread.sleep(millis);
+                    } catch (InterruptedException ie) {
+                        // ...
+                    }
+
+                }
+
+                // Exit the program
+                System.exit(0);
+
+
+
+
+
             }
             if (input.equals("MAJO")) {
                 System.out.println("Voulez vous utiliser la taille par défault pour la grille (10*5) ? (Y/N)");
