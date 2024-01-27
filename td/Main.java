@@ -18,6 +18,17 @@ public class Main {
      * @param args An array of command-line arguments for the application.
      */
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
+
+        // demande user pour choix de l'interface 
+        System.out.println("Appuyez sur 1 pour lancer l'interface console ou 2 pour lancer l'interface graphique");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String input = scanner.nextLine();
+        if (input.equals("1")) {
+            UserInterface ui = new UserInterface();
+        } else if (input.equals("2")) {
+            GUI uig = new GUI();
+        } else {
+            System.out.println("Commande inconnue, veuillez réessayer");
+        }
     }
 }

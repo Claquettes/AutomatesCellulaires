@@ -20,25 +20,28 @@ public class Automate {
     protected Integer nbLigne = 5;
 
 
-    /**
-     * Constructor for the Automate class.
-     * It initializes the Automate with a given name.
-     * 
-     * @param name The name of the Automate.
-     */
-    public Automate(String name) {
+    public Automate(String name, Integer nbCol,Integer nbLigne) {
+        this.nbCol = nbCol;
+        this.nbLigne = nbLigne;
         if (name.toUpperCase().equals("FEU")) {
             this.nombreVoisins = 4;
             EtatCellule etatFeu = new EtatCellule("FEU");
             this.localRule = new LocalRule(etatFeu.getEtatChoisie(), this.nombreVoisins, "FEU");
-            this.grid = new Grille(2, 3, 2, etatFeu);
-            initializeAutomate(etatFeu);
+
+            this.grid = new Grille(2, this.nbCol, this.nbLigne, etatFeu);
+            this.gridCopy = new Grille(grid);
+
         } else {
-            System.out.println("Erreur : nom d'automate inconnu...");
+            if (name.equals("CONWAY")) {
+                // this.grid = new Grille(2, 8, new EtatCellule("CONWAY"));
+                System.out.println("Création de l'automate " + name + " en mode prédéfini");
+            } else {
+                System.out.println("Erreur : nom d'automate inconnu...");
+            }
         }
     }
 
-    /**
+   /**
      * Constructor for the Automate class.
      * It initializes the Automate with a given name, number of neighbors, and rule
      * number.
@@ -47,13 +50,16 @@ public class Automate {
      * @param nbVoisins  The number of neighbors.
      * @param ruleNumber The rule number.
      */
-    public Automate(String name, Integer nbVoisins, Integer ruleNumber) {
+    public Automate(String name, Integer nbVoisins, Integer ruleNumber, Integer nbCol) {
+        this.nbCol = nbCol;
+
         if (name.toUpperCase().equals("1D")) {
             this.nombreVoisins = 1;
             EtatCellule etat1D = new EtatCellule("1D");
             this.localRule = new LocalRule(etat1D.getEtatChoisie(), this.nombreVoisins, ruleNumber);
-            this.grid = new Grille(1, this.nbCol, 1, etat1D);
-            initializeAutomate(etat1D);
+
+            this.grid = new Grille(1, this.nbCol,1,  etat1D);
+            this.gridCopy = new Grille(grid);
         } else {
             System.out.println("Erreur : nom d'automate inconnu...");
         }
@@ -245,3 +251,4 @@ public class Automate {
     }
 
 }
+
