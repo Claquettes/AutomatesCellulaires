@@ -30,5 +30,6 @@ public class Main {
         } else {
             System.out.println("Commande inconnue, veuillez réessayer");
         }
+        scanner.close();
     }
 }
