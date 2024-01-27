@@ -111,7 +111,7 @@ public class GUI extends JFrame {
                                         }
                                     }
 
-                                    JButton backButton = new JButton("Retour");
+                                    JButton backButton = new JButton("Fermer");
                                     backButton.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
