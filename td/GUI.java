@@ -16,6 +16,7 @@ public class GUI extends JFrame {
     private JTextField textField4;
     private JTextField textField_voison;
     private JTextField textField_regle;
+    private JTextField textField_iterations;
     private JButton validateButton;
     private JButton backButton;
     private JButton secondaryValidateButton;
@@ -48,6 +49,7 @@ public class GUI extends JFrame {
         JLabel label1 = new JLabel("Choix automate:");
         JLabel label2 = new JLabel("Nombre de colonnes:");
         JLabel label3 = new JLabel("Nombre de lignes:");
+        JLabel label4 = new JLabel("Nombre d'itérations:");
 
         String[] options = { "Feu", "Conway", "1D", "Majorité" };
         comboBox = new JComboBox<>(options);
@@ -56,6 +58,7 @@ public class GUI extends JFrame {
         textField2 = new JTextField(10);
         textField_voison = new JTextField(10);
         textField_regle = new JTextField(10);
+        textField_iterations = new JTextField(10);
 
         validateButton = new JButton("Validate");
         backButton = new JButton("Retour");
@@ -100,7 +103,7 @@ public class GUI extends JFrame {
                         new SwingWorker<Void, Void>() {
                             @Override
                             protected Void doInBackground() throws Exception {
-                                for (int i = 0; i < 50; i++){
+                                for (int i = 0; i < Integer.parseInt(textField_iterations.getText()); i++){
                                     automate.miseAJour();
 
                                     SwingUtilities.invokeLater(() -> {
@@ -158,7 +161,7 @@ public class GUI extends JFrame {
                         new SwingWorker<Void, Void>() {
                             @Override
                             protected Void doInBackground() throws Exception {
-                                for (int i = 0; i < 50; i++) {
+                                for (int i = 0; i < Integer.parseInt(textField_iterations.getText()); i++) {
                                     automate.miseAJour();
 
                                     SwingUtilities.invokeLater(() -> {
@@ -250,7 +253,7 @@ public class GUI extends JFrame {
                     new SwingWorker<Void, Void>() {
                         @Override
                         protected Void doInBackground() throws Exception {
-                            for (int i = 0; i < 50; i++){
+                            for (int i = 0; i < Integer.parseInt(textField_iterations.getText()); i++){
                                 automate.miseAJour();
 
                                 SwingUtilities.invokeLater(() -> {
@@ -312,7 +315,7 @@ public class GUI extends JFrame {
                     new SwingWorker<Void, Void>() {
                         @Override
                         protected Void doInBackground() throws Exception {
-                            for (int i = 0; i < 50; i++) {
+                            for (int i = 0; i < Integer.parseInt(textField_iterations.getText()); i++) {
                                 automate.miseAJour();
 
                                 // supprimer les cellules précédentes
@@ -336,7 +339,7 @@ public class GUI extends JFrame {
                                     }
 
                                     // Add a "Back" button at the end
-                                    JButton backButton = new JButton("Retour");
+                                    JButton backButton = new JButton("Fermer");
                                     backButton.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
@@ -367,6 +370,8 @@ public class GUI extends JFrame {
         mainPanel.add(textField1);
         mainPanel.add(label3);
         mainPanel.add(textField2);
+        mainPanel.add(label4);
+        mainPanel.add(textField_iterations);
         mainPanel.add(validateButton);
 
         secondaryPanel.add(backButton);
