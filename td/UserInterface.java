@@ -64,6 +64,29 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Interracts with the User to read a AutomateCellulaire save file
+     * @return Automate form the file given by the user or null if there is a error or the file doesen't exist
+     */
+    private Automate LireAutomate(){
+        System.out.println("Quelle sauvegarde voulez vous lire ? (donnez le nom sans extention)");
+        String nomFich = scanner.nextLine();
+        SaveConfiRead saveConf = new SaveConfiRead();
+
+        System.out.println("La lecture peut prendre quelques minutes si le nombre de voisins est important, veillez attendre");
+
+        Automate ResultatLecture = saveConf.lireConfig(nomFich);
+
+        if( ResultatLecture == null){
+            System.out.println("Il y a eu un probleme lors de la lecture veuillez essayer avec un autre fichier de sauvegarde ");
+            System.out.println("Fin" );
+            System.exit(0);
+
+        }
+        System.out.println("Fin de la lecture OK" );
+        return ResultatLecture;
+    }
+
 
     /**
      * Handles the user input.
@@ -285,44 +308,23 @@ public class UserInterface {
                 }
             }
             if (input.equals("L")) {
-                System.out.println("Lancement du modèle de conway");
-                System.out.println("Voulez vous utiliser la taille par défault pour la grille (20*20) ? (Y/N)");
-                String input2 = scanner.nextLine();
-                if (input2.equals("Y") || input2.equals("y")) {
-                    nbCol = 20;
-                    nbLigne = 20;
-                } else {
+                System.out.println("Lecture de sauvegarde d'automates");
 
-                    System.out.println("Veuillez entrer le nombre de colonnes de la grille");
-                    nbCol = scanner.nextInt();
-                    if (nbCol < 0) {
-                        System.out.println("Le nombre de colonnes doit être supérieur à 0");
-                        System.exit(0);
-                    }
-                    System.out.println("Veuillez entrer le nombre de lignes de la grille");
-                    nbLigne = scanner.nextInt();
-                    if (nbLigne < 0) {
-                        System.out.println("Le nombre de lignes doit être supérieur à 0");
-                        System.exit(0);
-                    }
+                Automate automateLu = LireAutomate();
 
-                }
-
-                Automate automateVIE = new Automate(8, nbCol, nbLigne, "VIE");
-
-                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 0) ?");
                 int nbIt = scanner.nextInt();
-                boolean nbItOk = (nbIt > 0);
+                boolean nbItOk = (nbIt >= 0);
                 while (nbItOk != true) {
                     System.out.println("Donner un nombre possitif non nul");
                     nbIt = scanner.nextInt();
-                    nbItOk = (nbIt > 0);
+                    nbItOk = (nbIt >= 0);
                 }
 
                 // La boucle qui fait tourner le modèle
                 for (int i = 0; i < nbIt; i++) {
-                    System.out.println(automateVIE.grid);
-                    automateVIE.miseAJour();
+                    System.out.println(automateLu);
+                    automateLu.miseAJour();
                     int millis = 1000;
                     try {
                         Thread.sleep(millis);
@@ -331,7 +333,7 @@ public class UserInterface {
                     }
 
                 }
-                SauvegarderAutomate(automateVIE);
+                SauvegarderAutomate(automateLu);
 
                 // Exit the program
                 System.exit(0);

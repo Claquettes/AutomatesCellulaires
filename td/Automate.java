@@ -294,6 +294,24 @@ public class Automate {
         }
     }
 
+    /**
+     * Returns a string with corresponding color and character
+     *
+     * @param e String cell content we want to display
+     * @return String
+     */
+    public String cellToStringCouleur(String e) {
+        String RESET = "\u001B[0m";
+        switch (e) {
+            case "1":
+                return "\u001B[32m" + "1" + RESET;
+            case "0":
+                return "\u001B[90m" + "o" + RESET;
+            default:
+                return e;
+        }
+    }
+
 
     @Override
     /**
@@ -319,7 +337,7 @@ public class Automate {
 
             for (int j = 0; j < nbCol; j++) {
                 //grilleString += this.grid.getValeurCellule(i,j);
-                grilleString += esp + this.grid.getValeurCellule(i,j);
+                grilleString += esp + this.cellToStringCouleur(this.grid.getValeurCellule(i,j));
                 grilleString += diff;
                 //grilleString += " \t";
             }
