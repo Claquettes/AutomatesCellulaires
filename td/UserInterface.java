@@ -31,7 +31,37 @@ public class UserInterface {
         System.out.println("Appuyez sur C pour lancer le modèle de conway");
         System.out.println("Appuyez sur 1D pour lancer le modèle 1D");
         System.out.println("Ecrivez MAJO pour lancer le modèle avec la Regle de Majorité");
+        System.out.println("\u001B[34m" + "Ecrivez L pour lire un automate déjà sauvegardé"+"\u001B[0m");
         System.out.println("Appuyez sur Q pour quitter");
+    }
+
+    /**
+     * Saves the automate if the user wants it, with the name the user gaves
+     * @param automASauv the automate that could be saved
+     */
+    private void SauvegarderAutomate(Automate automASauv){
+        System.out.println("Voulez vous sauvegarder l'automate ? (1 :oui /0 : non)");
+        int Sauvegardee = scanner.nextInt();
+        scanner.nextLine();
+
+        if(Sauvegardee==1 ){
+            System.out.println("Donnez le nom sans extention ");
+            String nomFich = scanner.nextLine();
+            SaveConfiRead saveConf = new SaveConfiRead();
+            int resEcriture = saveConf.sauvegardeConfig(nomFich,automASauv);
+            if(resEcriture == 1 ){
+                System.out.println(" Sauvegarde reussie ! La sauvegarde est dans la fichier :" + nomFich +".json" );
+                System.out.println("Vous pouvais le modifier puis le charger dans un automate avec l'option L dans le menu textuel " );
+            }else{
+                System.out.println("Erreur dans la sauvegarde" );
+            }
+            System.out.println("Fin" );
+            System.exit(0);
+
+        }else{
+            System.out.println("Fin sans auvegarde" );
+            return;
+        }
     }
 
 
@@ -69,7 +99,7 @@ public class UserInterface {
                     System.out.println(automateFeu);
                     for (int i = 0; i < nbIt; i++) {
                         automateFeu.miseAJour();
-                        int millis = 3000;
+                        int millis = 1000;
                         try {
                             Thread.sleep(millis);
                         } catch (InterruptedException ie) {
@@ -79,7 +109,9 @@ public class UserInterface {
 
                     }
                     // Exit the program
+                    SauvegarderAutomate(automateFeu);
                     System.exit(0);
+
 
                 }else {
                     System.out.println("Veuillez entrer le nombre de colonnes de la grille");
@@ -248,8 +280,61 @@ public class UserInterface {
 
                     }
                     // Exit the program
-                    System.exit(0);
+                    SauvegarderAutomate(automateFeu);
+                    //System.exit(0);
                 }
+            }
+            if (input.equals("L")) {
+                System.out.println("Lancement du modèle de conway");
+                System.out.println("Voulez vous utiliser la taille par défault pour la grille (20*20) ? (Y/N)");
+                String input2 = scanner.nextLine();
+                if (input2.equals("Y") || input2.equals("y")) {
+                    nbCol = 20;
+                    nbLigne = 20;
+                } else {
+
+                    System.out.println("Veuillez entrer le nombre de colonnes de la grille");
+                    nbCol = scanner.nextInt();
+                    if (nbCol < 0) {
+                        System.out.println("Le nombre de colonnes doit être supérieur à 0");
+                        System.exit(0);
+                    }
+                    System.out.println("Veuillez entrer le nombre de lignes de la grille");
+                    nbLigne = scanner.nextInt();
+                    if (nbLigne < 0) {
+                        System.out.println("Le nombre de lignes doit être supérieur à 0");
+                        System.exit(0);
+                    }
+
+                }
+
+                Automate automateVIE = new Automate(8, nbCol, nbLigne, "VIE");
+
+                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                int nbIt = scanner.nextInt();
+                boolean nbItOk = (nbIt > 0);
+                while (nbItOk != true) {
+                    System.out.println("Donner un nombre possitif non nul");
+                    nbIt = scanner.nextInt();
+                    nbItOk = (nbIt > 0);
+                }
+
+                // La boucle qui fait tourner le modèle
+                for (int i = 0; i < nbIt; i++) {
+                    System.out.println(automateVIE.grid);
+                    automateVIE.miseAJour();
+                    int millis = 1000;
+                    try {
+                        Thread.sleep(millis);
+                    } catch (InterruptedException ie) {
+                        // ...
+                    }
+
+                }
+                SauvegarderAutomate(automateVIE);
+
+                // Exit the program
+                System.exit(0);
             }
             if (input.equals("C")) {
                 System.out.println("Lancement du modèle de conway");
@@ -298,6 +383,7 @@ public class UserInterface {
                     }
 
                 }
+                SauvegarderAutomate(automateVIE);
 
                 // Exit the program
                 System.exit(0);
@@ -351,6 +437,7 @@ public class UserInterface {
                     automateMAJO.miseAJour();
                     System.out.println(automateMAJO.grid);
                 }
+                SauvegarderAutomate(automateMAJO);
 
                 // Exit the program
                 System.exit(0);
@@ -399,11 +486,21 @@ public class UserInterface {
                 }
                 Automate automate1D = new Automate("1D", neighbours, ruleNumber, nbCol);
 
+                System.out.println("Quel est le nombre de iterations que vous voulez (minimum 1) ?");
+                int nbIt = scanner.nextInt();
+                boolean nbItOk = (nbIt>0 );
+                while (nbItOk != true){
+                    System.out.println("Donner un nombre possitif non nul");
+                    nbIt = scanner.nextInt();
+                    nbItOk = (nbIt>0 );
+                }
+
                 // La boucle qui fait tourner le modèle
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < nbIt; i++) {
                     automate1D.miseAJour();
                     System.out.println(automate1D.grid);
                 }
+                SauvegarderAutomate(automate1D);
 
                 // Exit the program
                 System.exit(0);

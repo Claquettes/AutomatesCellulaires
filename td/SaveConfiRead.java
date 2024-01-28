@@ -1,7 +1,7 @@
 package AutomatesCellulaires.td;
 
-//import com.google.gson.Gson;
-//import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.*;
 
@@ -11,7 +11,7 @@ import java.io.*;
 
 public class SaveConfiRead {
 
-    /*public Gson gsonPretty;
+    public Gson gsonPretty;
 
     SaveConfiRead() {
         gsonPretty = new GsonBuilder().setPrettyPrinting().create();
@@ -24,7 +24,8 @@ public class SaveConfiRead {
      * @param fileName        string it is the name of the file where we will write
      * @param automatonToSave the automaton we want to save
      * @return -1 in case of error 1 if everything is ok
-     *
+     */
+
     public int sauvegardeConfig(String nomFichier, Automate automateASauvegarder) {
         String jsonV2 = "";
         try {
@@ -58,7 +59,7 @@ public class SaveConfiRead {
      * 
      * @param fileName String without extension
      * @return null in case of error and the automaton if everything is ok
-     *
+     */
 
 
     public Automate lireConfig(String nomFichier) {
@@ -103,5 +104,5 @@ public class SaveConfiRead {
             // cas ou le contenu est vide
             return null;
         }
-    }*/
+    }
 }
