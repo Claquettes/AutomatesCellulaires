@@ -156,7 +156,7 @@ public class GUI extends JFrame {
                     
                     }
                     else{
-                        Automate automate = new Automate(selectedOption, columns, rows);
+                        Automate automate = new AutomateFeu(4, columns, rows , 0.75, "Est", 0.2, 0.6, 0, 4);
 
                         new SwingWorker<Void, Void>() {
                             @Override
