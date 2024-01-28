@@ -7,7 +7,7 @@ Ce projet est une implémentation en Java d'automates cellulaires. Il comprend d
 Le projet est organisé en plusieurs classes Java :
 
 - `Automate.java` : Cette classe représente l'automate cellulaire. Elle comprend des méthodes pour mettre à jour l'état de l'automate.
-- `AutomateFeu.java` : Cette classe représente l'automateFeu, c'est une spécialisation de la classe Automate. Elle prend en compte la notion de vent, probalilité de autocomnustion, de propagation du feu.
+- `AutomateFeu.java` : Cette classe représente l'automateFeu, c'est une spécialisation de la classe Automate. Elle prend en compte la notion de vent, probalilité de autocombustion, de propagation du feu.
 - `Grille.java` : Cette classe représente la grille de cellules dans l'automate.
 - `Cellule.java` : Cette classe représente une cellule de l'automate.
 - `Coordonnee.java` : Cette classe représente les coordonnées d'une cellule dans l'automate.
