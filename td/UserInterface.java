@@ -30,7 +30,7 @@ public class UserInterface {
         System.out.println("Appuyez sur F pour lancer le modèle de feu");
         System.out.println("Appuyez sur C pour lancer le modèle de conway");
         System.out.println("Appuyez sur 1D pour lancer le modèle 1D");
-        System.out.println("Ecruvez MAJO pour lancer le modèle avec la Regle de Majorité");
+        System.out.println("Ecrivez MAJO pour lancer le modèle avec la Regle de Majorité");
         System.out.println("Appuyez sur Q pour quitter");
     }
 

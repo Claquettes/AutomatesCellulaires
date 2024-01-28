@@ -66,7 +66,7 @@ public class Grille {
         for (int i = 0; i < nbLine; i++) {
             for (int j = 0; j < nbCol; j++) {
                 grilleString += this.cellules[i][j].getEtat();
-                grilleString += "\t" + " | ";
+                grilleString += "\t" ;///+ " | ";
             }
             grilleString += "\n";
         }
