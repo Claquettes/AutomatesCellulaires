@@ -49,7 +49,7 @@ public class GUI extends JFrame {
         JLabel label2 = new JLabel("Nombre de colonnes:");
         JLabel label3 = new JLabel("Nombre de lignes:");
 
-        String[] options = { "Feu", "Conway", "1D" };
+        String[] options = { "Feu", "Conway", "1D", "Majorité" };
         comboBox = new JComboBox<>(options);
 
         textField1 = new JTextField(10);
@@ -71,90 +71,156 @@ public class GUI extends JFrame {
                 String selectedOption = (String) comboBox.getSelectedItem();
                 int columns = Integer.parseInt(textField1.getText());
                 int rows = Integer.parseInt(textField2.getText());
-                if (selectedOption.equals("1D")) {
-                    JLabel label_voisin = new JLabel("Nombre de voisins:");
+                if (selectedOption.equals("1D") || selectedOption.equals("Majorité")) {
+                    if(selectedOption.equals("Majorité")){
+                        JLabel label_voisin = new JLabel("Nombre de voisins impaire:");
+                        secondaryPanel.add(label_voisin);
+                    }else{
+                        JLabel label_voisin = new JLabel("Nombre de voisins (1 ou 2):");
+                        secondaryPanel.add(label_voisin);
+                    }
+                    
                     JLabel label_regle = new JLabel("Numéro de la règle:");
 
-                    secondaryPanel.add(label_voisin);
+                    
                     secondaryPanel.add(textField_voison);
-                    secondaryPanel.add(label_regle);
-                    secondaryPanel.add(textField_regle);
+                    if (selectedOption.equals("1D")){
+                        secondaryPanel.add(label_regle);
+                        secondaryPanel.add(textField_regle);
+                    }
+                    
                     secondaryPanel.add(secondaryValidateButton);
                     cardLayout.show(panel, "secondaryPanel");
-                } else {
-                    Automate automate = new Automate(selectedOption, columns, rows);
 
-                    new SwingWorker<Void, Void>() {
-                        @Override
-                        protected Void doInBackground() throws Exception {
-                            for (int i = 0; i < 50; i++) {
-                                automate.miseAJour();
+                }
+                else {
+                    if (selectedOption.equals("Conway")) {
+                        Automate automate = new Automate(8, columns,rows, "VIE" );
 
-                                SwingUtilities.invokeLater(() -> {
-                                    secondaryPanel.removeAll();
-                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set
-                                                                                                               // the
-                                                                                                               // layout
-                                                                                                               // to
-                                                                                                               // BoxLayout
+                        new SwingWorker<Void, Void>() {
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                for (int i = 0; i < 50; i++){
+                                    automate.miseAJour();
 
-                                    JPanel gridPanel = new JPanel(
-                                            new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); // Create a new
-                                                                                                        // panel with a
-                                                                                                        // GridLayout
-                                    gridPanel.setMaximumSize(
-                                            new Dimension((int) (getWidth() * 0.8), (int) (getHeight() * 0.8)));
-                                    for (int row = 0; row < automate.grid.nbLine; row++) {
-                                        for (int col = 0; col < automate.grid.nbCol; col++) {
-                                            JPanel cellPanel = new JPanel();
-                                            cellPanel.setPreferredSize(
-                                                    new Dimension((int) (getWidth() * 0.8 / automate.grid.nbCol),
-                                                            (int) (getHeight() * 0.8 / automate.grid.nbLine)));
-                                            switch (automate.grid.getValeurCellule(row, col)) {
-                                                case "CENDRE":
-                                                    cellPanel.setBackground(Color.GRAY);
-                                                    break;
+                                    SwingUtilities.invokeLater(() -> {
+                                        secondaryPanel.removeAll();
+                                        secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); 
 
-                                                case "FEU":
-                                                    cellPanel.setBackground(Color.RED);
-                                                    break;
-
-                                                case "ARBRE":
-                                                    cellPanel.setBackground(Color.GREEN);
-                                                    break;
-
-                                                default:
+                                        JPanel gridPanel = new JPanel(
+                                                new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); 
+                                        gridPanel.setMaximumSize(
+                                                new Dimension((int) (getWidth() * 0.8), (int) (getHeight() * 0.8)));
+                                        for (int row = 0; row < automate.grid.nbLine; row++) {
+                                            for (int col = 0; col < automate.grid.nbCol; col++) {
+                                                JPanel cellPanel = new JPanel();
+                                                cellPanel.setPreferredSize(
+                                                        new Dimension((int) (getWidth() * 0.8 / automate.grid.nbCol),
+                                                                (int) (getHeight() * 0.8 / automate.grid.nbLine)));
+                                                if (automate.grid.getValeurCellule(row, col) == "1") {
+                                                    cellPanel.setBackground(Color.BLACK);
+                                                } else {
                                                     cellPanel.setBackground(Color.WHITE);
-                                                    break;
+                                                }
+                                                    
+                                                gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
                                             }
-
-                                            gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
                                         }
-                                    }
 
-                                    JButton backButton = new JButton("Fermer");
-                                    backButton.addActionListener(new ActionListener() {
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                            // fermer le programme
-                                            System.exit(0);
-                                        }
+                                        JButton backButton = new JButton("Fermer");
+                                        backButton.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                // fermer le programme
+                                                System.exit(0);
+                                            }
+                                        });
+
+                                        secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                        secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical
+                                                                                                    // spacer
+                                        secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
+
+                                        secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                        secondaryPanel.repaint();
                                     });
 
-                                    secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
-                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical
-                                                                                                   // spacer
-                                    secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
-
-                                    secondaryPanel.revalidate(); // Update the panel after adding the cells
-                                    secondaryPanel.repaint();
-                                });
-
-                                Thread.sleep(250); // Wait for 1 second
+                                    Thread.sleep(250);
+                                }
+                                return null;
                             }
-                            return null;
-                        }
-                    }.execute();
+                        }.execute();
+                    
+                    }
+                    else{
+                        Automate automate = new Automate(selectedOption, columns, rows);
+
+                        new SwingWorker<Void, Void>() {
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                for (int i = 0; i < 50; i++) {
+                                    automate.miseAJour();
+
+                                    SwingUtilities.invokeLater(() -> {
+                                        secondaryPanel.removeAll();
+                                        secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); 
+
+                                        JPanel gridPanel = new JPanel(
+                                                new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); 
+                                        gridPanel.setMaximumSize(
+                                                new Dimension((int) (getWidth() * 0.8), (int) (getHeight() * 0.8)));
+                                        for (int row = 0; row < automate.grid.nbLine; row++) {
+                                            for (int col = 0; col < automate.grid.nbCol; col++) {
+                                                JPanel cellPanel = new JPanel();
+                                                cellPanel.setPreferredSize(
+                                                        new Dimension((int) (getWidth() * 0.8 / automate.grid.nbCol),
+                                                                (int) (getHeight() * 0.8 / automate.grid.nbLine)));
+                                                switch (automate.grid.getValeurCellule(row, col)) {
+                                                    case "CENDRE":
+                                                        cellPanel.setBackground(Color.GRAY);
+                                                        break;
+
+                                                    case "FEU":
+                                                        cellPanel.setBackground(Color.RED);
+                                                        break;
+
+                                                    case "ARBRE":
+                                                        cellPanel.setBackground(Color.GREEN);
+                                                        break;
+
+                                                    default:
+                                                        cellPanel.setBackground(Color.WHITE);
+                                                        break;
+                                                }
+
+                                                gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
+                                            }
+                                        }
+
+                                        JButton backButton = new JButton("Fermer");
+                                        backButton.addActionListener(new ActionListener() {
+                                            @Override
+                                            public void actionPerformed(ActionEvent e) {
+                                                // fermer le programme
+                                                System.exit(0);
+                                            }
+                                        });
+
+                                        secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                        secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical
+                                                                                                    // spacer
+                                        secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
+
+                                        secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                        secondaryPanel.repaint();
+                                    });
+
+                                    Thread.sleep(250); // Wait for 1 second
+                                }
+                                return null;
+                            }
+                        }.execute();
+                    }
 
                     cardLayout.show(panel, "secondaryPanel");
                 }
@@ -171,67 +237,127 @@ public class GUI extends JFrame {
         secondaryValidateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) comboBox.getSelectedItem();
                 int neighbors = Integer.parseInt(textField_voison.getText());
-                int regle = Integer.parseInt(textField_regle.getText());
+        
                 int col = Integer.parseInt(textField1.getText());
 
-                Automate automate = new Automate("1D", neighbors, regle, col);
+                if (selectedOption.equals("Majorité")) {
+                    int row = Integer.parseInt(textField2.getText());
 
-                new SwingWorker<Void, Void>() {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        for (int i = 0; i < 50; i++) {
-                            automate.miseAJour();
+                    Automate automate = new Automate(neighbors, col,row, "MAJORITE" );
 
-                            // supprimer les cellules précédentes
-                            SwingUtilities.invokeLater(() -> {
-                                secondaryPanel.removeAll();
-                                secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); // Set the
-                                                                                                           // layout to
-                                                                                                           // BoxLayout
+                    new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            for (int i = 0; i < 50; i++){
+                                automate.miseAJour();
 
-                                JPanel gridPanel = new JPanel(new GridLayout(1, automate.grid.nbCol)); // Create a new
-                                                                                                       // panel with a
-                                                                                                       // GridLayout
-                                gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20)); // Set maximum
-                                                                                                       // size to avoid
-                                                                                                       // taking up the
-                                                                                                       // whole window
+                                SwingUtilities.invokeLater(() -> {
+                                    secondaryPanel.removeAll();
+                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS)); 
 
-                                for (int j = 0; j < automate.grid.nbCol; j++) {
-                                    JPanel cellPanel = new JPanel();
-                                    cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a
-                                                                                       // square
-                                    if (automate.grid.getValeurCellule(0, j) == "1") {
-                                        cellPanel.setBackground(Color.BLACK);
-                                    } else {
-                                        cellPanel.setBackground(Color.WHITE);
+                                    JPanel gridPanel = new JPanel(
+                                            new GridLayout(automate.grid.nbLine, automate.grid.nbCol)); 
+                                    gridPanel.setMaximumSize(
+                                            new Dimension((int) (getWidth() * 0.8), (int) (getHeight() * 0.8)));
+                                    for (int row = 0; row < automate.grid.nbLine; row++) {
+                                        for (int col = 0; col < automate.grid.nbCol; col++) {
+                                            JPanel cellPanel = new JPanel();
+                                            cellPanel.setPreferredSize(
+                                                    new Dimension((int) (getWidth() * 0.8 / automate.grid.nbCol),
+                                                            (int) (getHeight() * 0.8 / automate.grid.nbLine)));
+                                            if (automate.grid.getValeurCellule(row, col) == "1") {
+                                                cellPanel.setBackground(Color.BLACK);
+                                            } else {
+                                                cellPanel.setBackground(Color.WHITE);
+                                            }
+                                                
+                                            gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
+                                        }
                                     }
-                                    gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
-                                }
 
-                                // Add a "Back" button at the end
-                                JButton backButton = new JButton("Retour");
-                                backButton.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        // fermer le programme
-                                        System.exit(0);
-                                    }
+                                    JButton backButton = new JButton("Fermer");
+                                    backButton.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            // fermer le programme
+                                            System.exit(0);
+                                        }
+                                    });
+
+                                    secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical
+                                                                                                // spacer
+                                    secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
+
+                                    secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                    secondaryPanel.repaint();
                                 });
-                                secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
-                                secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical spacer
-                                secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
 
-                                secondaryPanel.revalidate(); // Update the panel after adding the cells
-                                secondaryPanel.repaint();
-                            });
-
-                            Thread.sleep(250); // Wait for 1 second
+                                Thread.sleep(250);
+                            }
+                            return null;
                         }
-                        return null;
-                    }
-                }.execute();
+                    }.execute();
+
+
+
+                }
+                else{
+                    int regle = Integer.parseInt(textField_regle.getText());
+
+                    Automate automate = new Automate("1D", neighbors, regle, col);
+
+                    new SwingWorker<Void, Void>() {
+                        @Override
+                        protected Void doInBackground() throws Exception {
+                            for (int i = 0; i < 50; i++) {
+                                automate.miseAJour();
+
+                                // supprimer les cellules précédentes
+                                SwingUtilities.invokeLater(() -> {
+                                    secondaryPanel.removeAll();
+                                    secondaryPanel.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS));
+
+                                    JPanel gridPanel = new JPanel(new GridLayout(1, automate.grid.nbCol));
+                                    gridPanel.setMaximumSize(new Dimension(automate.grid.nbCol * 20, 20));
+
+                                    for (int j = 0; j < automate.grid.nbCol; j++) {
+                                        JPanel cellPanel = new JPanel();
+                                        cellPanel.setPreferredSize(new Dimension(20, 20)); // Set preferred size to create a
+                                                                                        // square
+                                        if (automate.grid.getValeurCellule(0, j) == "1") {
+                                            cellPanel.setBackground(Color.BLACK);
+                                        } else {
+                                            cellPanel.setBackground(Color.WHITE);
+                                        }
+                                        gridPanel.add(cellPanel); // Add the cellPanel to the gridPanel
+                                    }
+
+                                    // Add a "Back" button at the end
+                                    JButton backButton = new JButton("Retour");
+                                    backButton.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            // fermer le programme
+                                            System.exit(0);
+                                        }
+                                    });
+                                    secondaryPanel.add(backButton); // Add the backButton to the secondaryPanel
+                                    secondaryPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add a vertical spacer
+                                    secondaryPanel.add(gridPanel); // Add the gridPanel to the secondaryPanel
+
+                                    secondaryPanel.revalidate(); // Update the panel after adding the cells
+                                    secondaryPanel.repaint();
+                                });
+
+                                Thread.sleep(250); // Wait for 1 second
+                            }
+                            return null;
+                        }
+                    }.execute();
+                }
             }
         });
 

@@ -253,11 +253,11 @@ public class UserInterface {
             }
             if (input.equals("C")) {
                 System.out.println("Lancement du modèle de conway");
-                System.out.println("Voulez vous utiliser la taille par défault pour la grille (10*10) ? (Y/N)");
+                System.out.println("Voulez vous utiliser la taille par défault pour la grille (20*20) ? (Y/N)");
                 String input2 = scanner.nextLine();
                 if(input2.equals("Y") || input2.equals("y")){
-                    nbCol = 10;
-                    nbLigne = 10;
+                    nbCol = 20;
+                    nbLigne = 20;
                 }else{
 
                     System.out.println("Veuillez entrer le nombre de colonnes de la grille");

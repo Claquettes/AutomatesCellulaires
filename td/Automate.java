@@ -59,7 +59,7 @@ public class Automate {
         this.nbCol = nbCol;
 
         if (name.toUpperCase().equals("1D")) {
-            this.nombreVoisins = 1;
+            this.nombreVoisins = nbVoisins % 2 == 0 ? 2 : 1;
             EtatCellule etat1D = new EtatCellule("1D");
             this.localRule = new LocalRule(etat1D.getEtatChoisie(), this.nombreVoisins, ruleNumber);
 
