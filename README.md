@@ -15,11 +15,18 @@ Le projet est organisé en plusieurs classes Java :
 - `LocalRule.java` : Cette classe représente les règles locales de l'automate.
 - `GUI.java` : Cette classe représente l'interface graphique de l'automate.
 - `UserInterface.java` : Cette classe gère les entrées et sorties de l'utilisateur en verison console.
+- `SaveConfiRead.java` : Cette classe ecrit et lit des sauvegardes de Automates en json.
 - `Main.java` : C'est la classe principale qui exécute l'automate.
 
 ## Comment Exécuter
 
 ### Prérequis
+
+#### Cette branche du projet est un projet Maven
+-On a besoin d'avoir InteliJ avec openJDK-21
+-Puis vérifiez que vous avez Maven sur inteliJ, un M doit apparaitre dans le lateral droit de l'IDE
+-Lancez avec le bbouton Run
+
 
 #### Sous Linux
 
